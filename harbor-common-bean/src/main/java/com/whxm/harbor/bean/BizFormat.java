@@ -1,5 +1,7 @@
 package com.whxm.harbor.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class BizFormat {
     private String bizFormatId;
 
@@ -7,6 +9,7 @@ public class BizFormat {
 
     private String bizFormatType;
 
+    @JsonIgnore
     private Integer isDeleted;
 
     public String getBizFormatId() {
