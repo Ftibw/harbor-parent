@@ -6,7 +6,6 @@ import com.whxm.harbor.common.bean.Result;
 import com.whxm.harbor.mapper.BizFormatMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -29,7 +28,6 @@ public class BusinessFormatServiceImpl implements BusinessFormatService {
         return bizFormatMapper.selectByPrimaryKey(bizFormatId);
     }
 
-    @Override
     public List<BizFormat> getBizFormatList() {
         return bizFormatMapper.getBizFormatList();
     }
@@ -37,6 +35,8 @@ public class BusinessFormatServiceImpl implements BusinessFormatService {
     @Override
     public Result deleteBizFormat(String bizFormatId) {
         Assert.notNull(bizFormatId,"业态ID不能为空");
+
+        //StringUtils.isNotBlank(bizFormatId)
         BizFormat bizFormat = new BizFormat();
         bizFormat.setBizFormatId(bizFormatId);
         bizFormat.setIsDeleted(0);

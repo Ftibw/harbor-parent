@@ -3,6 +3,7 @@ package com.whxm.harbor.business.controller;
 import com.whxm.harbor.bean.BizFormat;
 import com.whxm.harbor.business.service.BusinessFormatService;
 import com.whxm.harbor.common.bean.Result;
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Api(value = "API - BusinessFormatController", description = "业态 Controller")
 @RestController
 public class BusinessFormatController {
     private static final Logger logger = LoggerFactory.getLogger(BusinessFormatController.class);

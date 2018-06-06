@@ -1,0 +1,7 @@
+
+spring:
+  application:
+    name: business-format-web
+
+# swagger2
+swagger2.package: com.whxm.harbor.business.controller

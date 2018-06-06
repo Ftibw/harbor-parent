@@ -3,11 +3,15 @@ package com.whxm.harbor.activity.controller;
 import com.whxm.harbor.activity.service.ActivityService;
 import com.whxm.harbor.bean.BizActivity;
 import com.whxm.harbor.common.bean.Result;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Api(value = "API - BusinessActivityController", description = "活动 Controller")
 @RestController
 public class BizActivityController {
     @Autowired
@@ -16,6 +20,7 @@ public class BizActivityController {
     /**
      * 获取楼层列表
      */
+    @ApiOperation("获取楼层列表")
     @GetMapping("/bizActivities")
     public Result getBizActivities(){
         List<BizActivity> bizActivityList = activityService.getBizActivityList();
@@ -29,6 +34,7 @@ public class BizActivityController {
     /**
      * 修改楼层
      */
+    @ApiOperation("修改楼层")
     @PutMapping("/bizActivity/")
     public Result updateBizActivity(@RequestBody BizActivity bizActivity){
         Result result = activityService.updateBizActivity(bizActivity);
@@ -38,8 +44,10 @@ public class BizActivityController {
     /**
      * 删除楼层
      */
+    @ApiOperation("删除楼层")
     @DeleteMapping("/bizActivity/{ID}")
-    public Result delBizActivity(@PathVariable("ID") Integer bizActivityId){
+    public Result delBizActivity(@ApiParam(name = "ID",value = "楼层的ID",required = true)
+                                     @PathVariable("ID") Integer bizActivityId){
         Result result = activityService.deleteBizActivity(bizActivityId);
         return result;
     }
@@ -47,6 +55,7 @@ public class BizActivityController {
     /**
      * 添加楼层
      */
+    @ApiOperation("添加楼层")
     @PostMapping("/bizActivity/")
     public Result addBizActivity(@RequestBody BizActivity bizActivity){
         Result result = activityService.addBizActivity(bizActivity);
