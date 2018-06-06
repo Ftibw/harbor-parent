@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whxm.harbor.mapper.ShopPictureRelationMapper" >
+  <resultMap id="BaseResultMap" type="com.whxm.harbor.bean.ShopPictureRelation" >
+    <id column="shop_id" property="shopId" jdbcType="VARCHAR" />
+    <result column="shop_picture_path" property="shopPicturePath" jdbcType="VARCHAR" />
+    <result column="shop_picture_size" property="shopPictureSize" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    shop_id, shop_picture_path, shop_picture_size
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from shop_picture_relation
+    where shop_id = #{shopId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from shop_picture_relation
+    where shop_id = #{shopId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.whxm.harbor.bean.ShopPictureRelation" >
+    insert into shop_picture_relation (shop_id, shop_picture_path, shop_picture_size
+      )
+    values (#{shopId,jdbcType=VARCHAR}, #{shopPicturePath,jdbcType=VARCHAR}, #{shopPictureSize,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.whxm.harbor.bean.ShopPictureRelation" >
+    insert into shop_picture_relation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shopId != null" >
+        shop_id,
+      </if>
+      <if test="shopPicturePath != null" >
+        shop_picture_path,
+      </if>
+      <if test="shopPictureSize != null" >
+        shop_picture_size,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shopId != null" >
+        #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPicturePath != null" >
+        #{shopPicturePath,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPictureSize != null" >
+        #{shopPictureSize,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whxm.harbor.bean.ShopPictureRelation" >
+    update shop_picture_relation
+    <set >
+      <if test="shopPicturePath != null" >
+        shop_picture_path = #{shopPicturePath,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPictureSize != null" >
+        shop_picture_size = #{shopPictureSize,jdbcType=BIGINT},
+      </if>
+    </set>
+    where shop_id = #{shopId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whxm.harbor.bean.ShopPictureRelation" >
+    update shop_picture_relation
+    set shop_picture_path = #{shopPicturePath,jdbcType=VARCHAR},
+      shop_picture_size = #{shopPictureSize,jdbcType=BIGINT}
+    where shop_id = #{shopId,jdbcType=VARCHAR}
+  </update>
+</mapper>
