@@ -1,5 +1,6 @@
 package com.whxm.harbor.floor.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.whxm.harbor.bean.BizFloor;
 import com.whxm.harbor.common.bean.Result;
 import com.whxm.harbor.floor.service.FloorService;
@@ -28,6 +29,8 @@ public class FloorServiceImpl implements FloorService {
 
     @Override
     public List<BizFloor> getBizFloorList() {
+
+        PageHelper.startPage(0, 1);
 
         List<BizFloor> floorList = bizFloorMapper.getBizFloorList();
 

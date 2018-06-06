@@ -1,5 +1,6 @@
 package com.whxm.harbor.activity.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.whxm.harbor.activity.service.ActivityService;
 import com.whxm.harbor.bean.BizActivity;
 import com.whxm.harbor.common.bean.Result;
@@ -42,6 +43,8 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public List<BizActivity> getBizActivityList() {
+
+        PageHelper.startPage(0, 1);
 
         List<BizActivity> activityList = bizActivityMapper.getBizActivityList();
 
