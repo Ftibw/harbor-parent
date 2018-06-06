@@ -1,6 +1,5 @@
 package com.whxm.harbor.business.service.impl;
 
-import com.github.pagehelper.PageHelper;
 import com.whxm.harbor.bean.BizFormat;
 import com.whxm.harbor.business.service.BusinessFormatService;
 import com.whxm.harbor.common.bean.Result;
@@ -30,9 +29,6 @@ public class BusinessFormatServiceImpl implements BusinessFormatService {
     }
 
     public List<BizFormat> getBizFormatList() {
-
-        PageHelper.startPage(0, 1);
-
         return bizFormatMapper.getBizFormatList();
     }
 

@@ -1,6 +1,5 @@
 package com.whxm.harbor.shop.service.impl;
 
-import com.github.pagehelper.PageHelper;
 import com.whxm.harbor.bean.BizShop;
 import com.whxm.harbor.common.bean.Result;
 import com.whxm.harbor.shop.service.ShopService;
@@ -19,9 +18,6 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public List<BizShop> getBizShopList() {
-
-        PageHelper.startPage(0, 1);
-
         return null;
     }
 
