@@ -27,6 +27,7 @@
         <option value="$PROJECT_DIR$/harbor-screensaver-material-web/pom.xml" />
         <option value="$PROJECT_DIR$/harbor-screensaver-service/pom.xml" />
         <option value="$PROJECT_DIR$/harbor-screensaver-web/pom.xml" />
+        <option value="$PROJECT_DIR$/harbor-terminal-service/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

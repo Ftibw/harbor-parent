@@ -27,6 +27,7 @@
         <module>harbor-shop-service</module>
         <module>harbor-screensaver-material-service</module>
         <module>harbor-screensaver-service</module>
+        <module>harbor-terminal-service</module>
 
         <module>harbor-business-web</module>
         <module>harbor-floor-web</module>

@@ -23,6 +23,7 @@
         <module name="harbor-screensaver-web" />
         <module name="harbor-shop-service" />
         <module name="harbor-shop-web" />
+        <module name="harbor-terminal-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -48,6 +49,7 @@
       <module name="harbor-screensaver-web" target="1.8" />
       <module name="harbor-shop-service" target="1.8" />
       <module name="harbor-shop-web" target="1.8" />
+      <module name="harbor-terminal-service" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
