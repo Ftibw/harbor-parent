@@ -123,6 +123,9 @@
              FROM screensaver_published_terminal_relation
              GROUP BY screensaver_id
          ) tmp2 using ( screensaver_id )
+    <if test="screensaverProgramName!=null">
+        WHERE screensaver_program_name LIKE concat('%',#{screensaverProgramName},'%')
+    </if>
   </select>
 
     <resultMap id="ExtensionResultMap" type="com.whxm.harbor.bean.BizScreensaver" extends="BaseResultMap">

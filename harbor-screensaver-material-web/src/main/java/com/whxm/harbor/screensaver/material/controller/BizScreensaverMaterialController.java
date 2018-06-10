@@ -32,11 +32,13 @@ public class BizScreensaverMaterialController {
 
     @ApiOperation("获取屏保素材列表")
     @GetMapping("/bizScreensaverMaterials")
-    public Result getBizActivities(PageQO<BizScreensaverMaterial> pageQO) {
+    public Result getBizActivities(PageQO<BizScreensaverMaterial> pageQO,BizScreensaverMaterial condition) {
 
         Result ret = null;
 
         try {
+            pageQO.setCondition(condition);
+
             PageVO<BizScreensaverMaterial> pageVO = screensaverMaterialService.getBizScreensaverMaterialList(pageQO);
 
             ret = new Result(pageVO);

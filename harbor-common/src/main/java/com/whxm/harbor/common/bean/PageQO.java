@@ -21,23 +21,12 @@ public class PageQO<T> {
 //    @ApiModelProperty(value = "排序", notes = "例：create_time desc,update_time desc")
 //    private String orderBy;
 
-
-    public PageQO() {
-    }
-
     public PageQO(int pageNum, int pageSize) {
         this.pageNum = pageNum;
         this.pageSize = pageSize;
     }
 
-    private T condition;
-
-    public T getCondition() {
-        return condition;
-    }
-
-    public void setCondition(T condition) {
-        this.condition = condition;
+    public PageQO() {
     }
 
     public int getOffset() {
@@ -59,5 +48,15 @@ public class PageQO<T> {
 
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
+    }
+
+    private T condition;
+
+    public T getCondition() {
+        return condition;
+    }
+
+    public void setCondition(T condition) {
+        this.condition = condition;
     }
 }

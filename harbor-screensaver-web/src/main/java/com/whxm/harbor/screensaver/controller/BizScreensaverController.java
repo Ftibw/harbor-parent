@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Api(value = "API - BusinessScreensaverController", description = "屏保 Controller")
 @RestController
@@ -29,14 +30,16 @@ public class BizScreensaverController {
 
     @ApiOperation("获取屏保列表")
     @GetMapping("/bizScreensavers")
-    public Result getBizActivities(PageQO<BizScreensaver> pageQO) {
+    public Result getBizActivities(PageQO<BizScreensaver> pageQO, BizScreensaver condition) {
 
         Result ret = null;
 
         try {
-            PageVO<BizScreensaver> pageVO= screensaverService.getBizScreensaverList(pageQO);
+            pageQO.setCondition(condition);
 
-            ret = new Result( pageVO);
+            PageVO<BizScreensaver> pageVO = screensaverService.getBizScreensaverList(pageQO);
+
+            ret = new Result(pageVO);
 
         } catch (Exception e) {
             logger.error("屏保列表 获取报错", e);
@@ -77,7 +80,7 @@ public class BizScreensaverController {
         try {
             ret = screensaverService.updateBizScreensaver(bizScreensaver);
         } catch (Exception e) {
-            logger.error("屏保数据 修改报错",e);
+            logger.error("屏保数据 修改报错", e);
 
             ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保数据 修改报错", null);
         }

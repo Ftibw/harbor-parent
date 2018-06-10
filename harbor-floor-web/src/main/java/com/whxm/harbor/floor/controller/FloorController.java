@@ -26,11 +26,13 @@ public class FloorController {
 
     @ApiOperation("获取楼层列表")
     @GetMapping("/bizFloors")
-    public Result getBizFloors(PageQO<BizFloor> pageQO) {
+    public Result getBizFloors(PageQO<BizFloor> pageQO,BizFloor condition) {
         PageVO<BizFloor> pageVO = null;
 
         Result ret = null;
         try {
+            pageQO.setCondition(condition);
+
             pageVO = floorService.getBizFloorList(pageQO);
 
             ret = new Result(pageVO);

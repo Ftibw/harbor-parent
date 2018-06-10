@@ -32,11 +32,13 @@ public class BizActivityMaterialController {
 
     @ApiOperation("获取活动素材列表")
     @GetMapping("/bizActivityMaterials")
-    public Result getBizActivities(PageQO<BizActivityMaterial> pageQO) {
+    public Result getBizActivities(PageQO<BizActivityMaterial> pageQO, BizActivityMaterial condition) {
 
         Result ret = null;
         PageVO<BizActivityMaterial> pageVO = null;
         try {
+            pageQO.setCondition(condition);
+
             pageVO = activityMaterialService.getBizActivityMaterialList(pageQO);
 
             ret = new Result(pageVO);

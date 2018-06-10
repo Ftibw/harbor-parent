@@ -34,12 +34,14 @@ public class BizActivityController {
 
     @ApiOperation("获取活动列表")
     @GetMapping("/bizActivities")
-    public Result getBizActivities(PageQO<BizActivity> pageQO) {
+    public Result getBizActivities(PageQO<BizActivity> pageQO,BizActivity condition) {
         Result ret = null;
 
         PageVO<BizActivity> pageVO = null;
 
         try {
+            pageQO.setCondition(condition);
+
             pageVO = activityService.getBizActivityList(pageQO);
 
             ret = new Result(pageVO);
