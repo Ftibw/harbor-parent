@@ -14,7 +14,7 @@
     activity_material_size, activity_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from biz_activity_material
     where activity_material_id = #{activityMaterialId,jdbcType=INTEGER}
@@ -109,6 +109,10 @@
   <select id="getBizActivityMaterialList" resultMap="ExtensionResultMap">
     select bam.*,ba.activity_type from biz_activity_material bam
     JOIN biz_activity ba USING (activity_id)
+    <where>
+      <if test="activityMaterialName!=null">and activity_material_name like concat('%',#{activityMaterialName},'%')</if>
+      <if test="activityId!=null">and activity_id=#{activityId}</if>
+    </where>
   </select>
 
   <resultMap id="ExtensionResultMap" type="com.whxm.harbor.bean.BizActivityMaterial" extends="BaseResultMap">

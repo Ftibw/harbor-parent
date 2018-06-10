@@ -227,6 +227,13 @@
         from biz_shop
         JOIN biz_floor USING(floor_id)
         JOIN biz_format USING (biz_format_id)
+        <where>
+            <if test="shopName!=null">and shop_name like concat('%',#{shopName},'%')</if>
+            <if test="shopHouseNumber!=null">and shop_house_number like concat('%',#{shopHouseNumber},'%')</if>
+            <if test="isShopEnabled!=null">and is_shop_enabled=#{shopName}</if>
+            <if test="floorId!=null">and floor_id=#{floorId}</if>
+            <if test="bizFormatId!=null">and biz_format_id=#{bizFormatId}</if>
+        </where>
     </select>
 
     <resultMap id="ExtensionResultMap" type="com.whxm.harbor.bean.BizShop" extends="BaseResultMap">
