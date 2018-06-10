@@ -26,7 +26,7 @@ public class BusinessFormatController {
 
     @ApiOperation("获取业态列表")
     @GetMapping("/bizFormats")
-    public Result getBizFormats(PageQO<BizFormat> pageQO) {
+    public Result getBizFormats(@RequestBody PageQO<BizFormat> pageQO) {
         Result ret = null;
 
         PageVO<BizFormat> pageVO = businessFormatService.getBizFormatList(pageQO);

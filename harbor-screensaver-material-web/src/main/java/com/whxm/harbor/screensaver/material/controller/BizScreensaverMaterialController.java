@@ -32,7 +32,7 @@ public class BizScreensaverMaterialController {
 
     @ApiOperation("获取屏保素材列表")
     @GetMapping("/bizScreensaverMaterials")
-    public Result getBizActivities(PageQO<BizScreensaverMaterial> pageQO) {
+    public Result getBizActivities(@RequestBody PageQO<BizScreensaverMaterial> pageQO) {
 
         Result ret = null;
 
