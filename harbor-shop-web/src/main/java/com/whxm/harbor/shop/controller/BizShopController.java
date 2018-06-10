@@ -1,7 +1,5 @@
 package com.whxm.harbor.shop.controller;
 
-import com.github.pagehelper.Page;
-import com.whxm.harbor.bean.BizScreensaver;
 import com.whxm.harbor.bean.BizShop;
 import com.whxm.harbor.common.bean.PageQO;
 import com.whxm.harbor.common.bean.PageVO;

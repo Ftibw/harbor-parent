@@ -140,7 +140,10 @@
         </foreach>
     </insert>
 
-    <!--删除语句要额外注意-->
+    <!--清除屏保-屏保材料关系表数据,
+    屏保与屏保材料,可以认为屏保是主表,可以主动解除关系,
+    而屏保与终端表,可以认为终端是主表,屏保不能主动解除关系,应该由终端决定是否解除屏保关系
+    删除语句要额外注意-->
     <delete id="delScreensaverMaterialRelation">
         DELETE FROM screensaver_material_relation WHERE screensaver_id=#{screensaverId}
     </delete>

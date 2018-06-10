@@ -80,7 +80,10 @@ public class ShopServiceImpl implements ShopService {
 
             try {
                 BizShop bizShop = getBizShop(bizShopId);
-
+                /*
+                * if(0==bizShop.getIsShopEnabled() ^ 1)
+                * bizShopMapper.delShopPicturesRelation(bizShopId);
+                * */
                 bizShop.setIsShopEnabled(bizShop.getIsShopEnabled() ^ 1);
 
                 ret = updateBizShop(bizShop);

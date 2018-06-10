@@ -25,4 +25,6 @@ public interface BizShopMapper {
     int updateByPrimaryKey(BizShop record);
 
     List<BizShop> getBizShopList(BizShop condition);
+
+    //int delShopPicturesRelation(String shopId);
 }

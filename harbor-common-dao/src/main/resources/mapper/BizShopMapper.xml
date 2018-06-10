@@ -248,4 +248,10 @@
             (#{shopId},#{item.shopPicturePath},#{item.shopPictureSize})
         </foreach>
     </insert>
+
+    <!--清除商铺-商铺图片关系表数据-->
+    <!--<delete id="delShopPicturesRelation">
+        DELETE FROM shop_picture_relation
+        WHERE shop_id=#{shopId}
+    </delete>-->
 </mapper>
