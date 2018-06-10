@@ -21,6 +21,10 @@ public class PageQO<T> {
 //    @ApiModelProperty(value = "排序", notes = "例：create_time desc,update_time desc")
 //    private String orderBy;
 
+
+    public PageQO() {
+    }
+
     public PageQO(int pageNum, int pageSize) {
         this.pageNum = pageNum;
         this.pageSize = pageSize;
