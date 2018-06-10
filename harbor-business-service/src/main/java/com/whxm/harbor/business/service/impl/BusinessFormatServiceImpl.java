@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -26,14 +25,37 @@ public class BusinessFormatServiceImpl implements BusinessFormatService {
     @Override
     public BizFormat getBizFormat(Integer bizFormatId) {
 
-        return bizFormatMapper.selectByPrimaryKey(bizFormatId);
+        BizFormat bizFormat = null;
+
+        try {
+            bizFormat = bizFormatMapper.selectByPrimaryKey(bizFormatId);
+
+        } catch (Exception e) {
+
+            logger.error("ID为{}的业态数据 获取报错", bizFormatId);
+
+            throw new RuntimeException();
+        }
+
+        return bizFormat;
     }
 
     public List<BizFormat> getBizFormatList() {
 
         PageHelper.startPage(0, 1);
 
-        return bizFormatMapper.getBizFormatList();
+        List<BizFormat> bizFormatList = null;
+        try {
+            bizFormatList = bizFormatMapper.getBizFormatList();
+
+        } catch (Exception e) {
+
+            logger.error("业态数据列表 获取报错", e);
+
+            throw new RuntimeException();
+        }
+
+        return bizFormatList;
     }
 
     @Override
@@ -41,15 +63,24 @@ public class BusinessFormatServiceImpl implements BusinessFormatService {
 
         //StringUtils.isNotBlank(bizFormatId)
 
-        BizFormat bizFormat = new BizFormat();
+        Result ret = null;
+        try {
+            BizFormat bizFormat = new BizFormat();
 
-        bizFormat.setBizFormatId(bizFormatId);
+            bizFormat.setBizFormatId(bizFormatId);
 
-        bizFormat.setIsDeleted(0);
+            bizFormat.setIsDeleted(0);
 
-        updateBizFormat(bizFormat);
+            updateBizFormat(bizFormat);
 
-        Result ret = new Result(200,"ok","void");
+            ret = new Result("ID为" + bizFormatId + "的业态数据删除成功");
+
+        } catch (Exception e) {
+
+            logger.error("ID为{}的业态 删除报错", bizFormatId);
+
+            throw new RuntimeException();
+        }
 
         return ret;
     }
@@ -57,27 +88,52 @@ public class BusinessFormatServiceImpl implements BusinessFormatService {
     @Override
     public Result updateBizFormat(BizFormat bizFormat) {
 
-        int affectRow = bizFormatMapper.updateByPrimaryKeySelective(bizFormat);
+        Result ret = null;
 
-        Result ret = new Result(200,"ok","");
+        if (null == bizFormat) {
+
+            logger.info("业态为空");
+
+            return ret = new Result("业态为空");
+
+        } else if (null == bizFormat.getBizFormatId()) {
+
+            logger.info("业态ID为空");
+
+            return ret = new Result("业态ID为空");
+        }
+
+        try {
+            int affectRow = bizFormatMapper.updateByPrimaryKeySelective(bizFormat);
+
+            ret = new Result("ID为" + bizFormat.getBizFormatId() + "的业态 修改成功 影响了" + affectRow + "行");
+
+        } catch (Exception e) {
+
+            logger.error("ID为{}的业态 修改报错", bizFormat.getBizFormatId());
+
+            throw new RuntimeException();
+        }
 
         return ret;
     }
 
-/*    @Override
-    public List<BizFormat> getBizFormatByNumPrefix(String keyword) {
-
-        List<BizFormat> bizFormats = bizFormatMapper.getByNumPrefix(keyword);
-
-        return bizFormats;
-    }*/
-
     @Override
     public Result addBizFormat(BizFormat bizFormat) {
 
-        int affectRow = bizFormatMapper.insert(bizFormat);
+        Result ret = null;
 
-        Result ret = new Result(200,"ok","成功添加"+affectRow+"行记录");
+        try {
+            int affectRow = bizFormatMapper.insert(bizFormat);
+
+            ret = new Result("成功添加" + affectRow + "行记录");
+
+        } catch (Exception e) {
+
+            logger.error("业态数据 添加报错",e);
+
+            throw new RuntimeException();
+        }
 
         return ret;
     }
