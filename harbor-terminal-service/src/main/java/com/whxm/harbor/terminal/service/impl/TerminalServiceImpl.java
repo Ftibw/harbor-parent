@@ -74,7 +74,13 @@ public class TerminalServiceImpl implements TerminalService {
 
         try {
 
-            bizTerminalMapper.deleteByPrimaryKey(bizTerminalId);
+            bizTerminalMapper.delScreensaverTerminalRelation(bizTerminalId);
+
+            BizTerminal bizTerminal = new BizTerminal();
+
+            bizTerminal.setIsDeleted(0);
+
+            updateBizTerminal(bizTerminal);
 
             logger.info("ID为{}的终端 删除成功", bizTerminalId);
 

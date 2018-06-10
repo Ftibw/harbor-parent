@@ -18,4 +18,6 @@ public interface BizTerminalMapper {
     int updateByPrimaryKey(BizTerminal record);
 
     List<BizTerminal> getBizTerminalList(BizTerminal condition);
+
+    void delScreensaverTerminalRelation(String bizTerminalId);
 }

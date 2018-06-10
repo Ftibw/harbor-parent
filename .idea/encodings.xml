@@ -21,5 +21,6 @@
     <file url="file://$PROJECT_DIR$/harbor-shop-service" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/harbor-shop-web" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/harbor-terminal-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/harbor-terminal-web" charset="UTF-8" />
   </component>
 </project>

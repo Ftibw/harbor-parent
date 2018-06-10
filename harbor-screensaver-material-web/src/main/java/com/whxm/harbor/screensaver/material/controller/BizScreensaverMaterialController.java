@@ -62,11 +62,11 @@ public class BizScreensaverMaterialController {
         try {
             screensaverMaterial = screensaverMaterialService.getBizScreensaverMaterial(screensaverMaterialId);
 
-            ret = new Result(200, "ok", screensaverMaterial);
+            ret = new Result(screensaverMaterial);
 
         } catch (Exception e) {
             logger.error("屏保素材数据 获取报错", e);
-            ret = new Result(500, "error", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保素材数据 获取报错", null);
         }
 
         return ret;
@@ -75,9 +75,18 @@ public class BizScreensaverMaterialController {
     @ApiOperation("修改屏保素材")
     @PutMapping("/bizScreensaverMaterial")
     public Result updateBizScreensaverMaterial(@RequestBody BizScreensaverMaterial bizScreensaverMaterial) {
-        Result result = screensaverMaterialService.updateBizScreensaverMaterial(bizScreensaverMaterial);
+        Result ret = null;
+        try {
+            ret = screensaverMaterialService.updateBizScreensaverMaterial(bizScreensaverMaterial);
 
-        return result;
+        } catch (Exception e) {
+
+            logger.error("屏保素材数据 修改报错",e);
+
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保素材数据 修改报错", null);
+        }
+
+        return ret;
     }
 
     @ApiOperation("删除屏保素材")
@@ -86,9 +95,17 @@ public class BizScreensaverMaterialController {
             @ApiParam(name = "ID", value = "屏保素材的ID", required = true)
             @PathVariable("ID") Integer bizScreensaverMaterialId
     ) {
-        Result result = screensaverMaterialService.deleteBizScreensaverMaterial(bizScreensaverMaterialId);
+        Result ret = null;
+        try {
+            ret = screensaverMaterialService.deleteBizScreensaverMaterial(bizScreensaverMaterialId);
+        } catch (Exception e) {
 
-        return result;
+            logger.error("屏保素材数据 删除报错",e);
+
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保素材数据 删除报错", null);
+        }
+
+        return ret;
     }
 
     @ApiOperation("添加屏保素材")

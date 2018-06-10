@@ -24,6 +24,7 @@
         <module name="harbor-shop-service" />
         <module name="harbor-shop-web" />
         <module name="harbor-terminal-service" />
+        <module name="harbor-terminal-web" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -50,6 +51,7 @@
       <module name="harbor-shop-service" target="1.8" />
       <module name="harbor-shop-web" target="1.8" />
       <module name="harbor-terminal-service" target="1.8" />
+      <module name="harbor-terminal-web" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

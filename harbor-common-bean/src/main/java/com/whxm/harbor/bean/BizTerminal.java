@@ -31,6 +31,17 @@ public class BizTerminal {
 
     private Integer terminalPlatform;
 
+    //join biz_floor 查询终端所在楼层名
+    private String floorName;
+
+    public String getFloorName() {
+        return floorName;
+    }
+
+    public void setFloorName(String floorName) {
+        this.floorName = floorName;
+    }
+
     public String getTerminalId() {
         return terminalId;
     }

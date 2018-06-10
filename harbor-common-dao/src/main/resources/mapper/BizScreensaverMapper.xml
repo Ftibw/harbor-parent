@@ -103,7 +103,7 @@
     <select id="getBizScreensaverList" resultMap="ExtensionResultMap">
     SELECT
         bs.screensaver_id,
-        screensaver_program_name,
+        bs.screensaver_program_name,
         bs.add_screensaver_time,
         tmp1.screensaver_material_amount ,
         tmp2.screensaver_published_amount
@@ -124,7 +124,7 @@
              GROUP BY screensaver_id
          ) tmp2 using ( screensaver_id )
     <if test="screensaverProgramName!=null">
-        WHERE screensaver_program_name LIKE concat('%',#{screensaverProgramName},'%')
+        WHERE bs.screensaver_program_name LIKE concat('%',#{screensaverProgramName},'%')
     </if>
   </select>
 

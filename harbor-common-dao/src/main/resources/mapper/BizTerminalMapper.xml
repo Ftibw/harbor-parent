@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.whxm.harbor.mapper.BizTerminalMapper" >
-  <resultMap id="BaseResultMap" type="com.whxm.harbor.bean.BizTerminal" >
-    <id column="terminal_id" property="terminalId" jdbcType="VARCHAR" />
-    <result column="terminal_name" property="terminalName" jdbcType="VARCHAR" />
-    <result column="terminal_number" property="terminalNumber" jdbcType="INTEGER" />
-    <result column="terminal_ip" property="terminalIp" jdbcType="VARCHAR" />
-    <result column="terminal_type" property="terminalType" jdbcType="VARCHAR" />
-    <result column="terminal_location" property="terminalLocation" jdbcType="VARCHAR" />
-    <result column="terminal_rotation_angle" property="terminalRotationAngle" jdbcType="INTEGER" />
-    <result column="is_terminal_online" property="isTerminalOnline" jdbcType="INTEGER" />
-    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
-    <result column="add_terminal_time" property="addTerminalTime" jdbcType="TIMESTAMP" />
-    <result column="register_terminal_time" property="registerTerminalTime" jdbcType="TIMESTAMP" />
-    <result column="floor_id" property="floorId" jdbcType="INTEGER" />
-    <result column="terminal_switch_time" property="terminalSwitchTime" jdbcType="TIMESTAMP" />
-    <result column="terminal_platform" property="terminalPlatform" jdbcType="INTEGER" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.whxm.harbor.mapper.BizTerminalMapper">
+    <resultMap id="BaseResultMap" type="com.whxm.harbor.bean.BizTerminal">
+        <id column="terminal_id" property="terminalId" jdbcType="VARCHAR"/>
+        <result column="terminal_name" property="terminalName" jdbcType="VARCHAR"/>
+        <result column="terminal_number" property="terminalNumber" jdbcType="INTEGER"/>
+        <result column="terminal_ip" property="terminalIp" jdbcType="VARCHAR"/>
+        <result column="terminal_type" property="terminalType" jdbcType="VARCHAR"/>
+        <result column="terminal_location" property="terminalLocation" jdbcType="VARCHAR"/>
+        <result column="terminal_rotation_angle" property="terminalRotationAngle" jdbcType="INTEGER"/>
+        <result column="is_terminal_online" property="isTerminalOnline" jdbcType="INTEGER"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="INTEGER"/>
+        <result column="add_terminal_time" property="addTerminalTime" jdbcType="TIMESTAMP"/>
+        <result column="register_terminal_time" property="registerTerminalTime" jdbcType="TIMESTAMP"/>
+        <result column="floor_id" property="floorId" jdbcType="INTEGER"/>
+        <result column="terminal_switch_time" property="terminalSwitchTime" jdbcType="TIMESTAMP"/>
+        <result column="terminal_platform" property="terminalPlatform" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     terminal_id, terminal_name, terminal_number, terminal_ip, terminal_type, terminal_location, 
     terminal_rotation_angle, is_terminal_online, is_deleted, add_terminal_time, register_terminal_time, 
     floor_id, terminal_switch_time, terminal_platform
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from biz_terminal
-    where terminal_id = #{terminalId,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from biz_terminal
+        where terminal_id = #{terminalId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from biz_terminal
     where terminal_id = #{terminalId,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.whxm.harbor.bean.BizTerminal" >
+    <insert id="insert" parameterType="com.whxm.harbor.bean.BizTerminal">
     insert into biz_terminal (terminal_id, terminal_name, terminal_number, 
       terminal_ip, terminal_type, terminal_location, 
       terminal_rotation_angle, is_terminal_online, 
@@ -46,143 +46,143 @@
       #{floorId,jdbcType=INTEGER}, #{terminalSwitchTime,jdbcType=TIMESTAMP}, #{terminalPlatform,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.whxm.harbor.bean.BizTerminal" >
-    insert into biz_terminal
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="terminalId != null" >
-        terminal_id,
-      </if>
-      <if test="terminalName != null" >
-        terminal_name,
-      </if>
-      <if test="terminalNumber != null" >
-        terminal_number,
-      </if>
-      <if test="terminalIp != null" >
-        terminal_ip,
-      </if>
-      <if test="terminalType != null" >
-        terminal_type,
-      </if>
-      <if test="terminalLocation != null" >
-        terminal_location,
-      </if>
-      <if test="terminalRotationAngle != null" >
-        terminal_rotation_angle,
-      </if>
-      <if test="isTerminalOnline != null" >
-        is_terminal_online,
-      </if>
-      <if test="isDeleted != null" >
-        is_deleted,
-      </if>
-      <if test="addTerminalTime != null" >
-        add_terminal_time,
-      </if>
-      <if test="registerTerminalTime != null" >
-        register_terminal_time,
-      </if>
-      <if test="floorId != null" >
-        floor_id,
-      </if>
-      <if test="terminalSwitchTime != null" >
-        terminal_switch_time,
-      </if>
-      <if test="terminalPlatform != null" >
-        terminal_platform,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="terminalId != null" >
-        #{terminalId,jdbcType=VARCHAR},
-      </if>
-      <if test="terminalName != null" >
-        #{terminalName,jdbcType=VARCHAR},
-      </if>
-      <if test="terminalNumber != null" >
-        #{terminalNumber,jdbcType=INTEGER},
-      </if>
-      <if test="terminalIp != null" >
-        #{terminalIp,jdbcType=VARCHAR},
-      </if>
-      <if test="terminalType != null" >
-        #{terminalType,jdbcType=VARCHAR},
-      </if>
-      <if test="terminalLocation != null" >
-        #{terminalLocation,jdbcType=VARCHAR},
-      </if>
-      <if test="terminalRotationAngle != null" >
-        #{terminalRotationAngle,jdbcType=INTEGER},
-      </if>
-      <if test="isTerminalOnline != null" >
-        #{isTerminalOnline,jdbcType=INTEGER},
-      </if>
-      <if test="isDeleted != null" >
-        #{isDeleted,jdbcType=INTEGER},
-      </if>
-      <if test="addTerminalTime != null" >
-        #{addTerminalTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="registerTerminalTime != null" >
-        #{registerTerminalTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="floorId != null" >
-        #{floorId,jdbcType=INTEGER},
-      </if>
-      <if test="terminalSwitchTime != null" >
-        #{terminalSwitchTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="terminalPlatform != null" >
-        #{terminalPlatform,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.whxm.harbor.bean.BizTerminal" >
-    update biz_terminal
-    <set >
-      <if test="terminalName != null" >
-        terminal_name = #{terminalName,jdbcType=VARCHAR},
-      </if>
-      <if test="terminalNumber != null" >
-        terminal_number = #{terminalNumber,jdbcType=INTEGER},
-      </if>
-      <if test="terminalIp != null" >
-        terminal_ip = #{terminalIp,jdbcType=VARCHAR},
-      </if>
-      <if test="terminalType != null" >
-        terminal_type = #{terminalType,jdbcType=VARCHAR},
-      </if>
-      <if test="terminalLocation != null" >
-        terminal_location = #{terminalLocation,jdbcType=VARCHAR},
-      </if>
-      <if test="terminalRotationAngle != null" >
-        terminal_rotation_angle = #{terminalRotationAngle,jdbcType=INTEGER},
-      </if>
-      <if test="isTerminalOnline != null" >
-        is_terminal_online = #{isTerminalOnline,jdbcType=INTEGER},
-      </if>
-      <if test="isDeleted != null" >
-        is_deleted = #{isDeleted,jdbcType=INTEGER},
-      </if>
-      <if test="addTerminalTime != null" >
-        add_terminal_time = #{addTerminalTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="registerTerminalTime != null" >
-        register_terminal_time = #{registerTerminalTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="floorId != null" >
-        floor_id = #{floorId,jdbcType=INTEGER},
-      </if>
-      <if test="terminalSwitchTime != null" >
-        terminal_switch_time = #{terminalSwitchTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="terminalPlatform != null" >
-        terminal_platform = #{terminalPlatform,jdbcType=INTEGER},
-      </if>
-    </set>
-    where terminal_id = #{terminalId,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.whxm.harbor.bean.BizTerminal" >
+    <insert id="insertSelective" parameterType="com.whxm.harbor.bean.BizTerminal">
+        insert into biz_terminal
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="terminalId != null">
+                terminal_id,
+            </if>
+            <if test="terminalName != null">
+                terminal_name,
+            </if>
+            <if test="terminalNumber != null">
+                terminal_number,
+            </if>
+            <if test="terminalIp != null">
+                terminal_ip,
+            </if>
+            <if test="terminalType != null">
+                terminal_type,
+            </if>
+            <if test="terminalLocation != null">
+                terminal_location,
+            </if>
+            <if test="terminalRotationAngle != null">
+                terminal_rotation_angle,
+            </if>
+            <if test="isTerminalOnline != null">
+                is_terminal_online,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+            <if test="addTerminalTime != null">
+                add_terminal_time,
+            </if>
+            <if test="registerTerminalTime != null">
+                register_terminal_time,
+            </if>
+            <if test="floorId != null">
+                floor_id,
+            </if>
+            <if test="terminalSwitchTime != null">
+                terminal_switch_time,
+            </if>
+            <if test="terminalPlatform != null">
+                terminal_platform,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="terminalId != null">
+                #{terminalId,jdbcType=VARCHAR},
+            </if>
+            <if test="terminalName != null">
+                #{terminalName,jdbcType=VARCHAR},
+            </if>
+            <if test="terminalNumber != null">
+                #{terminalNumber,jdbcType=INTEGER},
+            </if>
+            <if test="terminalIp != null">
+                #{terminalIp,jdbcType=VARCHAR},
+            </if>
+            <if test="terminalType != null">
+                #{terminalType,jdbcType=VARCHAR},
+            </if>
+            <if test="terminalLocation != null">
+                #{terminalLocation,jdbcType=VARCHAR},
+            </if>
+            <if test="terminalRotationAngle != null">
+                #{terminalRotationAngle,jdbcType=INTEGER},
+            </if>
+            <if test="isTerminalOnline != null">
+                #{isTerminalOnline,jdbcType=INTEGER},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=INTEGER},
+            </if>
+            <if test="addTerminalTime != null">
+                #{addTerminalTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="registerTerminalTime != null">
+                #{registerTerminalTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="floorId != null">
+                #{floorId,jdbcType=INTEGER},
+            </if>
+            <if test="terminalSwitchTime != null">
+                #{terminalSwitchTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="terminalPlatform != null">
+                #{terminalPlatform,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.whxm.harbor.bean.BizTerminal">
+        update biz_terminal
+        <set>
+            <if test="terminalName != null">
+                terminal_name = #{terminalName,jdbcType=VARCHAR},
+            </if>
+            <if test="terminalNumber != null">
+                terminal_number = #{terminalNumber,jdbcType=INTEGER},
+            </if>
+            <if test="terminalIp != null">
+                terminal_ip = #{terminalIp,jdbcType=VARCHAR},
+            </if>
+            <if test="terminalType != null">
+                terminal_type = #{terminalType,jdbcType=VARCHAR},
+            </if>
+            <if test="terminalLocation != null">
+                terminal_location = #{terminalLocation,jdbcType=VARCHAR},
+            </if>
+            <if test="terminalRotationAngle != null">
+                terminal_rotation_angle = #{terminalRotationAngle,jdbcType=INTEGER},
+            </if>
+            <if test="isTerminalOnline != null">
+                is_terminal_online = #{isTerminalOnline,jdbcType=INTEGER},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=INTEGER},
+            </if>
+            <if test="addTerminalTime != null">
+                add_terminal_time = #{addTerminalTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="registerTerminalTime != null">
+                register_terminal_time = #{registerTerminalTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="floorId != null">
+                floor_id = #{floorId,jdbcType=INTEGER},
+            </if>
+            <if test="terminalSwitchTime != null">
+                terminal_switch_time = #{terminalSwitchTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="terminalPlatform != null">
+                terminal_platform = #{terminalPlatform,jdbcType=INTEGER},
+            </if>
+        </set>
+        where terminal_id = #{terminalId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.whxm.harbor.bean.BizTerminal">
     update biz_terminal
     set terminal_name = #{terminalName,jdbcType=VARCHAR},
       terminal_number = #{terminalNumber,jdbcType=INTEGER},
@@ -200,19 +200,28 @@
     where terminal_id = #{terminalId,jdbcType=VARCHAR}
   </update>
 
-  <!--以下为自定义部分-->
-  <select id="getBizTerminalList">
-    SELECT
-    <include refid="Base_Column_List"/>
-    FROM biz_terminal
-    JOIN biz_floor USING (floor_id)
-    <where>
-      <if test="terminalName!=null">and terminal_name like concat('%',#{terminalName},'%')</if>
-      <if test="terminalNumber!=null">and terminal_number like concat('%',#{terminalNumber},'%')</if>
-      <if test="terminalType!=null">and terminal_type =#{terminalType}</if>
-      <if test="isTerminalOnline!=null">and is_terminal_online=#{isTerminalOnline}</if>
-      <if test="floorId!=null">and floor_id=#{floorId}</if>
-    </where>
-  </select>
+    <!--以下为自定义部分-->
+    <select id="getBizTerminalList" resultMap="ExtensionResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM biz_terminal
+        JOIN biz_floor USING (floor_id)
+        <where>
+            is_deleted=1
+            <if test="terminalName!=null">and terminal_name like concat('%',#{terminalName},'%')</if>
+            <if test="terminalNumber!=null">and terminal_number like concat('%',#{terminalNumber},'%')</if>
+            <if test="terminalType!=null">and terminal_type =#{terminalType}</if>
+            <if test="isTerminalOnline!=null">and is_terminal_online=#{isTerminalOnline}</if>
+            <if test="floorId!=null">and floor_id=#{floorId}</if>
+        </where>
+    </select>
 
+    <resultMap id="ExtensionResultMap" type="com.whxm.harbor.bean.BizTerminal" extends="BaseResultMap">
+        <result column="floor_name" property="floorName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <delete id="delScreensaverTerminalRelation">
+        DELETE FROM screensaver_published_terminal_relation
+        WHERE terminal_id=#{terminalId}
+    </delete>
 </mapper>
