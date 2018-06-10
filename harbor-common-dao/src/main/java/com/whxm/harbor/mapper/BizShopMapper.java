@@ -24,5 +24,5 @@ public interface BizShopMapper {
 
     int updateByPrimaryKey(BizShop record);
 
-    List<BizShop> getBizShopList();
+    List<BizShop> getBizShopList(BizShop condition);
 }

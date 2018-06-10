@@ -1,7 +1,10 @@
 package com.whxm.harbor.screensaver.material.service.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.whxm.harbor.bean.BizScreensaverMaterial;
+import com.whxm.harbor.common.bean.PageQO;
+import com.whxm.harbor.common.bean.PageVO;
 import com.whxm.harbor.mapper.BizScreensaverMaterialMapper;
 import com.whxm.harbor.screensaver.material.service.ScreensaverMaterialService;
 import com.whxm.harbor.common.bean.Result;
@@ -44,20 +47,26 @@ public class ScreensaverMaterialServiceImpl implements ScreensaverMaterialServic
     }
 
     @Override
-    public List<BizScreensaverMaterial> getBizScreensaverMaterialList() {
+    public PageVO<BizScreensaverMaterial> getBizScreensaverMaterialList(PageQO<BizScreensaverMaterial> pageQO) {
 
-        List<BizScreensaverMaterial> screensaverMaterialList = null;
+        PageVO<BizScreensaverMaterial> pageVO = null;
         try {
-            PageHelper.startPage(0, 1);
+            Page page = PageHelper.startPage(pageQO.getPageNum(), pageQO.getPageSize());
 
-            screensaverMaterialList = bizScreensaverMaterialMapper.getBizScreensaverMaterialList();
+            pageVO = new PageVO<>(pageQO);
+
+            pageVO.setList(bizScreensaverMaterialMapper.getBizScreensaverMaterialList(pageQO.getCondition()));
+
+            pageVO.setTotal(page.getTotal());
+
         } catch (Exception e) {
+
             logger.error("屏保素材列表 获取报错", e);
 
             throw new RuntimeException();
         }
 
-        return screensaverMaterialList;
+        return pageVO;
     }
 
     @Override

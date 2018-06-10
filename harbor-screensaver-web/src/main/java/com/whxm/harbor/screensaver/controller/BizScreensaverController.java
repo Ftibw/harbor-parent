@@ -1,6 +1,8 @@
 package com.whxm.harbor.screensaver.controller;
 
 import com.whxm.harbor.bean.BizScreensaver;
+import com.whxm.harbor.common.bean.PageQO;
+import com.whxm.harbor.common.bean.PageVO;
 import com.whxm.harbor.common.bean.Result;
 import com.whxm.harbor.screensaver.service.ScreensaverService;
 import io.swagger.annotations.Api;
@@ -27,16 +29,18 @@ public class BizScreensaverController {
 
     @ApiOperation("获取屏保列表")
     @GetMapping("/bizScreensavers")
-    public Result getBizActivities() {
+    public Result getBizActivities(PageQO<BizScreensaver> pageQO) {
 
         Result ret = null;
-        try {
-            List<BizScreensaver> bizScreensaverList = screensaverService.getBizScreensaverList();
 
-            ret = new Result(HttpStatus.OK.value(), "OK", bizScreensaverList);
+        try {
+            PageVO<BizScreensaver> pageVO= screensaverService.getBizScreensaverList(pageQO);
+
+            ret = new Result( pageVO);
 
         } catch (Exception e) {
             logger.error("屏保列表 获取报错", e);
+
             ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保列表 获取报错", null);
         }
 
@@ -54,11 +58,11 @@ public class BizScreensaverController {
         try {
             screensaver = screensaverService.getBizScreensaver(screensaverId);
 
-            ret = new Result(200, "ok", screensaver);
+            ret = new Result(screensaver);
 
         } catch (Exception e) {
             logger.error("屏保数据 获取报错", e);
-            ret = new Result(500, "error", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "error", null);
         }
 
         return ret;
@@ -67,9 +71,18 @@ public class BizScreensaverController {
     @ApiOperation("修改屏保")
     @PutMapping("/bizScreensaver")
     public Result updateBizScreensaver(@RequestBody BizScreensaver bizScreensaver) {
-        Result result = screensaverService.updateBizScreensaver(bizScreensaver);
 
-        return result;
+
+        Result ret = null;
+        try {
+            ret = screensaverService.updateBizScreensaver(bizScreensaver);
+        } catch (Exception e) {
+            logger.error("屏保数据 修改报错",e);
+
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保数据 修改报错", null);
+        }
+
+        return ret;
     }
 
     @ApiOperation("删除屏保")
@@ -78,9 +91,17 @@ public class BizScreensaverController {
             @ApiParam(name = "ID", value = "屏保的ID", required = true)
             @PathVariable("ID") Integer bizScreensaverId
     ) {
-        Result result = screensaverService.deleteBizScreensaver(bizScreensaverId);
+        Result ret = null;
 
-        return result;
+        try {
+            ret = screensaverService.deleteBizScreensaver(bizScreensaverId);
+        } catch (Exception e) {
+            logger.error("屏保 删除报错", e);
+
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保 删除报错", null);
+        }
+
+        return ret;
     }
 
     @ApiOperation("添加屏保")

@@ -1,7 +1,10 @@
 package com.whxm.harbor.shop.service.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.whxm.harbor.bean.BizShop;
+import com.whxm.harbor.common.bean.PageQO;
+import com.whxm.harbor.common.bean.PageVO;
 import com.whxm.harbor.common.bean.Result;
 import com.whxm.harbor.mapper.BizShopMapper;
 import com.whxm.harbor.shop.service.ShopService;
@@ -10,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -45,13 +47,18 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public List<BizShop> getBizShopList() {
+    public PageVO<BizShop> getBizShopList(PageQO<BizShop> pageQO) {
 
-        PageHelper.startPage(0, 1);
+        PageVO<BizShop> pageVO = null;
 
-        List<BizShop> shopList = null;
         try {
-            shopList = bizShopMapper.getBizShopList();
+            Page page = PageHelper.startPage(pageQO.getPageNum(), pageQO.getPageSize());
+
+            pageVO = new PageVO<>(pageQO);
+
+            pageVO.setList(bizShopMapper.getBizShopList(pageQO.getCondition()));
+
+            pageVO.setTotal(page.getTotal());
 
             logger.info("商铺列表 获取成功");
 
@@ -62,7 +69,7 @@ public class ShopServiceImpl implements ShopService {
             throw new RuntimeException();
         }
 
-        return shopList;
+        return pageVO;
     }
 
     @Override

@@ -17,5 +17,5 @@ public interface BizFloorMapper {
 
     int updateByPrimaryKey(BizFloor record);
 
-    List<BizFloor> getBizFloorList();
+    List<BizFloor> getBizFloorList(BizFloor condition);
 }

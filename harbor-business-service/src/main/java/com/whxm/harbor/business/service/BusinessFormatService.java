@@ -2,9 +2,9 @@ package com.whxm.harbor.business.service;
 
 
 import com.whxm.harbor.bean.BizFormat;
+import com.whxm.harbor.common.bean.PageQO;
+import com.whxm.harbor.common.bean.PageVO;
 import com.whxm.harbor.common.bean.Result;
-
-import java.util.List;
 
 /**
  * 业态服务
@@ -22,8 +22,9 @@ public interface BusinessFormatService {
      * 获取业态集合
      *
      * @return list
+     * @param pageQO
      */
-    List<BizFormat> getBizFormatList();
+    PageVO<BizFormat> getBizFormatList(PageQO<BizFormat> pageQO);
 
     /**
      * 根据ID删除一个业态数据

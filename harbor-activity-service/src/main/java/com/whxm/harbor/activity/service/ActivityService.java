@@ -1,9 +1,9 @@
 package com.whxm.harbor.activity.service;
 
 import com.whxm.harbor.bean.BizActivity;
+import com.whxm.harbor.common.bean.PageQO;
+import com.whxm.harbor.common.bean.PageVO;
 import com.whxm.harbor.common.bean.Result;
-
-import java.util.List;
 
 /**
  * 活动服务
@@ -21,8 +21,9 @@ public interface ActivityService {
      * 获取活动列表
      *
      * @return list
+     * @param pageQO
      */
-    List<BizActivity> getBizActivityList();
+    PageVO<BizActivity> getBizActivityList(PageQO<BizActivity> pageQO);
 
     /**
      * 根据ID删除活动

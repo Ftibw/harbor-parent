@@ -17,5 +17,5 @@ public interface BizFormatMapper {
 
     int updateByPrimaryKey(BizFormat record);
 
-    List<BizFormat> getBizFormatList();
+    List<BizFormat> getBizFormatList(BizFormat condition);
 }

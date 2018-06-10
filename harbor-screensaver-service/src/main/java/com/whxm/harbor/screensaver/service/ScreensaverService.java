@@ -2,9 +2,9 @@ package com.whxm.harbor.screensaver.service;
 
 
 import com.whxm.harbor.bean.BizScreensaver;
+import com.whxm.harbor.common.bean.PageQO;
+import com.whxm.harbor.common.bean.PageVO;
 import com.whxm.harbor.common.bean.Result;
-
-import java.util.List;
 
 public interface ScreensaverService {
     /**
@@ -19,8 +19,9 @@ public interface ScreensaverService {
      * 获取屏保列表
      *
      * @return list
+     * @param pageQO
      */
-    List<BizScreensaver> getBizScreensaverList();
+    PageVO<BizScreensaver> getBizScreensaverList(PageQO<BizScreensaver> pageQO);
 
     /**
      * 根据ID删除屏保

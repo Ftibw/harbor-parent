@@ -1,10 +1,9 @@
 package com.whxm.harbor.floor.service;
 
 import com.whxm.harbor.bean.BizFloor;
+import com.whxm.harbor.common.bean.PageQO;
+import com.whxm.harbor.common.bean.PageVO;
 import com.whxm.harbor.common.bean.Result;
-
-import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * 楼层服务
@@ -22,8 +21,9 @@ public interface FloorService {
      * 获取楼层列表
      *
      * @return list
+     * @param pageQO
      */
-    List<BizFloor> getBizFloorList();
+    PageVO<BizFloor> getBizFloorList(PageQO<BizFloor> pageQO);
 
     /**
      * 根据ID删除楼层

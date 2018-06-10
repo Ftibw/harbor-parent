@@ -1,5 +1,7 @@
 package com.whxm.harbor.screensaver.material.controller;
 
+import com.whxm.harbor.common.bean.PageQO;
+import com.whxm.harbor.common.bean.PageVO;
 import com.whxm.harbor.screensaver.material.service.ScreensaverMaterialService;
 import com.whxm.harbor.bean.BizScreensaverMaterial;
 import com.whxm.harbor.common.bean.Result;
@@ -30,13 +32,14 @@ public class BizScreensaverMaterialController {
 
     @ApiOperation("获取屏保素材列表")
     @GetMapping("/bizScreensaverMaterials")
-    public Result getBizActivities() {
+    public Result getBizActivities(PageQO<BizScreensaverMaterial> pageQO) {
 
         Result ret = null;
-        try {
-            List<BizScreensaverMaterial> bizScreensaverMaterialList = screensaverMaterialService.getBizScreensaverMaterialList();
 
-            ret = new Result(HttpStatus.OK.value(), "OK", bizScreensaverMaterialList);
+        try {
+            PageVO<BizScreensaverMaterial> pageVO = screensaverMaterialService.getBizScreensaverMaterialList(pageQO);
+
+            ret = new Result(pageVO);
 
         } catch (Exception e) {
             logger.error("屏保素材列表 获取报错", e);
@@ -94,9 +97,9 @@ public class BizScreensaverMaterialController {
             ret = screensaverMaterialService.addBizScreensaverMaterial(bizScreensaverMaterial);
 
         } catch (Exception e) {
-            logger.error("屏保素材 添加报错",e);
+            logger.error("屏保素材 添加报错", e);
 
-            ret=new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(),"屏保素材 添加报错",null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保素材 添加报错", null);
         }
         return ret;
     }
@@ -119,7 +122,7 @@ public class BizScreensaverMaterialController {
                 map.put("screensaverMaterialImgPath", href);
                 map.put("screensaverMaterialImgName", originName);
                 map.put("screensaverMaterialSize", file.getSize());
-                map.put("imgNewName",href.replaceAll("^.*\\\\(.*)\\..*$", "$1"));
+                map.put("imgNewName", href.replaceAll("^.*\\\\(.*)\\..*$", "$1"));
 
                 return new Result(HttpStatus.OK.value(), "文件" + originName + "上传成功", map);
 

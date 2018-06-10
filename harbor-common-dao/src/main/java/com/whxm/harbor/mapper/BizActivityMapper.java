@@ -17,5 +17,5 @@ public interface BizActivityMapper {
 
     int updateByPrimaryKey(BizActivity record);
 
-    List<BizActivity> getBizActivityList();
+    List<BizActivity> getBizActivityList(BizActivity condition);
 }

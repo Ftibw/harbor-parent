@@ -2,6 +2,8 @@ package com.whxm.harbor.business.controller;
 
 import com.whxm.harbor.bean.BizFormat;
 import com.whxm.harbor.business.service.BusinessFormatService;
+import com.whxm.harbor.common.bean.PageQO;
+import com.whxm.harbor.common.bean.PageVO;
 import com.whxm.harbor.common.bean.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,12 +26,12 @@ public class BusinessFormatController {
 
     @ApiOperation("获取业态列表")
     @GetMapping("/bizFormats")
-    public Result getBizFormats() {
+    public Result getBizFormats(PageQO<BizFormat> pageQO) {
         Result ret = null;
 
-        List<BizFormat> bizFormatList = businessFormatService.getBizFormatList();
+        PageVO<BizFormat> pageVO = businessFormatService.getBizFormatList(pageQO);
 
-        ret = new Result(bizFormatList);
+        ret = new Result(pageVO);
 
         return ret;
     }

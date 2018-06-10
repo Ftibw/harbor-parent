@@ -1,8 +1,11 @@
 package com.whxm.harbor.business.service.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.whxm.harbor.bean.BizFormat;
 import com.whxm.harbor.business.service.BusinessFormatService;
+import com.whxm.harbor.common.bean.PageQO;
+import com.whxm.harbor.common.bean.PageVO;
 import com.whxm.harbor.common.bean.Result;
 import com.whxm.harbor.mapper.BizFormatMapper;
 import org.slf4j.Logger;
@@ -40,13 +43,18 @@ public class BusinessFormatServiceImpl implements BusinessFormatService {
         return bizFormat;
     }
 
-    public List<BizFormat> getBizFormatList() {
+    public PageVO<BizFormat> getBizFormatList(PageQO<BizFormat> pageQO) {
 
-        PageHelper.startPage(0, 1);
 
-        List<BizFormat> bizFormatList = null;
+        PageVO<BizFormat> pageVO = null;
         try {
-            bizFormatList = bizFormatMapper.getBizFormatList();
+            Page page = PageHelper.startPage(pageQO.getPageNum(), pageQO.getPageSize());
+
+            pageVO = new PageVO<>(pageQO);
+
+            pageVO.setList(bizFormatMapper.getBizFormatList(pageQO.getCondition()));
+
+            pageVO.setTotal(page.getTotal());
 
         } catch (Exception e) {
 
@@ -55,7 +63,7 @@ public class BusinessFormatServiceImpl implements BusinessFormatService {
             throw new RuntimeException();
         }
 
-        return bizFormatList;
+        return pageVO;
     }
 
     @Override
@@ -130,7 +138,7 @@ public class BusinessFormatServiceImpl implements BusinessFormatService {
 
         } catch (Exception e) {
 
-            logger.error("业态数据 添加报错",e);
+            logger.error("业态数据 添加报错", e);
 
             throw new RuntimeException();
         }

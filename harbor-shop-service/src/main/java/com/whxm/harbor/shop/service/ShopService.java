@@ -1,6 +1,8 @@
 package com.whxm.harbor.shop.service;
 
 import com.whxm.harbor.bean.BizShop;
+import com.whxm.harbor.common.bean.PageQO;
+import com.whxm.harbor.common.bean.PageVO;
 import com.whxm.harbor.common.bean.Result;
 
 import java.util.List;
@@ -22,8 +24,9 @@ public interface ShopService {
      * 获取商铺列表
      *
      * @return list
+     * @param pageQO
      */
-    List<BizShop> getBizShopList();
+    PageVO<BizShop> getBizShopList(PageQO<BizShop> pageQO);
 
     /**
      * 根据ID停用/启用商铺

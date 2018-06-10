@@ -21,7 +21,7 @@ public interface BizScreensaverMapper {
 
     int updateByPrimaryKey(BizScreensaver record);
 
-    List<BizScreensaver> getBizScreensaverList();
+    List<BizScreensaver> getBizScreensaverList(BizScreensaver condition);
 
     int insertScreensaverMaterials(
             @Param("screensaverId") Integer screensaverId,

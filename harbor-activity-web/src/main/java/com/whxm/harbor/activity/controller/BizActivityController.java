@@ -2,6 +2,8 @@ package com.whxm.harbor.activity.controller;
 
 import com.whxm.harbor.activity.service.ActivityService;
 import com.whxm.harbor.bean.BizActivity;
+import com.whxm.harbor.common.bean.PageQO;
+import com.whxm.harbor.common.bean.PageVO;
 import com.whxm.harbor.common.bean.Result;
 import com.whxm.harbor.common.utils.FileUtils;
 import com.whxm.harbor.common.utils.StringUtils;
@@ -32,11 +34,20 @@ public class BizActivityController {
 
     @ApiOperation("获取活动列表")
     @GetMapping("/bizActivities")
-    public Result getBizActivities() {
+    public Result getBizActivities(PageQO<BizActivity> pageQO) {
+        Result ret = null;
 
-        List<BizActivity> bizActivityList = activityService.getBizActivityList();
+        PageVO<BizActivity> pageVO = null;
 
-        Result ret = new Result(HttpStatus.OK.value(), "OK", bizActivityList);
+        try {
+            pageVO = activityService.getBizActivityList(pageQO);
+
+            ret = new Result(pageVO);
+
+        } catch (Exception e) {
+
+            logger.error("活动列表 获取报错", e);
+        }
 
         return ret;
     }

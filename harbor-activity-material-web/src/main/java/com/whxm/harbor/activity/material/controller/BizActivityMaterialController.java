@@ -2,6 +2,8 @@ package com.whxm.harbor.activity.material.controller;
 
 import com.whxm.harbor.activity.material.service.ActivityMaterialService;
 import com.whxm.harbor.bean.BizActivityMaterial;
+import com.whxm.harbor.common.bean.PageQO;
+import com.whxm.harbor.common.bean.PageVO;
 import com.whxm.harbor.common.bean.Result;
 import com.whxm.harbor.common.utils.FileUtils;
 import io.swagger.annotations.Api;
@@ -30,16 +32,18 @@ public class BizActivityMaterialController {
 
     @ApiOperation("获取活动素材列表")
     @GetMapping("/bizActivityMaterials")
-    public Result getBizActivities() {
+    public Result getBizActivities(PageQO<BizActivityMaterial> pageQO) {
 
         Result ret = null;
+        PageVO<BizActivityMaterial> pageVO = null;
         try {
-            List<BizActivityMaterial> bizActivityMaterialList = activityMaterialService.getBizActivityMaterialList();
+            pageVO = activityMaterialService.getBizActivityMaterialList(pageQO);
 
-            ret = new Result(HttpStatus.OK.value(), "OK", bizActivityMaterialList);
+            ret = new Result(pageVO);
 
         } catch (Exception e) {
             logger.error("活动素材列表 获取报错", e);
+
             ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "活动素材列表 获取报错", null);
         }
 
@@ -108,7 +112,7 @@ public class BizActivityMaterialController {
                 map.put("activityMaterialImgPath", href);
                 map.put("activityMaterialImgName", originName);
                 map.put("activityMaterialSize", file.getSize());
-                map.put("imgNewName",href.replaceAll("^.*\\\\(.*)\\..*$", "$1"));
+                map.put("imgNewName", href.replaceAll("^.*\\\\(.*)\\..*$", "$1"));
 
                 return new Result(HttpStatus.OK.value(), "文件" + originName + "上传成功", map);
 

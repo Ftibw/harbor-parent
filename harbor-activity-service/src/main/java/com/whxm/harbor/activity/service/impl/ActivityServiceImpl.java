@@ -1,8 +1,11 @@
 package com.whxm.harbor.activity.service.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.whxm.harbor.activity.service.ActivityService;
 import com.whxm.harbor.bean.BizActivity;
+import com.whxm.harbor.common.bean.PageQO;
+import com.whxm.harbor.common.bean.PageVO;
 import com.whxm.harbor.common.bean.Result;
 import com.whxm.harbor.mapper.BizActivityMapper;
 import org.slf4j.Logger;
@@ -44,20 +47,25 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public List<BizActivity> getBizActivityList() {
+    public PageVO<BizActivity> getBizActivityList(PageQO<BizActivity> pageQO) {
+        PageVO<BizActivity> pageVO = null;
 
-        List<BizActivity> activityList = null;
         try {
-            PageHelper.startPage(0, 1);
+            Page page = PageHelper.startPage(pageQO.getPageNum(), pageQO.getPageSize());
 
-            activityList = bizActivityMapper.getBizActivityList();
+            pageVO = new PageVO<>(pageQO);
+
+            pageVO.setList(bizActivityMapper.getBizActivityList(pageQO.getCondition()));
+
+            pageVO.setTotal(page.getTotal());
+
         } catch (Exception e) {
             logger.error("活动列表 获取报错", e);
 
             throw new RuntimeException();
         }
 
-        return activityList;
+        return pageVO;
     }
 
     @Override

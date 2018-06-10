@@ -1,7 +1,10 @@
 package com.whxm.harbor.screensaver.service.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.whxm.harbor.bean.BizScreensaver;
+import com.whxm.harbor.common.bean.PageQO;
+import com.whxm.harbor.common.bean.PageVO;
 import com.whxm.harbor.common.bean.Result;
 import com.whxm.harbor.mapper.BizScreensaverMapper;
 import com.whxm.harbor.screensaver.service.ScreensaverService;
@@ -45,20 +48,25 @@ public class ScreensaverServiceImpl implements ScreensaverService {
     }
 
     @Override
-    public List<BizScreensaver> getBizScreensaverList() {
+    public PageVO<BizScreensaver> getBizScreensaverList(PageQO<BizScreensaver> pageQO) {
 
-        List<BizScreensaver> screensaverList = null;
+        PageVO<BizScreensaver> pageVO = null;
+
         try {
-            PageHelper.startPage(0, 1);
+            Page page = PageHelper.startPage(pageQO.getPageNum(), pageQO.getPageSize());
 
-            screensaverList = bizScreensaverMapper.getBizScreensaverList();
+            pageVO = new PageVO<>(pageQO);
+
+            pageVO.setList(bizScreensaverMapper.getBizScreensaverList(pageQO.getCondition()));
+
+            pageVO.setTotal(page.getTotal());
         } catch (Exception e) {
             logger.error("屏保列表 获取报错", e);
 
             throw new RuntimeException();
         }
 
-        return screensaverList;
+        return pageVO;
     }
 
     @Override
@@ -66,6 +74,7 @@ public class ScreensaverServiceImpl implements ScreensaverService {
         Result ret = null;
 
         try {
+            //删除屏保,先删屏保-屏保素材关系表,再删主表
             int affectRow1 = bizScreensaverMapper.delScreensaverMaterialRelation(bizScreensaverId);
 
             int affectRow2 = bizScreensaverMapper.deleteByPrimaryKey(bizScreensaverId);
@@ -134,6 +143,7 @@ public class ScreensaverServiceImpl implements ScreensaverService {
         Result ret = null;
 
         try {
+            //发布屏保,就是向屏保-发布的终端关系表中插入数据
             int affectRow = bizScreensaverMapper.insertScreensaverPublishedTerminal(screensaverId, terminalIds, new Date());
 
             ret = new Result("成功发布终端" + affectRow + "个");

@@ -2,9 +2,9 @@ package com.whxm.harbor.screensaver.material.service;
 
 
 import com.whxm.harbor.bean.BizScreensaverMaterial;
+import com.whxm.harbor.common.bean.PageQO;
+import com.whxm.harbor.common.bean.PageVO;
 import com.whxm.harbor.common.bean.Result;
-
-import java.util.List;
 
 public interface ScreensaverMaterialService {
     /**
@@ -19,8 +19,9 @@ public interface ScreensaverMaterialService {
      * 获取屏保素材列表
      *
      * @return list
+     * @param pageQO
      */
-    List<BizScreensaverMaterial> getBizScreensaverMaterialList();
+    PageVO<BizScreensaverMaterial> getBizScreensaverMaterialList(PageQO<BizScreensaverMaterial> pageQO);
 
     /**
      * 根据ID删除屏保素材

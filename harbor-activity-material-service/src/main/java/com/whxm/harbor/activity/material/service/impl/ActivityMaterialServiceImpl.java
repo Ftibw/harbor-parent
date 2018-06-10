@@ -1,8 +1,11 @@
 package com.whxm.harbor.activity.material.service.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.whxm.harbor.activity.material.service.ActivityMaterialService;
 import com.whxm.harbor.bean.BizActivityMaterial;
+import com.whxm.harbor.common.bean.PageQO;
+import com.whxm.harbor.common.bean.PageVO;
 import com.whxm.harbor.common.bean.Result;
 import com.whxm.harbor.mapper.BizActivityMaterialMapper;
 import org.slf4j.Logger;
@@ -44,20 +47,25 @@ public class ActivityMaterialServiceImpl implements ActivityMaterialService {
     }
 
     @Override
-    public List<BizActivityMaterial> getBizActivityMaterialList() {
+    public PageVO<BizActivityMaterial> getBizActivityMaterialList(PageQO<BizActivityMaterial> pageQO) {
 
-        List<BizActivityMaterial> activityMaterialList = null;
+        PageVO<BizActivityMaterial> pageVO = null;
         try {
-            PageHelper.startPage(0, 1);
+            Page page = PageHelper.startPage(pageQO.getPageNum(), pageQO.getPageSize());
 
-            activityMaterialList = bizActivityMaterialMapper.getBizActivityMaterialList();
+            pageVO = new PageVO<>(pageQO);
+
+            pageVO.setList(bizActivityMaterialMapper.getBizActivityMaterialList());
+
+            pageVO.setTotal(page.getTotal());
+
         } catch (Exception e) {
             logger.error("活动素材列表 获取报错", e);
 
             throw new RuntimeException();
         }
 
-        return activityMaterialList;
+        return pageVO;
     }
 
     @Override

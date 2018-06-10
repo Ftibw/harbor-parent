@@ -1,6 +1,9 @@
 package com.whxm.harbor.shop.controller;
 
+import com.github.pagehelper.Page;
 import com.whxm.harbor.bean.BizShop;
+import com.whxm.harbor.common.bean.PageQO;
+import com.whxm.harbor.common.bean.PageVO;
 import com.whxm.harbor.common.bean.Result;
 import com.whxm.harbor.common.utils.FileUtils;
 import com.whxm.harbor.shop.service.ShopService;
@@ -33,14 +36,13 @@ public class BizShopController {
 
     @ApiOperation("获取商铺列表")
     @GetMapping("/bizShops")
-    public Result getBizShops() {
+    public Result getBizShops(PageQO<BizShop> pageQO) {
         Result ret = null;
 
-        List<BizShop> bizShopList = null;
         try {
-            bizShopList = shopService.getBizShopList();
+            PageVO<BizShop> pageVO = shopService.getBizShopList(pageQO);
 
-            ret = new Result(bizShopList);
+            ret = new Result(pageVO);
 
         } catch (Exception e) {
 
