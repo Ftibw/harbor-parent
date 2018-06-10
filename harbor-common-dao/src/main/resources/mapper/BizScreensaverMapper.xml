@@ -26,7 +26,7 @@
        add_screensaver_time
       )
     values (#{screensaverId,jdbcType=INTEGER}, #{screensaverProgramName,jdbcType=VARCHAR}, 
-       current_date()
+       #{addScreensaverTime,jdbcType=TIMESTAMP}
       )
   </insert>
     <insert id="insertSelective" parameterType="com.whxm.harbor.bean.BizScreensaver">
@@ -74,9 +74,36 @@
   </update>
 
     <!--以下是自定义部分-->
+    <select id="selectWithScreensaverMaterialAndPublishedTerminalAmount" resultMap="ExtensionResultMap">
+    SELECT
+        bs.screensaver_id,
+        screensaver_program_name,
+        bs.add_screensaver_time,
+        tmp1.screensaver_material_amount ,
+        tmp2.screensaver_published_amount
+    FROM
+        biz_screensaver bs
+        JOIN (
+              SELECT
+              count(*) screensaver_material_amount,
+              screensaver_id
+              FROM screensaver_material_relation
+              GROUP BY screensaver_id
+          ) tmp1 USING ( screensaver_id )
+        LEFT JOIN (
+             SELECT
+             count(*) screensaver_published_amount,
+             screensaver_id
+             FROM screensaver_published_terminal_relation
+             GROUP BY screensaver_id
+         ) tmp2 using ( screensaver_id )
+    WHERE screensaver_id=#{screensaverId}
+    </select>
+
     <select id="getBizScreensaverList" resultMap="ExtensionResultMap">
     SELECT
         bs.screensaver_id,
+        screensaver_program_name,
         bs.add_screensaver_time,
         tmp1.screensaver_material_amount ,
         tmp2.screensaver_published_amount
@@ -110,14 +137,17 @@
         </foreach>
     </insert>
 
-    <!--<select id="selectWithAmount"-->
+    <!--删除语句要额外注意-->
+    <delete id="delScreensaverMaterialRelation">
+        DELETE FROM screensaver_material_relation WHERE screensaver_id=#{screensaverId}
+    </delete>
 
+    <!--屏保发布-->
     <insert id="insertScreensaverPublishedTerminal">
         insert into screensaver_published_terminal_relation (screensaver_id,terminal_id, screensaver_publish_time)
-        values (
+        values
         <foreach collection="terminalIds" item="item" separator=",">
-            (#{screensaverId},#{item},current_date())
+            (#{screensaverId},#{item},#{screensaverPublishTime})
         </foreach>
-        );
     </insert>
 </mapper>

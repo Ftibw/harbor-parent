@@ -3,6 +3,7 @@ package com.whxm.harbor.mapper;
 import com.whxm.harbor.bean.BizScreensaver;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface BizScreensaverMapper {
@@ -11,6 +12,8 @@ public interface BizScreensaverMapper {
     int insert(BizScreensaver record);
 
     int insertSelective(BizScreensaver record);
+
+    BizScreensaver selectWithScreensaverMaterialAndPublishedTerminalAmount(Integer screensaverId);
 
     BizScreensaver selectByPrimaryKey(Integer screensaverId);
 
@@ -28,6 +31,9 @@ public interface BizScreensaverMapper {
 
     int insertScreensaverPublishedTerminal(
             @Param("screensaverId") Integer screensaverId,
-            @Param("terminalIds") String[] terminalIds
+            @Param("terminalIds") String[] terminalIds,
+            @Param("screensaverPublishTime") Date screensaverPublishTime
     );
+
+    int delScreensaverMaterialRelation(@Param("screensaverId") Integer bizScreensaverId);
 }

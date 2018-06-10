@@ -106,7 +106,7 @@ public class BizScreensaverController {
             ret = screensaverService.publishScreensaver(param.screensaverId, param.terminalIds);
 
         } catch (Exception e) {
-            logger.error("屏保 添加报错", e);
+            logger.error("ID为{}的屏保 发布报错", param.screensaverId);
 
             ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保 发布报错", null);
         }
