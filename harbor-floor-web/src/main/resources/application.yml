@@ -1,0 +1,9 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: business-floor-web
+
+# swagger2
+swagger2.package: com.whxm.harbor.floor.controller

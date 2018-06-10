@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whxm.harbor.mapper.BizActivityMaterialMapper" >
+  <resultMap id="BaseResultMap" type="com.whxm.harbor.bean.BizActivityMaterial" >
+    <id column="activity_material_id" property="activityMaterialId" jdbcType="INTEGER" />
+    <result column="activity_material_img_path" property="activityMaterialImgPath" jdbcType="VARCHAR" />
+    <result column="activity_material_img_name" property="activityMaterialImgName" jdbcType="VARCHAR" />
+    <result column="activity_material_name" property="activityMaterialName" jdbcType="VARCHAR" />
+    <result column="activity_material_size" property="activityMaterialSize" jdbcType="BIGINT" />
+    <result column="activity_id" property="activityId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    activity_material_id, activity_material_img_path, activity_material_img_name, activity_material_name, 
+    activity_material_size, activity_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from biz_activity_material
+    where activity_material_id = #{activityMaterialId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from biz_activity_material
+    where activity_material_id = #{activityMaterialId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.whxm.harbor.bean.BizActivityMaterial" >
+    insert into biz_activity_material (activity_material_id, activity_material_img_path, 
+      activity_material_img_name, activity_material_name, 
+      activity_material_size, activity_id)
+    values (#{activityMaterialId,jdbcType=INTEGER}, #{activityMaterialImgPath,jdbcType=VARCHAR}, 
+      #{activityMaterialImgName,jdbcType=VARCHAR}, #{activityMaterialName,jdbcType=VARCHAR}, 
+      #{activityMaterialSize,jdbcType=BIGINT}, #{activityId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.whxm.harbor.bean.BizActivityMaterial" >
+    insert into biz_activity_material
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="activityMaterialId != null" >
+        activity_material_id,
+      </if>
+      <if test="activityMaterialImgPath != null" >
+        activity_material_img_path,
+      </if>
+      <if test="activityMaterialImgName != null" >
+        activity_material_img_name,
+      </if>
+      <if test="activityMaterialName != null" >
+        activity_material_name,
+      </if>
+      <if test="activityMaterialSize != null" >
+        activity_material_size,
+      </if>
+      <if test="activityId != null" >
+        activity_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="activityMaterialId != null" >
+        #{activityMaterialId,jdbcType=INTEGER},
+      </if>
+      <if test="activityMaterialImgPath != null" >
+        #{activityMaterialImgPath,jdbcType=VARCHAR},
+      </if>
+      <if test="activityMaterialImgName != null" >
+        #{activityMaterialImgName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityMaterialName != null" >
+        #{activityMaterialName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityMaterialSize != null" >
+        #{activityMaterialSize,jdbcType=BIGINT},
+      </if>
+      <if test="activityId != null" >
+        #{activityId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whxm.harbor.bean.BizActivityMaterial" >
+    update biz_activity_material
+    <set >
+      <if test="activityMaterialImgPath != null" >
+        activity_material_img_path = #{activityMaterialImgPath,jdbcType=VARCHAR},
+      </if>
+      <if test="activityMaterialImgName != null" >
+        activity_material_img_name = #{activityMaterialImgName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityMaterialName != null" >
+        activity_material_name = #{activityMaterialName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityMaterialSize != null" >
+        activity_material_size = #{activityMaterialSize,jdbcType=BIGINT},
+      </if>
+      <if test="activityId != null" >
+        activity_id = #{activityId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where activity_material_id = #{activityMaterialId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whxm.harbor.bean.BizActivityMaterial" >
+    update biz_activity_material
+    set activity_material_img_path = #{activityMaterialImgPath,jdbcType=VARCHAR},
+      activity_material_img_name = #{activityMaterialImgName,jdbcType=VARCHAR},
+      activity_material_name = #{activityMaterialName,jdbcType=VARCHAR},
+      activity_material_size = #{activityMaterialSize,jdbcType=BIGINT},
+      activity_id = #{activityId,jdbcType=INTEGER}
+    where activity_material_id = #{activityMaterialId,jdbcType=INTEGER}
+  </update>
+
+  <!--以下是自定义部分-->
+  <select id="getBizActivityMaterialList" resultMap="ExtensionResultMap">
+    select bam.*,ba.activity_type from biz_activity_material bam
+    JOIN biz_activity ba USING (activity_id)
+  </select>
+
+  <resultMap id="ExtensionResultMap" type="com.whxm.harbor.bean.BizActivityMaterial" extends="BaseResultMap">
+    <result column="activity_type" property="activityType" jdbcType="VARCHAR"/>
+  </resultMap>
+
+  <select id="selectMaterialWithActivityType" parameterType="java.lang.Integer" resultMap="ExtensionResultMap">
+    select bam.*,ba.activity_type from biz_activity_material bam
+    JOIN biz_activity ba USING (activity_id)
+    WHERE bam.activity_material_id=#{activityMaterialId,jdbcType=INTEGER}
+  </select>
+</mapper>

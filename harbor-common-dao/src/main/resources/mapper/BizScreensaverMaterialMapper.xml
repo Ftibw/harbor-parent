@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whxm.harbor.mapper.BizScreensaverMaterialMapper">
+    <resultMap id="BaseResultMap" type="com.whxm.harbor.bean.BizScreensaverMaterial">
+        <id column="screensaver_material_id" property="screensaverMaterialId" jdbcType="INTEGER"/>
+        <result column="screensaver_material_img_path" property="screensaverMaterialImgPath" jdbcType="VARCHAR"/>
+        <result column="screensaver_material_size" property="screensaverMaterialSize" jdbcType="BIGINT"/>
+        <result column="screensaver_material_name" property="screensaverMaterialName" jdbcType="VARCHAR"/>
+        <result column="screensaver_material_type" property="screensaverMaterialType" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    screensaver_material_id, screensaver_material_img_path, screensaver_material_size, 
+    screensaver_material_name, screensaver_material_type
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from biz_screensaver_material
+        where screensaver_material_id = #{screensaverMaterialId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from biz_screensaver_material
+    where screensaver_material_id = #{screensaverMaterialId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.whxm.harbor.bean.BizScreensaverMaterial">
+    insert into biz_screensaver_material (screensaver_material_id, screensaver_material_img_path, 
+      screensaver_material_size, screensaver_material_name, 
+      screensaver_material_type)
+    values (#{screensaverMaterialId,jdbcType=INTEGER}, #{screensaverMaterialImgPath,jdbcType=VARCHAR}, 
+      #{screensaverMaterialSize,jdbcType=BIGINT}, #{screensaverMaterialName,jdbcType=VARCHAR}, 
+      #{screensaverMaterialType,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.whxm.harbor.bean.BizScreensaverMaterial">
+        insert into biz_screensaver_material
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="screensaverMaterialId != null">
+                screensaver_material_id,
+            </if>
+            <if test="screensaverMaterialImgPath != null">
+                screensaver_material_img_path,
+            </if>
+            <if test="screensaverMaterialSize != null">
+                screensaver_material_size,
+            </if>
+            <if test="screensaverMaterialName != null">
+                screensaver_material_name,
+            </if>
+            <if test="screensaverMaterialType != null">
+                screensaver_material_type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="screensaverMaterialId != null">
+                #{screensaverMaterialId,jdbcType=INTEGER},
+            </if>
+            <if test="screensaverMaterialImgPath != null">
+                #{screensaverMaterialImgPath,jdbcType=VARCHAR},
+            </if>
+            <if test="screensaverMaterialSize != null">
+                #{screensaverMaterialSize,jdbcType=BIGINT},
+            </if>
+            <if test="screensaverMaterialName != null">
+                #{screensaverMaterialName,jdbcType=VARCHAR},
+            </if>
+            <if test="screensaverMaterialType != null">
+                #{screensaverMaterialType,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.whxm.harbor.bean.BizScreensaverMaterial">
+        update biz_screensaver_material
+        <set>
+            <if test="screensaverMaterialImgPath != null">
+                screensaver_material_img_path = #{screensaverMaterialImgPath,jdbcType=VARCHAR},
+            </if>
+            <if test="screensaverMaterialSize != null">
+                screensaver_material_size = #{screensaverMaterialSize,jdbcType=BIGINT},
+            </if>
+            <if test="screensaverMaterialName != null">
+                screensaver_material_name = #{screensaverMaterialName,jdbcType=VARCHAR},
+            </if>
+            <if test="screensaverMaterialType != null">
+                screensaver_material_type = #{screensaverMaterialType,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where screensaver_material_id = #{screensaverMaterialId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.whxm.harbor.bean.BizScreensaverMaterial">
+    update biz_screensaver_material
+    set screensaver_material_img_path = #{screensaverMaterialImgPath,jdbcType=VARCHAR},
+      screensaver_material_size = #{screensaverMaterialSize,jdbcType=BIGINT},
+      screensaver_material_name = #{screensaverMaterialName,jdbcType=VARCHAR},
+      screensaver_material_type = #{screensaverMaterialType,jdbcType=VARCHAR}
+    where screensaver_material_id = #{screensaverMaterialId,jdbcType=INTEGER}
+  </update>
+
+    <!--以下是自定义部分-->
+    <select id="getBizScreensaverMaterialList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from biz_screensaver_material
+    </select>
+</mapper>

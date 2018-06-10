@@ -1,0 +1,9 @@
+server:
+  port: 8130
+
+spring:
+  application:
+    name: business-screensaver-material-web
+
+# swagger2
+swagger2.package: com.whxm.harbor.screensaver.material.controller

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whxm.harbor.mapper.BizActivityMapper">
+    <resultMap id="BaseResultMap" type="com.whxm.harbor.bean.BizActivity">
+        <id column="activity_id" property="activityId" jdbcType="INTEGER"/>
+        <result column="activity_logo" property="activityLogo" jdbcType="VARCHAR"/>
+        <result column="activity_logo_size" property="activityLogoSize" jdbcType="BIGINT"/>
+        <result column="activity_type" property="activityType" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    activity_id, activity_logo, activity_logo_size, activity_type, is_deleted
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from biz_activity
+        where activity_id = #{activityId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from biz_activity
+    where activity_id = #{activityId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.whxm.harbor.bean.BizActivity">
+    insert into biz_activity (activity_id, activity_logo, activity_logo_size, 
+      activity_type, is_deleted)
+    values (#{activityId,jdbcType=INTEGER}, #{activityLogo,jdbcType=VARCHAR}, #{activityLogoSize,jdbcType=BIGINT}, 
+      #{activityType,jdbcType=VARCHAR}, #{isDeleted,jdbcType=INTEGER})
+  </insert>
+    <insert id="insertSelective" parameterType="com.whxm.harbor.bean.BizActivity">
+        insert into biz_activity
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="activityId != null">
+                activity_id,
+            </if>
+            <if test="activityLogo != null">
+                activity_logo,
+            </if>
+            <if test="activityLogoSize != null">
+                activity_logo_size,
+            </if>
+            <if test="activityType != null">
+                activity_type,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="activityId != null">
+                #{activityId,jdbcType=INTEGER},
+            </if>
+            <if test="activityLogo != null">
+                #{activityLogo,jdbcType=VARCHAR},
+            </if>
+            <if test="activityLogoSize != null">
+                #{activityLogoSize,jdbcType=BIGINT},
+            </if>
+            <if test="activityType != null">
+                #{activityType,jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.whxm.harbor.bean.BizActivity">
+        update biz_activity
+        <set>
+            <if test="activityLogo != null">
+                activity_logo = #{activityLogo,jdbcType=VARCHAR},
+            </if>
+            <if test="activityLogoSize != null">
+                activity_logo_size = #{activityLogoSize,jdbcType=BIGINT},
+            </if>
+            <if test="activityType != null">
+                activity_type = #{activityType,jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=INTEGER},
+            </if>
+        </set>
+        where activity_id = #{activityId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.whxm.harbor.bean.BizActivity">
+    update biz_activity
+    set activity_logo = #{activityLogo,jdbcType=VARCHAR},
+      activity_logo_size = #{activityLogoSize,jdbcType=BIGINT},
+      activity_type = #{activityType,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=INTEGER}
+    where activity_id = #{activityId,jdbcType=INTEGER}
+  </update>
+    <!--以下为自定义部分-->
+    <select id="getBizActivityList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from biz_activity where is_deleted = 1
+    </select>
+</mapper>

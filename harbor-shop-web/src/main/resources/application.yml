@@ -1,0 +1,9 @@
+server:
+  port: 8120
+
+spring:
+  application:
+    name: business-shop-web
+
+# swagger2
+swagger2.package: com.whxm.harbor.shop.controller

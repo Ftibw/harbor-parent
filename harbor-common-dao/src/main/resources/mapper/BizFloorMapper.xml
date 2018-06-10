@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whxm.harbor.mapper.BizFloorMapper">
+    <resultMap id="BaseResultMap" type="com.whxm.harbor.bean.BizFloor">
+        <id column="floor_id" property="floorId" jdbcType="INTEGER"/>
+        <result column="floor_number" property="floorNumber" jdbcType="VARCHAR"/>
+        <result column="floor_name" property="floorName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    floor_id, floor_number, floor_name
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from biz_floor
+        where floor_id = #{floorId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from biz_floor
+    where floor_id = #{floorId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.whxm.harbor.bean.BizFloor">
+    insert into biz_floor (floor_id, floor_number, floor_name
+      )
+    values (#{floorId,jdbcType=INTEGER}, #{floorNumber,jdbcType=VARCHAR}, #{floorName,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.whxm.harbor.bean.BizFloor">
+        insert into biz_floor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="floorId != null">
+                floor_id,
+            </if>
+            <if test="floorNumber != null">
+                floor_number,
+            </if>
+            <if test="floorName != null">
+                floor_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="floorId != null">
+                #{floorId,jdbcType=INTEGER},
+            </if>
+            <if test="floorNumber != null">
+                #{floorNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="floorName != null">
+                #{floorName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.whxm.harbor.bean.BizFloor">
+        update biz_floor
+        <set>
+            <if test="floorNumber != null">
+                floor_number = #{floorNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="floorName != null">
+                floor_name = #{floorName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where floor_id = #{floorId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.whxm.harbor.bean.BizFloor">
+    update biz_floor
+    set floor_number = #{floorNumber,jdbcType=VARCHAR},
+      floor_name = #{floorName,jdbcType=VARCHAR}
+    where floor_id = #{floorId,jdbcType=INTEGER}
+  </update>
+
+    <!--以下为自定义部分-->
+    <select id="getBizFloorList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from biz_floor
+    </select>
+</mapper>

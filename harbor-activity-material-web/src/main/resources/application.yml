@@ -1,0 +1,9 @@
+server:
+  port: 8110
+
+spring:
+  application:
+    name: business-activity-material-web
+
+# swagger2
+swagger2.package: com.whxm.harbor.activity.material.controller

@@ -1,0 +1,36 @@
+#spring:
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/harbor #jdbc:mysql://hostname:port/db_name
+#    driver-class-name: com.mysql.jdbc.Driver
+#    username: root
+#    password: 123456
+
+spring:
+  datasource:
+    url: jdbc:mysql://47.94.202.250:3306/harbor?useUnicode=true&characterEncoding=utf8   #47.94.202.250
+    username: root
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource #druid数据源
+    driver-class-name: com.mysql.jdbc.Driver
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+
+mybatis:
+    type-aliases-package: com.whxm.harbor.bean
+    mapper-locations: mapper/*.xml  # mapper/
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
