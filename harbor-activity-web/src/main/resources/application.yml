@@ -1,6 +1,0 @@
-spring:
-  application:
-    name: business-activity-web
-
-# swagger2
-swagger2.package: com.whxm.harbor.activity.controller
