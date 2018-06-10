@@ -36,7 +36,7 @@ public class BizShopController {
 
     @ApiOperation("获取商铺列表")
     @GetMapping("/bizShops")
-    public Result getBizShops(@RequestBody PageQO<BizShop> pageQO) {
+    public Result getBizShops(PageQO<BizShop> pageQO) {
         Result ret = null;
 
         try {

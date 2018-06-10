@@ -34,7 +34,7 @@ public class BizActivityController {
 
     @ApiOperation("获取活动列表")
     @GetMapping("/bizActivities")
-    public Result getBizActivities(@RequestBody PageQO<BizActivity> pageQO) {
+    public Result getBizActivities(PageQO<BizActivity> pageQO) {
         Result ret = null;
 
         PageVO<BizActivity> pageVO = null;

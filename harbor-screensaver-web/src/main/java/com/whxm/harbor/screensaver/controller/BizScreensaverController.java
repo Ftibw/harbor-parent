@@ -29,7 +29,7 @@ public class BizScreensaverController {
 
     @ApiOperation("获取屏保列表")
     @GetMapping("/bizScreensavers")
-    public Result getBizActivities(@RequestBody PageQO<BizScreensaver> pageQO) {
+    public Result getBizActivities(PageQO<BizScreensaver> pageQO) {
 
         Result ret = null;
 
