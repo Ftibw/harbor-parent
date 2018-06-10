@@ -19,12 +19,14 @@
     delete from biz_screensaver
     where screensaver_id = #{screensaverId,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" parameterType="com.whxm.harbor.bean.BizScreensaver">
+    <!--设置插入返回主键-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="screensaverId"
+            parameterType="com.whxm.harbor.bean.BizScreensaver">
     insert into biz_screensaver (screensaver_id, screensaver_program_name, 
        add_screensaver_time
       )
     values (#{screensaverId,jdbcType=INTEGER}, #{screensaverProgramName,jdbcType=VARCHAR}, 
-       #{addScreensaverTime,jdbcType=TIMESTAMP}
+       current_date()
       )
   </insert>
     <insert id="insertSelective" parameterType="com.whxm.harbor.bean.BizScreensaver">
@@ -100,4 +102,22 @@
         <result column="screensaver_material_amount" property="screensaverMaterialAmount" jdbcType="INTEGER"/>
         <result column="screensaver_published_amount" property="screensaverPublishedAmount" jdbcType="INTEGER"/>
     </resultMap>
+
+    <insert id="insertScreensaverMaterials">
+        insert into screensaver_material_relation (screensaver_id, screensaver_material_id) values
+        <foreach collection="screensaverMaterialIds" item="item" separator=",">
+            (#{screensaverId}, #{item})
+        </foreach>
+    </insert>
+
+    <!--<select id="selectWithAmount"-->
+
+    <insert id="insertScreensaverPublishedTerminal">
+        insert into screensaver_published_terminal_relation (screensaver_id,terminal_id, screensaver_publish_time)
+        values (
+        <foreach collection="terminalIds" item="item" separator=",">
+            (#{screensaverId},#{item},current_date())
+        </foreach>
+        );
+    </insert>
 </mapper>

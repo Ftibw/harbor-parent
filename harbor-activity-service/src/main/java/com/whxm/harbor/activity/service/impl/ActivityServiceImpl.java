@@ -31,7 +31,7 @@ public class ActivityServiceImpl implements ActivityService {
             bizActivity = bizActivityMapper.selectByPrimaryKey(bizActivityId);
 
             if (null == bizActivity) {
-                logger.error("错误活动ID", bizActivity);
+                logger.info("错误活动ID", bizActivity);
             }
         } catch (Exception e) {
 

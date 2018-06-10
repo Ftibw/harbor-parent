@@ -11,15 +11,16 @@ public interface BizShopMapper {
 
     int insert(BizShop record);
 
-    int insertShopPictures(@Param("shopId") String shopId,@Param("pictures") List<Map<String,Object>> pictures);
+    int insertShopPictures(
+            @Param("shopId") String shopId,
+            @Param("pictures") List<Map<String, Object>> pictures
+    );
 
     int insertSelective(BizShop record);
 
     BizShop selectByPrimaryKey(String shopId);
 
     int updateByPrimaryKeySelective(BizShop record);
-
-    int updateByPrimaryKeyWithBLOBs(BizShop record);
 
     int updateByPrimaryKey(BizShop record);
 

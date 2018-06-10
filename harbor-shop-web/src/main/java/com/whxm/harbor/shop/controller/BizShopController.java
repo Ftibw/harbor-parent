@@ -114,7 +114,7 @@ public class BizShopController {
             notes = "pictureList中元素为map,map有两个key," +
                     "分别必须写成shopPicturePath(商铺图片路径)和shopPictureSize(商铺图片大小)")
     @PostMapping("/bizShop")
-    public Result addBizShop(@RequestBody Param param) {
+    public Result addBizShop(@RequestBody ShopParam param) {
 
         Result ret = null;
         try {
@@ -130,14 +130,6 @@ public class BizShopController {
         return ret;
     }
 
-    //商铺+商铺图片数据封装
-    @SuppressWarnings("all")
-    private class Param {
-
-        public BizShop bizShop;
-
-        public List<Map<String, Object>> pictureList;
-    }
 
     @ApiOperation("上传商铺logo")
     @PostMapping("/logo")
@@ -197,4 +189,12 @@ public class BizShopController {
 
         return ret;
     }
+}
+
+//商铺+商铺图片数据封装
+class ShopParam {
+
+    public BizShop bizShop;
+
+    public List<Map<String, Object>> pictureList;
 }

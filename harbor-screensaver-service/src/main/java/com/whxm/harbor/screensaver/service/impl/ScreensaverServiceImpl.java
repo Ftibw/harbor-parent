@@ -102,16 +102,40 @@ public class ScreensaverServiceImpl implements ScreensaverService {
     }
 
     @Override
-    public Result addBizScreensaver(BizScreensaver bizScreensaver) {
+    public Result addBizScreensaver(BizScreensaver bizScreensaver, Integer[] screensaverMaterialIds) {
         Result ret = null;
 
         try {
-            int affectRow = bizScreensaverMapper.insert(bizScreensaver);
+            int affectRow1 = bizScreensaverMapper.insert(bizScreensaver);
 
-            ret = new Result("屏保数据添加了" + affectRow + "行");
+            System.out.println("影响了" + affectRow1 + "行,新增数据的主键为" + bizScreensaver.getScreensaverId());
+
+            int affectRow2 = bizScreensaverMapper.insertScreensaverMaterials(bizScreensaver.getScreensaverId(), screensaverMaterialIds);
+
+            ret = new Result("屏保数据添加了" + affectRow1 + "行,该屏保添加了"+affectRow2+"个素材");
+
         } catch (Exception e) {
 
             logger.error("屏保数据 添加报错", e);
+
+            throw new RuntimeException();
+        }
+
+        return ret;
+    }
+
+    @Override
+    public Result publishScreensaver(Integer screensaverId, String[] terminalIds) {
+        Result ret = null;
+
+        try {
+            int affectRow = bizScreensaverMapper.insertScreensaverPublishedTerminal(screensaverId, terminalIds);
+
+            ret=new Result("成功发布终端"+affectRow+"个");
+
+        } catch (Exception e) {
+
+            logger.error("ID为{}的屏保 发布报错", screensaverId);
 
             throw new RuntimeException();
         }

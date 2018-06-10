@@ -2,21 +2,18 @@ package com.whxm.harbor.screensaver.controller;
 
 import com.whxm.harbor.bean.BizScreensaver;
 import com.whxm.harbor.common.bean.Result;
-import com.whxm.harbor.common.utils.FileUtils;
 import com.whxm.harbor.screensaver.service.ScreensaverService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.models.auth.In;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 
 @Api(value = "API - BusinessScreensaverController", description = "屏保 Controller")
@@ -88,17 +85,46 @@ public class BizScreensaverController {
 
     @ApiOperation("添加屏保")
     @PostMapping("/bizScreensaver")
-    public Result addBizScreensaver(@RequestBody BizScreensaver bizScreensaver) {
+    public Result addBizScreensaver(@RequestBody ScreensaverParam param) {
         Result ret = null;
         try {
-            ret = screensaverService.addBizScreensaver(bizScreensaver);
+            ret = screensaverService.addBizScreensaver(param.bizScreensaver, param.screensaverMaterialIds);
 
         } catch (Exception e) {
-            logger.error("屏保 添加报错",e);
+            logger.error("屏保 添加报错", e);
 
-            ret=new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(),"屏保 添加报错",null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保 添加报错", null);
         }
         return ret;
     }
 
+    @ApiOperation("发布屏保")
+    @PostMapping("/publishedScreensaver")
+    public Result publishScreensaver(@RequestBody PublishedScreensaverParam param) {
+        Result ret = null;
+        try {
+            ret = screensaverService.publishScreensaver(param.screensaverId, param.terminalIds);
+
+        } catch (Exception e) {
+            logger.error("屏保 添加报错", e);
+
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保 发布报错", null);
+        }
+        return ret;
+    }
+
+}
+
+class ScreensaverParam {
+
+    public BizScreensaver bizScreensaver;
+
+    public Integer[] screensaverMaterialIds;
+}
+
+class PublishedScreensaverParam {
+
+    public Integer screensaverId;
+
+    public String[] terminalIds;
 }

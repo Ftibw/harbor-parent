@@ -40,10 +40,18 @@ public interface ScreensaverService {
 
     /**
      * 新增屏保数据
-     * @param screensaver  新屏保数据
-     * @return  添加操作结果
+     *
+     * @param screensaver            新屏保数据
+     * @param screensaverMaterialIds 新屏保的屏保素材
+     * @return 添加操作结果
      */
-    Result addBizScreensaver(BizScreensaver screensaver);
+    Result addBizScreensaver(BizScreensaver screensaver, Integer[] screensaverMaterialIds);
 
-
+    /**
+     * 给选择的终端发布屏保
+     * @param screensaverId 要发布的屏保ID
+     * @param terminalIds   终端ID列表
+     * @return  发布结果
+     */
+    Result publishScreensaver(Integer screensaverId,String[] terminalIds);
 }

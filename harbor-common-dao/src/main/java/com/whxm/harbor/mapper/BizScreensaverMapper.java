@@ -1,6 +1,7 @@
 package com.whxm.harbor.mapper;
 
 import com.whxm.harbor.bean.BizScreensaver;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,4 +19,15 @@ public interface BizScreensaverMapper {
     int updateByPrimaryKey(BizScreensaver record);
 
     List<BizScreensaver> getBizScreensaverList();
+
+    int insertScreensaverMaterials(
+            @Param("screensaverId") Integer screensaverId,
+            @Param("screensaverMaterialIds") Integer[] screensaverMaterialIds
+    );
+
+
+    int insertScreensaverPublishedTerminal(
+            @Param("screensaverId") Integer screensaverId,
+            @Param("terminalIds") String[] terminalIds
+    );
 }
