@@ -34,6 +34,7 @@
         <module>harbor-activity-material-web</module>
         <module>harbor-shop-web</module>
         <module>harbor-screensaver-material-web</module>
+        <module>harbor-screensaver-web</module>
 
     </modules>
 

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/harbor-activity-material-web" />
+    <file type="web" url="file://$PROJECT_DIR$/harbor-activity-web" />
+    <file type="web" url="file://$PROJECT_DIR$/harbor-business-web" />
+    <file type="web" url="file://$PROJECT_DIR$/harbor-floor-web" />
+    <file type="web" url="file://$PROJECT_DIR$/harbor-shop-web" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/harbor-common-mapper/pom.xml" />
+        <option value="$PROJECT_DIR$/harbor-business-service/pom.xml" />
+        <option value="$PROJECT_DIR$/harbor-common-dao/pom.xml" />
+        <option value="$PROJECT_DIR$/harbor-floor-service/pom.xml" />
+        <option value="$PROJECT_DIR$/harbor-activity-service/pom.xml" />
+        <option value="$PROJECT_DIR$/harbor-shop-service/pom.xml" />
+        <option value="$PROJECT_DIR$/harbor-business-web/pom.xml" />
+        <option value="$PROJECT_DIR$/harbor-floor-web/pom.xml" />
+        <option value="$PROJECT_DIR$/harbor-activity-web/pom.xml" />
+        <option value="$PROJECT_DIR$/harbor-activity-material-service/pom.xml" />
+        <option value="$PROJECT_DIR$/harbor-activity-material-web/pom.xml" />
+        <option value="$PROJECT_DIR$/harbor-shop-web/pom.xml" />
+        <option value="$PROJECT_DIR$/harbor-screensaver-material-service/pom.xml" />
+        <option value="$PROJECT_DIR$/harbor-screensaver-material-web/pom.xml" />
+        <option value="$PROJECT_DIR$/harbor-screensaver-service/pom.xml" />
+        <option value="$PROJECT_DIR$/harbor-screensaver-web/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/harbor-basic/pom.xml" />
+        <option value="$PROJECT_DIR$/harbor-common-mapper/pom.xml" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

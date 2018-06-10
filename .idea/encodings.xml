@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/harbor-activity-material-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/harbor-activity-material-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/harbor-activity-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/harbor-activity-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/harbor-business-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/harbor-business-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/harbor-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/harbor-common-bean" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/harbor-common-dao" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/harbor-common-dao/src/main/resources/config/application.yml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/harbor-floor-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/harbor-floor-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/harbor-screensaver-material-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/harbor-screensaver-material-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/harbor-screensaver-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/harbor-screensaver-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/harbor-shop-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/harbor-shop-web" charset="UTF-8" />
+  </component>
+</project>

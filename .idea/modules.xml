@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/harbor-activity-material-service/harbor-activity-material-service.iml" filepath="$PROJECT_DIR$/harbor-activity-material-service/harbor-activity-material-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/harbor-activity-material-web/harbor-activity-material-web.iml" filepath="$PROJECT_DIR$/harbor-activity-material-web/harbor-activity-material-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/harbor-activity-service/harbor-activity-service.iml" filepath="$PROJECT_DIR$/harbor-activity-service/harbor-activity-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/harbor-activity-web/harbor-activity-web.iml" filepath="$PROJECT_DIR$/harbor-activity-web/harbor-activity-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/harbor-business-service/harbor-business-service.iml" filepath="$PROJECT_DIR$/harbor-business-service/harbor-business-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/harbor-business-web/harbor-business-web.iml" filepath="$PROJECT_DIR$/harbor-business-web/harbor-business-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/harbor-common/harbor-common.iml" filepath="$PROJECT_DIR$/harbor-common/harbor-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/harbor-common-bean/harbor-common-bean.iml" filepath="$PROJECT_DIR$/harbor-common-bean/harbor-common-bean.iml" />
+      <module fileurl="file://$PROJECT_DIR$/harbor-common-dao/harbor-common-dao.iml" filepath="$PROJECT_DIR$/harbor-common-dao/harbor-common-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/harbor-floor-service/harbor-floor-service.iml" filepath="$PROJECT_DIR$/harbor-floor-service/harbor-floor-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/harbor-floor-web/harbor-floor-web.iml" filepath="$PROJECT_DIR$/harbor-floor-web/harbor-floor-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/harbor-parent.iml" filepath="$PROJECT_DIR$/harbor-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/harbor-screensaver-material-service/harbor-screensaver-material-service.iml" filepath="$PROJECT_DIR$/harbor-screensaver-material-service/harbor-screensaver-material-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/harbor-screensaver-material-web/harbor-screensaver-material-web.iml" filepath="$PROJECT_DIR$/harbor-screensaver-material-web/harbor-screensaver-material-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/harbor-screensaver-service/harbor-screensaver-service.iml" filepath="$PROJECT_DIR$/harbor-screensaver-service/harbor-screensaver-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/harbor-screensaver-web/harbor-screensaver-web.iml" filepath="$PROJECT_DIR$/harbor-screensaver-web/harbor-screensaver-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/harbor-shop-service/harbor-shop-service.iml" filepath="$PROJECT_DIR$/harbor-shop-service/harbor-shop-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/harbor-shop-web/harbor-shop-web.iml" filepath="$PROJECT_DIR$/harbor-shop-web/harbor-shop-web.iml" />
+    </modules>
+  </component>
+</project>

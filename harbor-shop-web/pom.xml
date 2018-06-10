@@ -11,6 +11,7 @@
 
     <name>harbor-shop-web</name>
     <description>harbor shop web</description>
+
     <parent>
         <groupId>com.whxm.harbor</groupId>
         <artifactId>harbor-parent</artifactId>

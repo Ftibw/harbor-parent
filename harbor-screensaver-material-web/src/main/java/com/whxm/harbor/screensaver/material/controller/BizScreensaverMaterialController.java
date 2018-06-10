@@ -135,9 +135,4 @@ public class BizScreensaverMaterialController {
         }
     }
 
-    public static void main(String[] args) {
-        System.out.println(
-                "shopPicture\\2018-06-07\\3192E69E8C6941AC8A44A4E40D753370.jpg".replaceAll("^.*\\\\(.*)\\..*$", "$1")
-        );
-    }
 }
