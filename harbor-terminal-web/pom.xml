@@ -17,7 +17,7 @@
 	</parent>
 
 	<dependencies>
-		<!--biz shop service-->
+		<!--biz terminal service-->
 		<dependency>
 			<groupId>com.whxm.harbor</groupId>
 			<artifactId>harbor-terminal-service</artifactId>

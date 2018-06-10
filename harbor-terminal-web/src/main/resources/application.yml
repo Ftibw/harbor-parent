@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: business-shop-web
+    name: business-terminal-web
 
 # swagger2
-swagger2.package: com.whxm.harbor.shop.controller
+swagger2.package: com.whxm.harbor.terminal.controller
