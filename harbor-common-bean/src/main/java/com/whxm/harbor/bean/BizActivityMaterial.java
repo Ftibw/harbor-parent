@@ -13,6 +13,7 @@ public class BizActivityMaterial {
 
     private Integer activityId;
 
+    //join activity 表查询 activity_type
     private String activityType;
 
     public String getActivityType() {
