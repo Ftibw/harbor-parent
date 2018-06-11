@@ -11,8 +11,14 @@ import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisKeyValueTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @Api(value = "API - BusinessUserController", description = "用户 Controller")
 @RestController
@@ -24,7 +30,7 @@ public class UserController {
     private UserService userService;
 
     @ApiOperation("获取用户列表")
-    @GetMapping("/Users")
+    @GetMapping("/users")
     public Result getUsers(PageQO<User> pageQO, User condition) {
 
         Result ret = null;
@@ -45,7 +51,7 @@ public class UserController {
     }
 
     @ApiOperation("获取用户")
-    @GetMapping("/User/{ID}")
+    @GetMapping("/user/{ID}")
     public Result getUser(
             @ApiParam(name = "ID", value = "用户的ID", required = true)
             @PathVariable("ID") String userId
@@ -66,11 +72,11 @@ public class UserController {
     }
 
     @ApiOperation("修改用户")
-    @PutMapping("/User")
-    public Result updateUser(@RequestBody User User) {
+    @PutMapping("/user")
+    public Result updateUser(@RequestBody User user) {
         Result ret = null;
         try {
-            ret = userService.updateUser(User);
+            ret = userService.updateUser(user);
         } catch (Exception e) {
 
             logger.error("用户数据 修改报错", e);
@@ -81,14 +87,14 @@ public class UserController {
     }
 
     @ApiOperation("删除用户")
-    @DeleteMapping("/User/{ID}")
+    @DeleteMapping("/user/{ID}")
     public Result delUser(
             @ApiParam(name = "ID", value = "用户的ID", required = true)
-            @PathVariable("ID") String UserId
+            @PathVariable("ID") String userId
     ) {
         Result ret = null;
         try {
-            ret = userService.deleteUser(UserId);
+            ret = userService.deleteUser(userId);
         } catch (Exception e) {
 
             logger.error("用户数据 删除报错", e);
@@ -100,17 +106,51 @@ public class UserController {
     }
 
     @ApiOperation("添加用户")
-    @PostMapping("/User")
-    public Result addUser(@RequestBody User User) {
+    @PostMapping("/user")
+    public Result addUser(@RequestBody User user) {
         Result ret = null;
         try {
-            ret = userService.addUser(User);
+            //密码加盐
+            user.setUserPassword(user.getUserPassword());
+
+            ret = userService.addUser(user);
 
         } catch (Exception e) {
             logger.error("用户 添加报错", e);
 
             ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "用户 添加报错", null);
         }
+        return ret;
+    }
+
+
+    @Autowired
+    private RedisTemplate<Object, Object> redisTemplate;
+
+    @ApiOperation("登陆接口")
+    @PostMapping("/login")
+    public Result userLogin(User user) {
+
+        Result ret = null;
+
+        User info = userService.getUserLoginInfo(user);
+
+        if (null != info) {
+
+            String token = UUID.randomUUID().toString();
+            //设置序列化器
+            redisTemplate.setKeySerializer(new StringRedisSerializer());
+            redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(User.class));
+            // key以String方式存储
+            // value以json字符串形式存储
+            redisTemplate.boundValueOps(token).set(info);
+
+            ret = new Result(token);
+        } else {
+
+            ret = new Result(null);
+        }
+
         return ret;
     }
 

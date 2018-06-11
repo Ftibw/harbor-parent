@@ -1,6 +1,8 @@
 package com.whxm.harbor.bean;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable{
     private String userId;
 
     private String userLoginname;
