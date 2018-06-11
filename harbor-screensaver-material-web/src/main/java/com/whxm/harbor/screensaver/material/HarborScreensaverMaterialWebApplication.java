@@ -4,14 +4,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HarborScreensaverMaterialWebApplication {
+public class HarborScreensaverMaterialWebApplication  {
 
 	public static void main(String[] args) {
 		SpringApplication.run(HarborScreensaverMaterialWebApplication.class, args);
 	}
 
-	/*@Override	extends SpringBootServletInitializer
-	protected SpringApplicationBuilder configure(HarborScreensaverMaterialWebApplication builder) {
-		return builder.sources(HarborFloorWebApplication.class);
-	}*/
+	//打成war包的配置
+    /*@Override   extends SpringBootServletInitializer
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(HarborScreensaverMaterialWebApplication.class);
+    }*/
 }

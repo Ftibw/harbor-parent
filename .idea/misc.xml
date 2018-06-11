@@ -5,7 +5,10 @@
     <file type="web" url="file://$PROJECT_DIR$/harbor-activity-web" />
     <file type="web" url="file://$PROJECT_DIR$/harbor-business-web" />
     <file type="web" url="file://$PROJECT_DIR$/harbor-floor-web" />
+    <file type="web" url="file://$PROJECT_DIR$/harbor-screensaver-material-web" />
+    <file type="web" url="file://$PROJECT_DIR$/harbor-screensaver-web" />
     <file type="web" url="file://$PROJECT_DIR$/harbor-shop-web" />
+    <file type="web" url="file://$PROJECT_DIR$/harbor-terminal-web" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
@@ -29,6 +32,8 @@
         <option value="$PROJECT_DIR$/harbor-screensaver-web/pom.xml" />
         <option value="$PROJECT_DIR$/harbor-terminal-service/pom.xml" />
         <option value="$PROJECT_DIR$/harbor-terminal-web/pom.xml" />
+        <option value="$PROJECT_DIR$/harbor-user-service/pom.xml" />
+        <option value="$PROJECT_DIR$/harbor-user-web/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

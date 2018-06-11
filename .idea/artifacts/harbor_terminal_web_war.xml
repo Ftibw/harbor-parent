@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="harbor-terminal-web:war">
+    <output-path>$PROJECT_DIR$/harbor-terminal-web/target</output-path>
+    <root id="archive" name="harbor-terminal-web-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="harbor-terminal-web:war exploded" />
+    </root>
+  </artifact>
+</component>

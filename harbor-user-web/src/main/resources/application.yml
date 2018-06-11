@@ -1,0 +1,9 @@
+server:
+  port: 8160
+
+spring:
+  application:
+    name: system-user-web
+
+# swagger2
+swagger2.package: com.whxm.harbor.user.controller

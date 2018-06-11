@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="harbor-screensaver-material-web:war">
+    <output-path>$PROJECT_DIR$/harbor-screensaver-material-web/target</output-path>
+    <root id="archive" name="harbor-screensaver-material-web-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="harbor-screensaver-material-web:war exploded" />
+    </root>
+  </artifact>
+</component>

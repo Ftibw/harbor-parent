@@ -25,7 +25,7 @@ public class BizTerminalController {
 
     @ApiOperation("获取终端列表")
     @GetMapping("/bizTerminals")
-    public Result getBizActivities(PageQO<BizTerminal> pageQO, BizTerminal condition) {
+    public Result getBizTerminals(PageQO<BizTerminal> pageQO, BizTerminal condition) {
 
         Result ret = null;
 

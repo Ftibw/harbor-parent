@@ -6,6 +6,7 @@
 	<artifactId>harbor-screensaver-web</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
+	<!--<packaging>war</packaging>-->
 
 	<name>harbor-screensaver-web</name>
 	<description>harbor screensaver web</description>
@@ -17,6 +18,14 @@
 	</parent>
 
 	<dependencies>
+
+		<!--打成war包的配置-->
+		<!--<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>-->
+		<!--biz shop service-->
 		<dependency>
 			<groupId>com.whxm.harbor</groupId>
 			<artifactId>harbor-screensaver-service</artifactId>

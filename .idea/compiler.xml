@@ -25,14 +25,18 @@
         <module name="harbor-shop-web" />
         <module name="harbor-terminal-service" />
         <module name="harbor-terminal-web" />
+        <module name="harbor-user-service" />
+        <module name="harbor-user-web" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="business-web" target="1.8" />
+      <module name="harbor-account-service" target="1.8" />
       <module name="harbor-activity-material-service" target="1.8" />
       <module name="harbor-activity-material-web" target="1.8" />
       <module name="harbor-activity-service" target="1.8" />
       <module name="harbor-activity-web" target="1.8" />
+      <module name="harbor-admin-service" target="1.5" />
       <module name="harbor-basic" target="1.8" />
       <module name="harbor-business-service" target="1.8" />
       <module name="harbor-business-web" target="1.8" />
@@ -52,6 +56,8 @@
       <module name="harbor-shop-web" target="1.8" />
       <module name="harbor-terminal-service" target="1.8" />
       <module name="harbor-terminal-web" target="1.8" />
+      <module name="harbor-user-service" target="1.8" />
+      <module name="harbor-user-web" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

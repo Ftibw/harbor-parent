@@ -6,6 +6,8 @@
 	<artifactId>harbor-terminal-web</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
+	<!--打成war包的配置-->
+	<!--<packaging>war</packaging>-->
 
 	<name>harbor-terminal-web</name>
 	<description>harbor terminal web</description>
@@ -17,6 +19,13 @@
 	</parent>
 
 	<dependencies>
+		<!--打成war包的配置-->
+		<!--<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>-->
+
 		<!--biz terminal service-->
 		<dependency>
 			<groupId>com.whxm.harbor</groupId>

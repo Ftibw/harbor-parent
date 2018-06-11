@@ -22,6 +22,8 @@
       <module fileurl="file://$PROJECT_DIR$/harbor-shop-web/harbor-shop-web.iml" filepath="$PROJECT_DIR$/harbor-shop-web/harbor-shop-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/harbor-terminal-service/harbor-terminal-service.iml" filepath="$PROJECT_DIR$/harbor-terminal-service/harbor-terminal-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/harbor-terminal-web/harbor-terminal-web.iml" filepath="$PROJECT_DIR$/harbor-terminal-web/harbor-terminal-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/harbor-user-service/harbor-user-service.iml" filepath="$PROJECT_DIR$/harbor-user-service/harbor-user-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/harbor-user-web/harbor-user-web.iml" filepath="$PROJECT_DIR$/harbor-user-web/harbor-user-web.iml" />
     </modules>
   </component>
 </project>
