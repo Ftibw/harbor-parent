@@ -1,4 +1,4 @@
-package com.whxm.harbor.bean;
+package com.whxm.harbor.common.bean;
 
 import java.io.Serializable;
 

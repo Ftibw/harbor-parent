@@ -1,6 +1,6 @@
 package com.whxm.harbor.mapper;
 
-import com.whxm.harbor.bean.User;
+import com.whxm.harbor.common.bean.User;
 
 import java.util.List;
 

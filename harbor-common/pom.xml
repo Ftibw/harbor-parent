@@ -11,12 +11,6 @@
 
     <artifactId>harbor-common</artifactId>
     <dependencies>
-        <!--servlet依赖-->
-        <!--<dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <scope>provided</scope>
-        </dependency>-->
         <!--commons-lang3 apache工具组件-->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -43,6 +37,10 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
         </dependency>
-
+        <!--redis依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
     </dependencies>
 </project>
