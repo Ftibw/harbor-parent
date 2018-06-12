@@ -84,9 +84,13 @@ public class ShopServiceImpl implements ShopService {
                  * if(0==bizShop.getIsShopEnabled() ^ 1)
                  * bizShopMapper.delShopPicturesRelation(bizShopId);
                  * */
-                bizShop.setIsShopEnabled(bizShop.getIsShopEnabled() ^ 1);
+                int status = bizShop.getIsShopEnabled() ^ 1;
 
-                ret = updateBizShop(bizShop);
+                bizShop.setIsShopEnabled(status);
+
+                updateBizShop(bizShop);
+
+                ret = new Result(status);
 
             } catch (Exception e) {
 

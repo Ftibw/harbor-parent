@@ -17,7 +17,7 @@ public class WebConf extends WebMvcConfigurerAdapter {
     //在低版本的spring boot中WebConf extends WebMvcConfigurerAdapter时,如下写法
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(tokenInterceptor).addPathPatterns("/user*");
+        registry.addInterceptor(tokenInterceptor).addPathPatterns("/user*","/token");
         super.addInterceptors(registry);
     }
 

@@ -148,7 +148,7 @@ public class UserController {
                 redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(User.class));
                 // key以String方式存储
                 // value以json字符串形式存储
-                redisTemplate.boundValueOps(token).set(info, 30, TimeUnit.MINUTES);
+                redisTemplate.boundValueOps(token).set(info, 60, TimeUnit.MINUTES);
 
                 ret = new Result(token);
 
@@ -164,7 +164,7 @@ public class UserController {
     }
 
     @ApiOperation("刷新token")
-    @PostMapping("/token")
+    @GetMapping("/token")
     public Result token(
             @ApiParam(name = "token", value = "token值", required = true) String token) {
         Result ret = null;
@@ -179,14 +179,16 @@ public class UserController {
             User user = (User) redisTemplate.boundValueOps(token).get();
 
             if (null != user) {
+                redisTemplate.delete(token);
+
                 String newToken = UUID.randomUUID().toString().replace("-", "");
 
-                redisTemplate.boundValueOps(token).set(user, 30, TimeUnit.MINUTES);
+                redisTemplate.boundValueOps(newToken).set(user, 60, TimeUnit.MINUTES);
 
                 ret = new Result(newToken);
 
             } else
-                ret = new Result(HttpStatus.UNAUTHORIZED.value(), "token过期了", null);
+                ret = new Result(HttpStatus.UNAUTHORIZED.value(), "token无效", null);
         } else
             ret = new Result(HttpStatus.UNAUTHORIZED.value(), "未登陆", null);
 
