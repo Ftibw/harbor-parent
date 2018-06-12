@@ -1,10 +1,27 @@
 package com.whxm.harbor.utils;
 
+/**
+ * @Author Ftibw
+ * @Email ftibw@live.com
+ * @CreateTime 2018/6/13 02:15
+ */
 public class TokenUtils {
-    /*
-     * 搅拌比例
+    /**
+     * 原料的搅拌比例
      */
-    private final static int FACTOR = 37;
+    private final static int SOURCE_FACTOR = 19;
+    /**
+     * 混合后的搅拌高比例
+     */
+    private final static int TARGET_FACTOR_HIGH = 31;
+    /**
+     * 混合后的搅拌低比例
+     */
+    private final static int TOKEN_FACTOR_LOW = 11;
+    /**
+     * 搅拌次数
+     */
+    private final static int DEFAULT_TIMES = 11;
 
     /**
      * 加盐搅拌5次
@@ -13,12 +30,19 @@ public class TokenUtils {
      * @return 64位字符串
      */
     public static String chaos(String text, String salt) {
+
+        for (int i = 0; i < DEFAULT_TIMES; i++) {
+            text = text.substring(SOURCE_FACTOR) + text.substring(0, SOURCE_FACTOR);
+        }
+
         String s = salt + text;
-        s = s.substring(FACTOR) + s.substring(0, FACTOR);
-        s = s.substring(FACTOR) + s.substring(0, FACTOR);
-        s = s.substring(FACTOR) + s.substring(0, FACTOR);
-        s = s.substring(FACTOR) + s.substring(0, FACTOR);
-        s = s.substring(FACTOR) + s.substring(0, FACTOR);
+
+        for (int i = 0; i < DEFAULT_TIMES; i++) {
+
+            s = s.substring(TARGET_FACTOR_HIGH) + s.substring(0, TARGET_FACTOR_HIGH);
+
+            s = s.substring(TOKEN_FACTOR_LOW) + s.substring(0, TOKEN_FACTOR_LOW);
+        }
         return s;
     }
 
@@ -29,23 +53,36 @@ public class TokenUtils {
      * @return 32位字符串
      */
     public static String order(String text) {
-        text = text.substring(64 - FACTOR) + text.substring(0, 64 - FACTOR);
-        text = text.substring(64 - FACTOR) + text.substring(0, 64 - FACTOR);
-        text = text.substring(64 - FACTOR) + text.substring(0, 64 - FACTOR);
-        text = text.substring(64 - FACTOR) + text.substring(0, 64 - FACTOR);
-        text = text.substring(64 - FACTOR) + text.substring(0, 64 - FACTOR);
-        return text.substring(text.length() / 2);
+
+        for (int i = 0; i < DEFAULT_TIMES; i++) {
+
+            text = text.substring(64 - TARGET_FACTOR_HIGH) + text.substring(0, 64 - TARGET_FACTOR_HIGH);
+
+            text = text.substring(64 - TOKEN_FACTOR_LOW) + text.substring(0, 64 - TOKEN_FACTOR_LOW);
+        }
+
+        text = text.substring(text.length() / 2);
+
+        for (int i = 0; i < DEFAULT_TIMES; i++) {
+
+            text = text.substring(32 - SOURCE_FACTOR) + text.substring(0, 32 - SOURCE_FACTOR);
+        }
+
+        return text;
     }
 
     /**
      * 分离盐获取原始盐
      */
     public static String salt(String text) {
-        text = text.substring(64 - FACTOR) + text.substring(0, 64 - FACTOR);
-        text = text.substring(64 - FACTOR) + text.substring(0, 64 - FACTOR);
-        text = text.substring(64 - FACTOR) + text.substring(0, 64 - FACTOR);
-        text = text.substring(64 - FACTOR) + text.substring(0, 64 - FACTOR);
-        text = text.substring(64 - FACTOR) + text.substring(0, 64 - FACTOR);
+
+        for (int i = 0; i < DEFAULT_TIMES; i++) {
+
+            text = text.substring(64 - TARGET_FACTOR_HIGH) + text.substring(0, 64 - TARGET_FACTOR_HIGH);
+
+            text = text.substring(64 - TOKEN_FACTOR_LOW) + text.substring(0, 64 - TOKEN_FACTOR_LOW);
+        }
+
         return text.substring(0, text.length() / 2);
     }
 }
