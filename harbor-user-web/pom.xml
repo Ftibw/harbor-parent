@@ -25,7 +25,7 @@
             <scope>provided</scope>
         </dependency>-->
 
-		<!--biz terminal service-->
+		<!--biz user service-->
 		<dependency>
 			<groupId>com.whxm.harbor</groupId>
 			<artifactId>harbor-user-service</artifactId>

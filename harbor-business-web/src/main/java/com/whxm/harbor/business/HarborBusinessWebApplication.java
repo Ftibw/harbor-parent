@@ -10,7 +10,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @SpringBootApplication
-@ComponentScan("com.whxm.harbor.common.interceptor")
 public class HarborBusinessWebApplication  {
 
     public static void main(String[] args) {

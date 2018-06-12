@@ -38,6 +38,7 @@
         <module>harbor-screensaver-material-web</module>
         <module>harbor-screensaver-web</module>
         <module>harbor-terminal-web</module>
+        <module>harbor-user-web</module>
 
     </modules>
 

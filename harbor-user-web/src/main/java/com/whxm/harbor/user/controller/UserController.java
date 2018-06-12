@@ -1,6 +1,6 @@
 package com.whxm.harbor.user.controller;
 
-import com.whxm.harbor.common.bean.User;
+import com.whxm.harbor.bean.User;
 import com.whxm.harbor.common.bean.PageQO;
 import com.whxm.harbor.common.bean.PageVO;
 import com.whxm.harbor.common.bean.Result;

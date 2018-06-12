@@ -1,7 +1,7 @@
-package com.whxm.harbor.common.interceptor;
+package com.whxm.harbor.activity.interceptor;
 
 
-import com.whxm.harbor.common.bean.User;
+import com.whxm.harbor.bean.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;

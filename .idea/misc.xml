@@ -9,6 +9,7 @@
     <file type="web" url="file://$PROJECT_DIR$/harbor-screensaver-web" />
     <file type="web" url="file://$PROJECT_DIR$/harbor-shop-web" />
     <file type="web" url="file://$PROJECT_DIR$/harbor-terminal-web" />
+    <file type="web" url="file://$PROJECT_DIR$/harbor-user-web" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
