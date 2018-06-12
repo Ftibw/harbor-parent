@@ -1,10 +1,8 @@
 package com.whxm.harbor.interceptor;
 
-import com.whxm.harbor.bean.User;
 import com.whxm.harbor.utils.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -37,10 +35,10 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
             redisTemplate.setValueSerializer(serializer);
 
             //从redis获取user信息
-            salt = (String) redisTemplate.boundValueOps(order(token, TokenUtils.FACTOR)).get();
+            salt = (String) redisTemplate.boundValueOps(order(token)).get();
         }
 
-        if (null == token || null == salt || !salt.equals(TokenUtils.salt(token, TokenUtils.FACTOR))) {
+        if (null == token || null == salt || !salt.equals(TokenUtils.salt(token))) {
             response.setContentType("text/html;charset=utf-8");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().println("token无效");

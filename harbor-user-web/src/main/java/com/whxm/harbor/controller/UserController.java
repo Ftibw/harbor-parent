@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -155,10 +154,11 @@ public class UserController {
 
                 redisTemplate.setValueSerializer(serializer);
 
+                //以userId为key避免登陆状态冗余,以盐为value始终维持最新的登陆状态
                 redisTemplate.boundValueOps(userId).set(salt, 2, TimeUnit.HOURS);
 
-                //根据factor比例将userId和盐搅拌生成token
-                ret = new Result(chaos(userId, salt, TokenUtils.FACTOR));
+                //将userId和盐搅拌生成token
+                ret = new Result(chaos(userId, salt));
 
             } else
 
@@ -185,18 +185,18 @@ public class UserController {
 
             redisTemplate.setValueSerializer(serializer);
 
-            String userId = order(token, TokenUtils.FACTOR);
+            String userId = order(token);
 
             //从redis获取盐信息
             String salt = (String) redisTemplate.boundValueOps(userId).get();
 
-            if (null != salt && salt.equals(TokenUtils.salt(token, TokenUtils.FACTOR))) {
+            if (null != salt && salt.equals(TokenUtils.salt(token))) {
 
                 String newSalt = UUID.randomUUID().toString().replace("-", "");
 
                 redisTemplate.boundValueOps(userId).set(newSalt, 2, TimeUnit.HOURS);
 
-                ret = new Result(chaos(userId, newSalt, TokenUtils.FACTOR));
+                ret = new Result(chaos(userId, newSalt));
 
             } else
                 ret = new Result(HttpStatus.UNAUTHORIZED.value(), "token无效", null);
@@ -213,7 +213,7 @@ public class UserController {
 
         try {
 
-            redisTemplate.delete(order(token, TokenUtils.FACTOR));
+            redisTemplate.delete(order(token));
 
             ret = new Result("登出成功");
 
