@@ -3,9 +3,9 @@ package com.whxm.harbor.user.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.whxm.harbor.bean.User;
-import com.whxm.harbor.common.bean.PageQO;
-import com.whxm.harbor.common.bean.PageVO;
-import com.whxm.harbor.common.bean.Result;
+import com.whxm.harbor.bean.PageQO;
+import com.whxm.harbor.bean.PageVO;
+import com.whxm.harbor.bean.Result;
 import com.whxm.harbor.mapper.UserMapper;
 import com.whxm.harbor.user.service.UserService;
 import org.slf4j.Logger;
@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public User getUserLoginInfo(User user) {
+    public User login(User user) {
 
         User po = null;
 

@@ -6,4 +6,4 @@ spring:
     name: business-activity-web
 
 # swagger2
-swagger2.package: com.whxm.harbor.activity.controller
+swagger2.package: com.whxm.harbor.controller

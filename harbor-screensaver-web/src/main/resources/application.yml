@@ -6,4 +6,4 @@ spring:
     name: business-screensaver-web
 
 # swagger2
-swagger2.package: com.whxm.harbor.screensaver.controller
+swagger2.package: com.whxm.harbor.controller

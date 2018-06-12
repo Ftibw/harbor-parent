@@ -1,9 +1,9 @@
 package com.whxm.harbor.activity.material.service;
 
 import com.whxm.harbor.bean.BizActivityMaterial;
-import com.whxm.harbor.common.bean.PageQO;
-import com.whxm.harbor.common.bean.PageVO;
-import com.whxm.harbor.common.bean.Result;
+import com.whxm.harbor.bean.PageQO;
+import com.whxm.harbor.bean.PageVO;
+import com.whxm.harbor.bean.Result;
 
 /**
  * 活动材料服务

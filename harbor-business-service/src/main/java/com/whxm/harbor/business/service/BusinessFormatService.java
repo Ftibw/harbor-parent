@@ -2,9 +2,9 @@ package com.whxm.harbor.business.service;
 
 
 import com.whxm.harbor.bean.BizFormat;
-import com.whxm.harbor.common.bean.PageQO;
-import com.whxm.harbor.common.bean.PageVO;
-import com.whxm.harbor.common.bean.Result;
+import com.whxm.harbor.bean.PageQO;
+import com.whxm.harbor.bean.PageVO;
+import com.whxm.harbor.bean.Result;
 
 /**
  * 业态服务

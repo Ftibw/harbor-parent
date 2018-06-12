@@ -4,9 +4,9 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.whxm.harbor.bean.BizFormat;
 import com.whxm.harbor.business.service.BusinessFormatService;
-import com.whxm.harbor.common.bean.PageQO;
-import com.whxm.harbor.common.bean.PageVO;
-import com.whxm.harbor.common.bean.Result;
+import com.whxm.harbor.bean.PageQO;
+import com.whxm.harbor.bean.PageVO;
+import com.whxm.harbor.bean.Result;
 import com.whxm.harbor.mapper.BizFormatMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @Service
 @Transactional

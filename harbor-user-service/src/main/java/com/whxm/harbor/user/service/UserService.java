@@ -1,9 +1,9 @@
 package com.whxm.harbor.user.service;
 
 import com.whxm.harbor.bean.User;
-import com.whxm.harbor.common.bean.PageQO;
-import com.whxm.harbor.common.bean.PageVO;
-import com.whxm.harbor.common.bean.Result;
+import com.whxm.harbor.bean.PageQO;
+import com.whxm.harbor.bean.PageVO;
+import com.whxm.harbor.bean.Result;
 
 /**
  * 用户管理
@@ -13,10 +13,10 @@ public interface UserService {
     /**
      * 获取用户信息
      *
-     * @param user 用户凭证信息
+     * @param user 用户登陆凭证信息
      * @return 用户数据
      */
-    User getUserLoginInfo(User user);
+    User login(User user);
 
     /**
      * 根据用户ID获取用户信息

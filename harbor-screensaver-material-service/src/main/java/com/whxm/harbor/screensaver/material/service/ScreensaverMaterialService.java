@@ -2,9 +2,9 @@ package com.whxm.harbor.screensaver.material.service;
 
 
 import com.whxm.harbor.bean.BizScreensaverMaterial;
-import com.whxm.harbor.common.bean.PageQO;
-import com.whxm.harbor.common.bean.PageVO;
-import com.whxm.harbor.common.bean.Result;
+import com.whxm.harbor.bean.PageQO;
+import com.whxm.harbor.bean.PageVO;
+import com.whxm.harbor.bean.Result;
 
 public interface ScreensaverMaterialService {
     /**

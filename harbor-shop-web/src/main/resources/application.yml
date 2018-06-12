@@ -6,4 +6,4 @@ spring:
     name: business-shop-web
 
 # swagger2
-swagger2.package: com.whxm.harbor.shop.controller
+swagger2.package: com.whxm.harbor.controller

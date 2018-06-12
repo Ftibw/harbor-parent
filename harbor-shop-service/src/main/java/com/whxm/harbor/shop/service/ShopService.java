@@ -1,9 +1,9 @@
 package com.whxm.harbor.shop.service;
 
 import com.whxm.harbor.bean.BizShop;
-import com.whxm.harbor.common.bean.PageQO;
-import com.whxm.harbor.common.bean.PageVO;
-import com.whxm.harbor.common.bean.Result;
+import com.whxm.harbor.bean.PageQO;
+import com.whxm.harbor.bean.PageVO;
+import com.whxm.harbor.bean.Result;
 
 import java.util.List;
 import java.util.Map;

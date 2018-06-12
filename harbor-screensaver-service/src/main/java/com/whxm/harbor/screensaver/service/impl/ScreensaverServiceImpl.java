@@ -3,9 +3,9 @@ package com.whxm.harbor.screensaver.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.whxm.harbor.bean.BizScreensaver;
-import com.whxm.harbor.common.bean.PageQO;
-import com.whxm.harbor.common.bean.PageVO;
-import com.whxm.harbor.common.bean.Result;
+import com.whxm.harbor.bean.PageQO;
+import com.whxm.harbor.bean.PageVO;
+import com.whxm.harbor.bean.Result;
 import com.whxm.harbor.mapper.BizScreensaverMapper;
 import com.whxm.harbor.screensaver.service.ScreensaverService;
 import org.slf4j.Logger;
@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
-import java.util.List;
 
 @Service
 @Transactional

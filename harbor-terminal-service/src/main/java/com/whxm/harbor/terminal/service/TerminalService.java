@@ -1,9 +1,9 @@
 package com.whxm.harbor.terminal.service;
 
 import com.whxm.harbor.bean.BizTerminal;
-import com.whxm.harbor.common.bean.PageQO;
-import com.whxm.harbor.common.bean.PageVO;
-import com.whxm.harbor.common.bean.Result;
+import com.whxm.harbor.bean.PageQO;
+import com.whxm.harbor.bean.PageVO;
+import com.whxm.harbor.bean.Result;
 
 /**
  *终端服务

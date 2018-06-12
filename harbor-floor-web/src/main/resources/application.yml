@@ -6,4 +6,4 @@ spring:
     name: business-floor-web
 
 # swagger2
-swagger2.package: com.whxm.harbor.floor.controller
+swagger2.package: com.whxm.harbor.controller

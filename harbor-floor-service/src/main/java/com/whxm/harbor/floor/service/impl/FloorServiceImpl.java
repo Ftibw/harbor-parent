@@ -3,9 +3,9 @@ package com.whxm.harbor.floor.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.whxm.harbor.bean.BizFloor;
-import com.whxm.harbor.common.bean.PageQO;
-import com.whxm.harbor.common.bean.PageVO;
-import com.whxm.harbor.common.bean.Result;
+import com.whxm.harbor.bean.PageQO;
+import com.whxm.harbor.bean.PageVO;
+import com.whxm.harbor.bean.Result;
 import com.whxm.harbor.floor.service.FloorService;
 import com.whxm.harbor.mapper.BizFloorMapper;
 import org.slf4j.Logger;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @Service
 @Transactional

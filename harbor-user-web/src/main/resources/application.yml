@@ -6,5 +6,5 @@ spring:
     name: system-user-web
 
 # swagger2
-swagger2.package: com.whxm.harbor.user.controller
+swagger2.package: com.whxm.harbor.controller
 
