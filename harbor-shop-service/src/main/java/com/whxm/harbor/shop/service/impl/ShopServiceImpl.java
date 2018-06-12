@@ -81,9 +81,9 @@ public class ShopServiceImpl implements ShopService {
             try {
                 BizShop bizShop = getBizShop(bizShopId);
                 /*
-                * if(0==bizShop.getIsShopEnabled() ^ 1)
-                * bizShopMapper.delShopPicturesRelation(bizShopId);
-                * */
+                 * if(0==bizShop.getIsShopEnabled() ^ 1)
+                 * bizShopMapper.delShopPicturesRelation(bizShopId);
+                 * */
                 bizShop.setIsShopEnabled(bizShop.getIsShopEnabled() ^ 1);
 
                 ret = updateBizShop(bizShop);
@@ -149,7 +149,11 @@ public class ShopServiceImpl implements ShopService {
             try {
                 int affectRow = bizShopMapper.insert(bizShop);
 
-                int affectRow2 = bizShopMapper.insertShopPictures(shopId, pictureList);
+                int affectRow2 = 0;
+
+                if (null != pictureList)
+
+                    affectRow2 = bizShopMapper.insertShopPictures(shopId, pictureList);
 
                 ret = new Result("新增" + affectRow + "行商铺记录,新增" + affectRow2 + "行商铺图片记录");
 

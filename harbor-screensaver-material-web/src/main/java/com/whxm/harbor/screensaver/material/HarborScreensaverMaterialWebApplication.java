@@ -2,6 +2,8 @@ package com.whxm.harbor.screensaver.material;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
@@ -12,7 +14,7 @@ public class HarborScreensaverMaterialWebApplication  {
 	}
 
 	//打成war包的配置
-    /*@Override   extends SpringBootServletInitializer
+    /*@Override    extends SpringBootServletInitializer
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
         return builder.sources(HarborScreensaverMaterialWebApplication.class);
     }*/

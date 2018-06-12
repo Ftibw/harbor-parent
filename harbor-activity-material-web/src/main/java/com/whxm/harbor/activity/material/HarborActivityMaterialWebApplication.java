@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 import javax.servlet.MultipartConfigElement;
 
 @SpringBootApplication
-public class HarborActivityMaterialWebApplication {
+public class HarborActivityMaterialWebApplication  {
 
     @Bean
     public MultipartConfigElement multipartConfigElement() {
