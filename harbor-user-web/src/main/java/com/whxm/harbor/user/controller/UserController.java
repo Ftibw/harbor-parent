@@ -4,6 +4,7 @@ import com.whxm.harbor.bean.User;
 import com.whxm.harbor.common.bean.PageQO;
 import com.whxm.harbor.common.bean.PageVO;
 import com.whxm.harbor.common.bean.Result;
+import com.whxm.harbor.common.utils.MD5Util;
 import com.whxm.harbor.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -109,8 +110,8 @@ public class UserController {
     public Result addUser(@RequestBody User user) {
         Result ret = null;
         try {
-            //密码加盐
-            user.setUserPassword(user.getUserPassword());
+            //32位加密
+            user.setUserPassword(MD5Util.MD5(user.getUserPassword()));
 
             ret = userService.addUser(user);
 
@@ -135,19 +136,23 @@ public class UserController {
         User info = userService.getUserLoginInfo(user);
 
         if (null != info) {
+            if (info.getUserPassword().equals(MD5Util.MD5(user.getUserPassword()))) {
+                String token = UUID.randomUUID().toString();
+                //设置序列化器
+                redisTemplate.setKeySerializer(new StringRedisSerializer());
+                redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(User.class));
+                // key以String方式存储
+                // value以json字符串形式存储
+                redisTemplate.boundValueOps(token).set(info);
 
-            String token = UUID.randomUUID().toString();
-            //设置序列化器
-            redisTemplate.setKeySerializer(new StringRedisSerializer());
-            redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(User.class));
-            // key以String方式存储
-            // value以json字符串形式存储
-            redisTemplate.boundValueOps(token).set(info);
+                ret = new Result(token);
 
-            ret = new Result(token);
+            } else
+
+                ret = new Result(HttpStatus.UNAUTHORIZED.value(), "密码错误", null);
         } else {
 
-            ret = new Result(null);
+            ret = new Result(HttpStatus.UNAUTHORIZED.value(), "该用户不存在", null);
         }
 
         return ret;

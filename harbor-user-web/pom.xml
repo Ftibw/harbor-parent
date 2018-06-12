@@ -5,8 +5,8 @@
 
 	<artifactId>harbor-user-web</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<!--<packaging>jar</packaging>-->
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
+	<!--<packaging>war</packaging>-->
 
 	<name>harbor-user-web</name>
 	<description>harbor user web</description>
@@ -19,11 +19,11 @@
 
 	<dependencies>
 		<!--打成war包的配置-->
-		<dependency>
+		<!--<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
             <scope>provided</scope>
-        </dependency>
+        </dependency>-->
 
 		<!--biz user service-->
 		<dependency>
