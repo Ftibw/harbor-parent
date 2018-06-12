@@ -4,8 +4,6 @@ server:
 spring:
   application:
     name: system-user-web
-  redis:
-      host: 47.94.202.250
 
 # swagger2
 swagger2.package: com.whxm.harbor.user.controller

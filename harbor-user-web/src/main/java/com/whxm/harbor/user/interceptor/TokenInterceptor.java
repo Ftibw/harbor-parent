@@ -4,6 +4,8 @@ package com.whxm.harbor.user.interceptor;
 import com.whxm.harbor.bean.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -23,6 +25,9 @@ public class TokenInterceptor implements HandlerInterceptor {
 
         String token = request.getParameter("token");
 
+        //设置序列化器
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(User.class));
         User user = (User) redisTemplate.boundValueOps(token).get();
 
         if (null == token || null==user) {

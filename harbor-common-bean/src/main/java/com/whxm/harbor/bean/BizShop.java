@@ -1,8 +1,10 @@
 package com.whxm.harbor.bean;
 
+
 import java.util.Date;
 
 public class BizShop {
+
     private String shopId;
 
     private String shopNumber;
