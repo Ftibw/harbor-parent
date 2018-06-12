@@ -6,6 +6,7 @@ import com.whxm.harbor.bean.PageVO;
 import com.whxm.harbor.bean.Result;
 import com.whxm.harbor.utils.MD5Util;
 import com.whxm.harbor.user.service.UserService;
+import com.whxm.harbor.utils.TokenUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -20,6 +21,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+
+import static com.whxm.harbor.utils.TokenUtils.chaos;
+import static com.whxm.harbor.utils.TokenUtils.order;
 
 @Api(value = "API - BusinessUserController", description = "用户 Controller")
 @RestController
@@ -128,10 +132,9 @@ public class UserController {
     @Autowired
     private RedisTemplate<Object, Object> redisTemplate;
 
-    @ApiOperation("登陆接口,token有效时间为30分钟")
+    @ApiOperation("登陆接口,token有效时间为2小时")
     @PostMapping("/login")
     public Result userLogin(@RequestBody User user) {
-
 
         Result ret = null;
 
@@ -141,16 +144,21 @@ public class UserController {
 
             if (info.getUserPassword().equals(MD5Util.MD5(user.getUserPassword()))) {
 
-                String token = UUID.randomUUID().toString().replace("-", "");
-                //设置序列化器
-                redisTemplate.setKeySerializer(new StringRedisSerializer());
+                String userId = info.getUserId();
 
-                redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(User.class));
-                // key以String方式存储
-                // value以json字符串形式存储
-                redisTemplate.boundValueOps(token).set(info, 60, TimeUnit.MINUTES);
+                String salt = UUID.randomUUID().toString().replace("-", "");
 
-                ret = new Result(token);
+                //设置String序列化器
+                StringRedisSerializer serializer = new StringRedisSerializer();
+
+                redisTemplate.setKeySerializer(serializer);
+
+                redisTemplate.setValueSerializer(serializer);
+
+                redisTemplate.boundValueOps(userId).set(salt, 2, TimeUnit.HOURS);
+
+                //根据factor比例将userId和盐搅拌生成token
+                ret = new Result(chaos(userId, salt, TokenUtils.FACTOR));
 
             } else
 
@@ -170,27 +178,51 @@ public class UserController {
         Result ret = null;
 
         if (token != null) {
-            //设置序列化器
-            redisTemplate.setKeySerializer(new StringRedisSerializer());
+            //设置String序列化器
+            StringRedisSerializer serializer = new StringRedisSerializer();
 
-            redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(User.class));
+            redisTemplate.setKeySerializer(serializer);
 
-            //从redis获取user信息
-            User user = (User) redisTemplate.boundValueOps(token).get();
+            redisTemplate.setValueSerializer(serializer);
 
-            if (null != user) {
-                redisTemplate.delete(token);
+            String userId = order(token, TokenUtils.FACTOR);
 
-                String newToken = UUID.randomUUID().toString().replace("-", "");
+            //从redis获取盐信息
+            String salt = (String) redisTemplate.boundValueOps(userId).get();
 
-                redisTemplate.boundValueOps(newToken).set(user, 60, TimeUnit.MINUTES);
+            if (null != salt && salt.equals(TokenUtils.salt(token, TokenUtils.FACTOR))) {
 
-                ret = new Result(newToken);
+                String newSalt = UUID.randomUUID().toString().replace("-", "");
+
+                redisTemplate.boundValueOps(userId).set(newSalt, 2, TimeUnit.HOURS);
+
+                ret = new Result(chaos(userId, newSalt, TokenUtils.FACTOR));
 
             } else
                 ret = new Result(HttpStatus.UNAUTHORIZED.value(), "token无效", null);
         } else
             ret = new Result(HttpStatus.UNAUTHORIZED.value(), "未登陆", null);
+
+        return ret;
+    }
+
+    @ApiOperation("用户登出")
+    @GetMapping("/logout")
+    public Result logout(@ApiParam(name = "token", value = "token值", required = true) String token) {
+        Result ret = null;
+
+        try {
+
+            redisTemplate.delete(order(token, TokenUtils.FACTOR));
+
+            ret = new Result("登出成功");
+
+        } catch (Exception e) {
+
+            logger.error("登出报错", e);
+
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "登出报错", null);
+        }
 
         return ret;
     }

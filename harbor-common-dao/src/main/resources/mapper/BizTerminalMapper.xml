@@ -203,7 +203,7 @@
     <!--以下为自定义部分-->
     <select id="getBizTerminalList" resultMap="ExtensionResultMap">
         SELECT
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List"/>,floor_name
         FROM biz_terminal
         JOIN biz_floor USING (floor_id)
         <where>

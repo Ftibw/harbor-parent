@@ -26,5 +26,9 @@ public interface BizShopMapper {
 
     List<BizShop> getBizShopList(BizShop condition);
 
+    List<String> selectShopPicturesById(String bizShopId);
+
+    List<String> selectShopIdListByBizType(String bizFormatType);
+
     //int delShopPicturesRelation(String shopId);
 }

@@ -192,6 +192,45 @@ public class BizShopController {
 
         return ret;
     }
+
+    @ApiOperation(value = "根据商铺ID获取商铺图片")
+    @GetMapping("/shopPictures/{ID}")
+    public Result getPicturesById(@PathVariable("ID") String bizShopId) {
+
+        Result ret = null;
+
+        try {
+            List<String> shopPicturePaths = shopService.getShopPicturesById(bizShopId);
+
+            ret = new Result(shopPicturePaths);
+
+        } catch (Exception e) {
+            logger.error("ID为{}的商铺图片 获取报错", bizShopId, e);
+
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "ID为" + bizShopId + "的商铺图片 获取报错", null);
+        }
+
+        return ret;
+    }
+
+    @ApiOperation(value = "根据商铺的业态类型获取商铺图片")
+    @GetMapping("/pictures/{type}")
+    public Result getPicturesByType(@PathVariable("type") String bizFormatType) {
+
+        Result ret = null;
+
+        try {
+             ret = shopService.getShopPicturesByBizType(bizFormatType);
+
+        } catch (Exception e) {
+            logger.error("业态类型为{}的商铺图片 获取报错", bizFormatType, e);
+
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "业态类型为" + bizFormatType + "的商铺图片 获取报错", null);
+        }
+
+        return ret;
+    }
+
 }
 
 //商铺+商铺图片数据封装

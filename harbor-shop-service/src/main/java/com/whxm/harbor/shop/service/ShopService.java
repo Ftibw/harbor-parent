@@ -23,8 +23,8 @@ public interface ShopService {
     /**
      * 获取商铺列表
      *
-     * @return list
      * @param pageQO
+     * @return list
      */
     PageVO<BizShop> getBizShopList(PageQO<BizShop> pageQO);
 
@@ -50,5 +50,18 @@ public interface ShopService {
      * @param bizShop 商铺数据新值
      * @return ret
      */
-    Result addBizShop(BizShop bizShop,List<Map<String,Object>> pictureList);
+    Result addBizShop(BizShop bizShop, List<Map<String, Object>> pictureList);
+
+    /**
+     * @param bizShopId 商铺ID
+     * @return 商铺的图片路径集合
+     */
+    List<String> getShopPicturesById(String bizShopId);
+
+    /**
+     * 根据业态种类获取图片集合
+     * @param bizFormatType 业态种类
+     * @return  查询结果
+     */
+    Result getShopPicturesByBizType(String bizFormatType);
 }

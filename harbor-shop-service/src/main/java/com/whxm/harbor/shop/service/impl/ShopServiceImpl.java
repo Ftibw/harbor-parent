@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Transactional
@@ -177,4 +174,50 @@ public class ShopServiceImpl implements ShopService {
         return ret;
     }
 
+    @Override
+    public List<String> getShopPicturesById(String bizShopId) {
+
+        List<String> shopPicturesPath = null;
+
+        try {
+            shopPicturesPath = bizShopMapper.selectShopPicturesById(bizShopId);
+
+        } catch (Exception e) {
+
+            logger.error("ID为{}的商铺图片 获取报错", bizShopId, e);
+
+            throw new RuntimeException();
+        }
+
+        return shopPicturesPath;
+    }
+
+    @Override
+    public Result getShopPicturesByBizType(String bizFormatType) {
+        Result ret = null;
+
+        try {
+            List<String> shopIdList = bizShopMapper.selectShopIdListByBizType(bizFormatType);
+
+            List<String> picturesPath = new ArrayList<>();
+
+            shopIdList.forEach(shopId -> {
+
+                List<String> shopPicturesPath = getShopPicturesById(shopId);
+
+                if (null != shopPicturesPath && !shopPicturesPath.isEmpty())
+                    picturesPath.addAll(shopPicturesPath);
+            });
+
+            ret = new Result(picturesPath);
+
+        } catch (Exception e) {
+
+            logger.error("业态种类为{}的商铺图片列表 查询报错", bizFormatType, e);
+
+            throw new RuntimeException();
+        }
+
+        return ret;
+    }
 }

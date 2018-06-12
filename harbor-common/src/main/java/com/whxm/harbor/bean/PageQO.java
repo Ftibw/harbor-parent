@@ -1,8 +1,11 @@
 package com.whxm.harbor.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiParam;
 import org.hibernate.validator.constraints.Range;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * @desc 分页查询对象
@@ -50,6 +53,7 @@ public class PageQO<T> {
         this.pageSize = pageSize;
     }
 
+    @ApiModelProperty(value = "查询条件",hidden = true)
     private T condition;
 
     public T getCondition() {

@@ -134,8 +134,8 @@
         from sys_user
         <where>
             <if test="userLoginname!=null">and user_loginname=#{userLoginname}</if>
-            <if test="userEmail!=null">and user_email=#{userEmail}</if>
-            <if test="userWechat!=null">and user_wechat=#{userWechat}</if>
+            <if test="userEmail!=null">or user_email=#{userEmail}</if>
+            <if test="userWechat!=null">or user_wechat=#{userWechat}</if>
         </where>
     </select>
 
