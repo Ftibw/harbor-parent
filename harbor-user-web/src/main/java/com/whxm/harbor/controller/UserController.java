@@ -137,6 +137,14 @@ public class UserController {
 
         Result ret = null;
 
+        if (null == user.getUserLoginname()) {
+            return new Result(HttpStatus.UNAUTHORIZED.value(), "用户名不能为空", null);
+        }
+
+        if (null == user.getUserPassword()) {
+            return new Result(HttpStatus.UNAUTHORIZED.value(), "用户密码不能为空", null);
+        }
+
         User info = userService.login(user);
 
         if (null != info) {

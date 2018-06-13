@@ -133,7 +133,7 @@
         <include refid="Base_Column_List"/>
         from sys_user
         <where>
-            <if test="userLoginname!=null">and user_loginname=#{userLoginname}</if>
+            user_loginname=#{userLoginname}
             <if test="userEmail!=null">or user_email=#{userEmail}</if>
             <if test="userWechat!=null">or user_wechat=#{userWechat}</if>
         </where>

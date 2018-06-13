@@ -157,4 +157,9 @@ public class TerminalServiceImpl implements TerminalService {
 
         return ret;
     }
+
+    @Override
+    public Map<String, Object> getTerminalScreensaverProgram(Map<String, Object> params) {
+        return null;
+    }
 }
