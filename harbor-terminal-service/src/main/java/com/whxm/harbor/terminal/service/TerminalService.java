@@ -5,8 +5,10 @@ import com.whxm.harbor.bean.PageQO;
 import com.whxm.harbor.bean.PageVO;
 import com.whxm.harbor.bean.Result;
 
+import java.util.Map;
+
 /**
- *终端服务
+ * 终端服务
  */
 public interface TerminalService {
     /**
@@ -48,4 +50,12 @@ public interface TerminalService {
      * @return ret
      */
     Result addBizTerminal(BizTerminal bizTerminal);
+
+    /**
+     * 根据终端编号和终端平台获取终端ID
+     *
+     * @param params 终端编号和终端平台
+     * @return 终端ID
+     */
+    Result getRegisteredTerminal(Map<String, Object> params);
 }

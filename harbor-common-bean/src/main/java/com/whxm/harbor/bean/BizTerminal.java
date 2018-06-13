@@ -7,7 +7,7 @@ public class BizTerminal {
 
     private String terminalName;
 
-    private Integer terminalNumber;
+    private String terminalNumber;
 
     private String terminalIp;
 
@@ -58,11 +58,11 @@ public class BizTerminal {
         this.terminalName = terminalName == null ? null : terminalName.trim();
     }
 
-    public Integer getTerminalNumber() {
+    public String getTerminalNumber() {
         return terminalNumber;
     }
 
-    public void setTerminalNumber(Integer terminalNumber) {
+    public void setTerminalNumber(String terminalNumber) {
         this.terminalNumber = terminalNumber;
     }
 

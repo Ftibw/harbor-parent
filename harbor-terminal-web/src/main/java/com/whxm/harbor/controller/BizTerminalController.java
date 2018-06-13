@@ -1,5 +1,6 @@
 package com.whxm.harbor.controller;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.whxm.harbor.bean.BizTerminal;
 import com.whxm.harbor.bean.PageQO;
 import com.whxm.harbor.bean.PageVO;
@@ -13,6 +14,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Api(value = "API - BusinessTerminalController", description = "终端 Controller")
 @RestController
@@ -114,5 +118,28 @@ public class BizTerminalController {
         return ret;
     }
 
+    @ApiOperation(value = "终端注册",
+            notes = "param: {'sn':'xx','os':1/2}  sn表示终端编号;os表示终端类型（1=android  2=windows）")
+    @PostMapping("/register")
+    public Map<String, Boolean> register(@RequestBody Map<String, Object> params) {
 
+        Map<String, Boolean> ret = new HashMap<>();
+
+        try {
+            if (HttpStatus.OK.value() ==
+                    terminalService.getRegisteredTerminal(params).getStatus()) {
+
+                ret.put("success", true);
+            } else {
+                ret.put("success", false);
+            }
+        } catch (Exception e) {
+
+            logger.error("终端注册检测报错", e);
+
+            ret.put("success", false);
+        }
+
+        return ret;
+    }
 }

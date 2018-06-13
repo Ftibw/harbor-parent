@@ -10,10 +10,12 @@ import com.whxm.harbor.mapper.BizTerminalMapper;
 import com.whxm.harbor.terminal.service.TerminalService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -126,6 +128,29 @@ public class TerminalServiceImpl implements TerminalService {
         } catch (Exception e) {
 
             logger.error("终端数据 添加报错", e);
+
+            throw new RuntimeException();
+        }
+
+        return ret;
+    }
+
+    @Override
+    public Result getRegisteredTerminal(Map<String, Object> params) {
+
+        Result ret = null;
+
+        try {
+            String terminalId = bizTerminalMapper.selectRegisteredTerminal(params);
+
+            if (null != terminalId)
+                ret = new Result(terminalId);
+            else
+                ret = new Result(HttpStatus.NOT_FOUND.value(), "终端未注册", null);
+
+        } catch (Exception e) {
+
+            logger.error("终端是否注册 查询报错 ", e);
 
             throw new RuntimeException();
         }

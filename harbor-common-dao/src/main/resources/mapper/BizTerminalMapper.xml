@@ -4,7 +4,7 @@
     <resultMap id="BaseResultMap" type="com.whxm.harbor.bean.BizTerminal">
         <id column="terminal_id" property="terminalId" jdbcType="VARCHAR"/>
         <result column="terminal_name" property="terminalName" jdbcType="VARCHAR"/>
-        <result column="terminal_number" property="terminalNumber" jdbcType="INTEGER"/>
+        <result column="terminal_number" property="terminalNumber" jdbcType="VARCHAR"/>
         <result column="terminal_ip" property="terminalIp" jdbcType="VARCHAR"/>
         <result column="terminal_type" property="terminalType" jdbcType="VARCHAR"/>
         <result column="terminal_location" property="terminalLocation" jdbcType="VARCHAR"/>
@@ -39,7 +39,7 @@
       is_deleted, add_terminal_time, register_terminal_time, 
       floor_id, terminal_switch_time, terminal_platform
       )
-    values (#{terminalId,jdbcType=VARCHAR}, #{terminalName,jdbcType=VARCHAR}, #{terminalNumber,jdbcType=INTEGER}, 
+    values (#{terminalId,jdbcType=VARCHAR}, #{terminalName,jdbcType=VARCHAR}, #{terminalNumber,jdbcType=VARCHAR},
       #{terminalIp,jdbcType=VARCHAR}, #{terminalType,jdbcType=VARCHAR}, #{terminalLocation,jdbcType=VARCHAR}, 
       #{terminalRotationAngle,jdbcType=INTEGER}, #{isTerminalOnline,jdbcType=INTEGER}, 
       #{isDeleted,jdbcType=INTEGER}, #{addTerminalTime,jdbcType=TIMESTAMP}, #{registerTerminalTime,jdbcType=TIMESTAMP}, 
@@ -100,7 +100,7 @@
                 #{terminalName,jdbcType=VARCHAR},
             </if>
             <if test="terminalNumber != null">
-                #{terminalNumber,jdbcType=INTEGER},
+                #{terminalNumber,jdbcType=VARCHAR},
             </if>
             <if test="terminalIp != null">
                 #{terminalIp,jdbcType=VARCHAR},
@@ -144,7 +144,7 @@
                 terminal_name = #{terminalName,jdbcType=VARCHAR},
             </if>
             <if test="terminalNumber != null">
-                terminal_number = #{terminalNumber,jdbcType=INTEGER},
+                terminal_number = #{terminalNumber,jdbcType=VARCHAR},
             </if>
             <if test="terminalIp != null">
                 terminal_ip = #{terminalIp,jdbcType=VARCHAR},
@@ -185,7 +185,7 @@
     <update id="updateByPrimaryKey" parameterType="com.whxm.harbor.bean.BizTerminal">
     update biz_terminal
     set terminal_name = #{terminalName,jdbcType=VARCHAR},
-      terminal_number = #{terminalNumber,jdbcType=INTEGER},
+      terminal_number = #{terminalNumber,jdbcType=VARCHAR},
       terminal_ip = #{terminalIp,jdbcType=VARCHAR},
       terminal_type = #{terminalType,jdbcType=VARCHAR},
       terminal_location = #{terminalLocation,jdbcType=VARCHAR},
@@ -209,7 +209,7 @@
         <where>
             is_deleted=1
             <if test="terminalName!=null">and terminal_name like concat('%',#{terminalName},'%')</if>
-            <if test="terminalNumber!=null">and terminal_number like concat('%',#{terminalNumber},'%')</if>
+            <if test="terminalNumber!=null">and terminal_number like concat('%',#{`},'%')</if>
             <if test="terminalType!=null">and terminal_type =#{terminalType}</if>
             <if test="isTerminalOnline!=null">and is_terminal_online=#{isTerminalOnline}</if>
             <if test="floorId!=null">and floor_id=#{floorId}</if>
@@ -224,4 +224,9 @@
         DELETE FROM screensaver_published_terminal_relation
         WHERE terminal_id=#{terminalId}
     </delete>
+
+    <select id="selectRegisteredTerminal" resultType="java.lang.String">
+        SELECT terminal_id FROM biz_terminal WHERE terminal_number=#{sn}
+        AND terminal_platform=#{os}
+    </select>
 </mapper>

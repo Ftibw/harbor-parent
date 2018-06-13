@@ -105,7 +105,7 @@
         bs.screensaver_id,
         bs.screensaver_program_name,
         bs.add_screensaver_time,
-        tmp1.screensaver_material_amount ,
+        tmp1.screensaver_material_amount,
         tmp2.screensaver_published_amount
     FROM
         biz_screensaver bs
