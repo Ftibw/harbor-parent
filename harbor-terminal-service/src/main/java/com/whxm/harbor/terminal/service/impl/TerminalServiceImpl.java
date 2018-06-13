@@ -33,7 +33,7 @@ public class TerminalServiceImpl implements TerminalService {
             terminal = bizTerminalMapper.selectByPrimaryKey(bizTerminalId);
 
             if (null == terminal) {
-                logger.error("错误终端ID", terminal);
+                logger.error("ID为{}的终端不存在", bizTerminalId);
             }
         } catch (Exception e) {
 
@@ -211,7 +211,7 @@ public class TerminalServiceImpl implements TerminalService {
 
         } catch (Exception e) {
 
-            logger.error("编号为{}的终端屏保信息 查询报错", terminalNumber);
+            logger.error("编号为{}的终端屏保信息 查询报错", terminalNumber, e);
 
             throw new RuntimeException();
         }
