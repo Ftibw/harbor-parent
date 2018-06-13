@@ -58,4 +58,11 @@ public interface TerminalService {
      * @return 终端ID
      */
     Result getRegisteredTerminal(Map<String, Object> params);
+
+    /**
+     * 根据终端编号和屏保ID
+     * @param params
+     * @return
+     */
+    Map<String,Object> getTerminalScreensaverProgram(Map<String, Object> params);
 }

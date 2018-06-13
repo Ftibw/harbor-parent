@@ -40,8 +40,8 @@ public class Swagger2 {
     }
 
     private ApiInfo apiInfo() {
-        Contact contact=new Contact("Ftibw",
-                "http://github.com/ZXWFtibw","ftibw@live.com");
+        Contact contact = new Contact("Ftibw",
+                "http://q-media.cn", "ftibw@live.com");
 
         return new ApiInfoBuilder()
                 .title(title + " RESTful APIs")

@@ -119,7 +119,7 @@ public class BizTerminalController {
     }
 
     @ApiOperation(value = "终端注册",
-            notes = "param: {'sn':'xx','os':1/2}  sn表示终端编号;os表示终端类型（1=android  2=windows）")
+            notes = "param: {\"sn\":\"xx\",\"os\":1/2}  sn表示终端编号;os表示终端类型（1=android  2=windows）")
     @PostMapping("/register")
     public Map<String, Boolean> register(@RequestBody Map<String, Object> params) {
 
@@ -142,4 +142,20 @@ public class BizTerminalController {
 
         return ret;
     }
+
+    @ApiOperation(value = "获取终端的屏保节目",
+            notes = "param: {\"sn\":\"xx\"prog\":xx}    sn表示终端编号；prog表示当前正在播放的屏保节目编号")
+    @PostMapping("/program")
+    public Map<String, Object> program(Map<String, Object> params) {
+
+        Map<String, Object> ret = new HashMap<>();
+
+        ret= terminalService.getTerminalScreensaverProgram(params);
+
+        return ret;
+    }
+}
+
+class DataGird {
+
 }
