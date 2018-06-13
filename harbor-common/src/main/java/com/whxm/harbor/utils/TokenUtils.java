@@ -17,7 +17,7 @@ public class TokenUtils {
     /**
      * 混合后的搅拌低比例
      */
-    private final static int TOKEN_FACTOR_LOW = 11;
+    private final static int TARGET_FACTOR_LOW = 11;
     /**
      * 搅拌次数
      */
@@ -41,7 +41,7 @@ public class TokenUtils {
 
             s = s.substring(TARGET_FACTOR_HIGH) + s.substring(0, TARGET_FACTOR_HIGH);
 
-            s = s.substring(TOKEN_FACTOR_LOW) + s.substring(0, TOKEN_FACTOR_LOW);
+            s = s.substring(TARGET_FACTOR_LOW) + s.substring(0, TARGET_FACTOR_LOW);
         }
         return s;
     }
@@ -58,7 +58,7 @@ public class TokenUtils {
 
             text = text.substring(64 - TARGET_FACTOR_HIGH) + text.substring(0, 64 - TARGET_FACTOR_HIGH);
 
-            text = text.substring(64 - TOKEN_FACTOR_LOW) + text.substring(0, 64 - TOKEN_FACTOR_LOW);
+            text = text.substring(64 - TARGET_FACTOR_LOW) + text.substring(0, 64 - TARGET_FACTOR_LOW);
         }
 
         text = text.substring(text.length() / 2);
@@ -80,7 +80,7 @@ public class TokenUtils {
 
             text = text.substring(64 - TARGET_FACTOR_HIGH) + text.substring(0, 64 - TARGET_FACTOR_HIGH);
 
-            text = text.substring(64 - TOKEN_FACTOR_LOW) + text.substring(0, 64 - TOKEN_FACTOR_LOW);
+            text = text.substring(64 - TARGET_FACTOR_LOW) + text.substring(0, 64 - TARGET_FACTOR_LOW);
         }
 
         return text.substring(0, text.length() / 2);
