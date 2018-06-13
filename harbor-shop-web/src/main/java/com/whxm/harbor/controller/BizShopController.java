@@ -62,6 +62,7 @@ public class BizShopController {
             @PathVariable("ID") String shopId
     ) {
         Result ret = null;
+
         BizShop shop = null;
         try {
             shop = shopService.getBizShop(shopId);
@@ -217,18 +218,20 @@ public class BizShopController {
     }
 
     @ApiOperation(value = "根据商铺的业态类型获取商铺图片")
-    @GetMapping("/pictures/{type}")
-    public Result getPicturesByType(@PathVariable("type") String bizFormatType) {
+    @GetMapping("/typePictures")
+    public Result getPicturesByType(
+            @ApiParam(name = "type", value = "商铺的业态种类", required = true)
+            String type) {
 
         Result ret = null;
 
         try {
-            ret = shopService.getShopPicturesByBizType(bizFormatType);
+            ret = shopService.getShopPicturesByBizType(type);
 
         } catch (Exception e) {
-            logger.error("业态类型为{}的商铺图片 获取报错", bizFormatType, e);
+            logger.error("业态类型为{}的商铺图片 获取报错", type, e);
 
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "业态类型为" + bizFormatType + "的商铺图片 获取报错", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "业态类型为" + type + "的商铺图片 获取报错", null);
         }
 
         return ret;

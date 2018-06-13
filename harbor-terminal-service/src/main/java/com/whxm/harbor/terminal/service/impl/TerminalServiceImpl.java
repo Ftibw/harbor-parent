@@ -13,10 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Transactional
@@ -123,6 +120,11 @@ public class TerminalServiceImpl implements TerminalService {
         Result ret = null;
 
         try {
+
+            bizTerminal.setIsDeleted(1);
+
+            bizTerminal.setAddTerminalTime(new Date());
+
             int affectRow = bizTerminalMapper.insert(bizTerminal);
 
             ret = new Result("终端数据添加了" + affectRow + "行");

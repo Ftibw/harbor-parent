@@ -41,7 +41,7 @@ public class BizTerminalController {
 
         } catch (Exception e) {
             logger.error("终端列表 获取报错", e);
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "终端列表 获取报错", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "终端列表 获取报错", pageQO);
         }
 
         return ret;
@@ -51,18 +51,20 @@ public class BizTerminalController {
     @GetMapping("/bizTerminal/{ID}")
     public Result getBizTerminal(
             @ApiParam(name = "ID", value = "终端的ID", required = true)
-            @PathVariable("ID") String terminalNumber
+            @PathVariable("ID") String terminalId
     ) {
         Result ret = null;
         BizTerminal terminal = null;
         try {
-            terminal = terminalService.getBizTerminal(terminalNumber);
+            terminal = terminalService.getBizTerminal(terminalId);
 
             ret = new Result(terminal);
 
         } catch (Exception e) {
-            logger.error("终端数据 获取报错", e);
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "终端数据 获取报错", null);
+
+            logger.error("ID为{}的终端数据 获取报错", terminalId, e);
+
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "ID为" + terminalId + "的终端数据 获取报错", null);
         }
 
         return ret;
@@ -77,7 +79,7 @@ public class BizTerminalController {
         } catch (Exception e) {
 
             logger.error("终端数据 修改报错", e);
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "终端数据 修改报错", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "终端数据 修改报错", bizTerminal);
         }
 
         return ret;
@@ -87,16 +89,16 @@ public class BizTerminalController {
     @DeleteMapping("/bizTerminal/{ID}")
     public Result delBizTerminal(
             @ApiParam(name = "ID", value = "终端的ID", required = true)
-            @PathVariable("ID") String bizTerminalId
+            @PathVariable("ID") String terminalId
     ) {
         Result ret = null;
         try {
-            ret = terminalService.deleteBizTerminal(bizTerminalId);
+            ret = terminalService.deleteBizTerminal(terminalId);
         } catch (Exception e) {
 
-            logger.error("终端数据 删除报错", e);
+            logger.error("ID为{}的终端数据 删除报错", terminalId, e);
 
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "终端数据 删除报错", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "ID为" + terminalId + "的终端数据 删除报错", null);
         }
 
         return ret;
@@ -112,7 +114,7 @@ public class BizTerminalController {
         } catch (Exception e) {
             logger.error("终端 添加报错", e);
 
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "终端 添加报错", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "终端 添加报错", bizTerminal);
         }
         return ret;
     }

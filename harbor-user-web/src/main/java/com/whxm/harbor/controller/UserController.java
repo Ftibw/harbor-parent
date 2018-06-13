@@ -48,7 +48,7 @@ public class UserController {
 
         } catch (Exception e) {
             logger.error("用户列表 获取报错", e);
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "用户列表 获取报错", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "用户列表 获取报错", pageQO);
         }
 
         return ret;
@@ -68,8 +68,8 @@ public class UserController {
             ret = new Result(user);
 
         } catch (Exception e) {
-            logger.error("用户数据 获取报错", e);
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "用户数据 获取报错", null);
+            logger.error("ID为{}的用户数据 获取报错", userId, e);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "ID为" + userId + "的用户数据 获取报错", null);
         }
 
         return ret;
@@ -84,7 +84,7 @@ public class UserController {
         } catch (Exception e) {
 
             logger.error("用户数据 修改报错", e);
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "用户数据 修改报错", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "用户数据 修改报错", user);
         }
 
         return ret;
@@ -101,9 +101,9 @@ public class UserController {
             ret = userService.deleteUser(userId);
         } catch (Exception e) {
 
-            logger.error("用户数据 删除报错", e);
+            logger.error("ID为{}的用户数据 删除报错", userId, e);
 
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "用户数据 删除报错", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "ID为" + userId + "的用户数据 删除报错", null);
         }
 
         return ret;
@@ -120,9 +120,9 @@ public class UserController {
             ret = userService.addUser(user);
 
         } catch (Exception e) {
-            logger.error("用户 添加报错", e);
+            logger.error("用户数据 添加报错", e);
 
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "用户 添加报错", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "用户数据 添加报错", user);
         }
         return ret;
     }
