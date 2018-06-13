@@ -205,7 +205,7 @@ public class ShopServiceImpl implements ShopService {
 
                 List<String> shopPicturesPath = getShopPicturesById(shopId);
 
-                if (null != shopPicturesPath && !shopPicturesPath.isEmpty())
+                if (null != shopPicturesPath)
                     picturesPath.addAll(shopPicturesPath);
             });
 

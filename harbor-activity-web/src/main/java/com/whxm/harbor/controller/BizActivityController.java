@@ -5,6 +5,7 @@ import com.whxm.harbor.bean.BizActivity;
 import com.whxm.harbor.bean.PageQO;
 import com.whxm.harbor.bean.PageVO;
 import com.whxm.harbor.bean.Result;
+import com.whxm.harbor.conf.FileDir;
 import com.whxm.harbor.utils.FileUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,8 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.HashMap;
 
 @Api(value = "API - BusinessActivityController", description = "活动 Controller")
 @RestController
@@ -130,32 +129,10 @@ public class BizActivityController {
     @ApiOperation("上传logo")
     @PostMapping("/logo")
     public Result uploadLogo(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-        String ACTIVITY_LOGO_DIR = "activityLogo";
 
-        String originName = null;
-
-        if (!file.isEmpty()) {
-            try {
-                originName = file.getOriginalFilename();
-
-                String href = FileUtils.upload(file, request, ACTIVITY_LOGO_DIR);
-
-                HashMap<String, Object> map = new HashMap<>();
-                map.put("activityLogo", href);
-                map.put("activityLogoSize", file.getSize());
-
-                return new Result(HttpStatus.OK.value(), "文件" + originName + "上传成功", map);
-
-            } catch (IOException e) {
-                String msg = "文件" + originName + "上传 发生错误";
-                logger.error(msg, e);
-                return new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), msg, file);
-            }
-        } else {
-
-            logger.error("上传的文件是空的");
-            return new Result(HttpStatus.OK.value(), "上传的文件是空的", file);
-        }
+        return FileUtils.upload(file, request, fileDir.getActivityLogoDir());
     }
 
+    @Autowired
+    private FileDir fileDir;
 }

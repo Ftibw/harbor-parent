@@ -264,4 +264,10 @@
         JOIN biz_format bf USING (biz_format_id)
         WHERE bf.biz_format_type=#{bizFormatType}
     </select>
+
+    <select id="selectShopPicturesByType" >
+        SELECT bs.shop_id FROM biz_shop bs
+        JOIN biz_format bf USING (biz_format_id)
+        WHERE bf.biz_format_type=#{bizFormatType}
+    </select>
 </mapper>

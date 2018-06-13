@@ -2,6 +2,7 @@ package com.whxm.harbor.controller;
 
 import com.whxm.harbor.bean.PageQO;
 import com.whxm.harbor.bean.PageVO;
+import com.whxm.harbor.conf.FileDir;
 import com.whxm.harbor.screensaver.material.service.ScreensaverMaterialService;
 import com.whxm.harbor.bean.BizScreensaverMaterial;
 import com.whxm.harbor.bean.Result;
@@ -17,8 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.HashMap;
 
 @Api(value = "API - BusinessScreensaverMaterialController", description = "屏保素材 Controller")
 @RestController
@@ -127,35 +126,10 @@ public class BizScreensaverMaterialController {
     @ApiOperation("上传屏保素材图片")
     @PostMapping("/picture")
     public Result uploadPicture(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-        String ACTIVITY_LOGO_DIR = "screensaverMaterialPicture";
 
-        String originName = null;
-
-        if (!file.isEmpty()) {
-            try {
-                originName = file.getOriginalFilename();
-
-                String href = FileUtils.upload(file, request, ACTIVITY_LOGO_DIR);
-
-                HashMap<String, Object> map = new HashMap<>();
-                //返回图片的保存路径,图片原名,图片大小,图片新名
-                map.put("screensaverMaterialImgPath", href);
-                map.put("screensaverMaterialImgName", originName);
-                map.put("screensaverMaterialSize", file.getSize());
-                map.put("imgNewName", href.replaceAll("^.*\\\\(.*)\\..*$", "$1"));
-
-                return new Result(HttpStatus.OK.value(), "文件" + originName + "上传成功", map);
-
-            } catch (IOException e) {
-                String msg = "文件" + originName + "上传 发生错误";
-                logger.error(msg, e);
-                return new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), msg, file);
-            }
-        } else {
-
-            logger.error("上传的文件是空的");
-            return new Result(HttpStatus.OK.value(), "上传的文件是空的", file);
-        }
+        return FileUtils.upload(file, request, fileDir.getScreensaverMaterialImgDir());
     }
 
+    @Autowired
+    private FileDir fileDir;
 }

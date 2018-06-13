@@ -5,6 +5,7 @@ import com.whxm.harbor.bean.BizActivityMaterial;
 import com.whxm.harbor.bean.PageQO;
 import com.whxm.harbor.bean.PageVO;
 import com.whxm.harbor.bean.Result;
+import com.whxm.harbor.conf.FileDir;
 import com.whxm.harbor.utils.FileUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,8 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.HashMap;
 
 @Api(value = "API - BusinessActivityMaterialController", description = "活动素材 Controller")
 @RestController
@@ -129,72 +128,10 @@ public class BizActivityMaterialController {
     @ApiOperation("上传活动素材图片")
     @PostMapping("/picture")
     public Result uploadPicture(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-        String ACTIVITY_LOGO_DIR = "activityMaterialPicture";
 
-        String originName = null;
-
-        if (!file.isEmpty()) {
-            try {
-                originName = file.getOriginalFilename();
-
-                String href = FileUtils.upload(file, request, ACTIVITY_LOGO_DIR);
-
-                HashMap<String, Object> map = new HashMap<>();
-                map.put("activityMaterialImgPath", href);
-                map.put("activityMaterialImgName", originName);
-                map.put("activityMaterialSize", file.getSize());
-                map.put("imgNewName", href.replaceAll("^.*\\\\(.*)\\..*$", "$1"));
-
-                return new Result(HttpStatus.OK.value(), "文件" + originName + "上传成功", map);
-
-            } catch (IOException e) {
-                String msg = "文件" + originName + "上传 发生错误";
-                logger.error(msg, e);
-                return new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), msg, file);
-            }
-        } else {
-
-            logger.error("上传的文件是空的");
-            return new Result(HttpStatus.OK.value(), "上传的文件是空的", file);
-        }
-    }
-    /**
-     * 文件上传返回参数模板方法
-     */
-    /*public Result uploadTemplate(MultipartFile file, HttpServletRequest request, String uploadDir, ParamCallback callback) {
-        String originName = null;
-        if (!file.isEmpty()) {
-            try {
-                originName = file.getOriginalFilename();
-                String href = FileUtils.upload(file, request, uploadDir);
-                HashMap<String, Object> map = new HashMap<>();
-                callback.execute(map, href, originName, file.getSize());
-                return new Result(HttpStatus.OK.value(), "文件" + originName + "上传成功", map);
-            } catch (IOException e) {
-                String msg = "文件" + originName + "上传 发生错误";
-                logger.error(msg, e);
-                return new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), msg, null);
-            }
-        } else {
-            logger.error("上传的文件是空的");
-            return new Result(HttpStatus.OK.value(), "上传的文件是空的", null);
-        }
+        return FileUtils.upload(file, request, fileDir.getActivityMaterialImgDir());
     }
 
-    interface ParamCallback {
-        void execute(Map<String, Object> map, String var1, String var2, Long var3);
-    }
-
-    @ApiOperation("上传活动素材图片")
-    @PostMapping("/img")
-    public Result uploadImg(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-
-        String ACTIVITY_LOGO_DIR = "activityMaterialPicture";
-
-        return uploadTemplate(file, request, ACTIVITY_LOGO_DIR, (map, var1, var2, var3) -> {
-            map.put("activityMaterialImgPath", var1);
-            map.put("activityMaterialImgName", var2);
-            map.put("activityMaterialSize", file.getSize());
-        });
-    }*/
+    @Autowired
+    private FileDir fileDir;
 }

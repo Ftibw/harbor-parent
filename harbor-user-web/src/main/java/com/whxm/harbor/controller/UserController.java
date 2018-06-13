@@ -4,6 +4,7 @@ import com.whxm.harbor.bean.User;
 import com.whxm.harbor.bean.PageQO;
 import com.whxm.harbor.bean.PageVO;
 import com.whxm.harbor.bean.Result;
+import com.whxm.harbor.conf.FileDir;
 import com.whxm.harbor.utils.MD5Util;
 import com.whxm.harbor.user.service.UserService;
 import com.whxm.harbor.utils.TokenUtils;

@@ -4,6 +4,7 @@ import com.whxm.harbor.bean.BizShop;
 import com.whxm.harbor.bean.PageQO;
 import com.whxm.harbor.bean.PageVO;
 import com.whxm.harbor.bean.Result;
+import com.whxm.harbor.conf.FileDir;
 import com.whxm.harbor.utils.FileUtils;
 import com.whxm.harbor.shop.service.ShopService;
 import io.swagger.annotations.Api;
@@ -18,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -136,57 +136,35 @@ public class BizShopController {
         return ret;
     }
 
+    @Autowired
+    private FileDir fileDir;
 
     @ApiOperation("上传商铺logo")
     @PostMapping("/logo")
     public Result uploadLogo(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-        Result ret = null;
 
-        String SHOP_LOGO_DIR = "shopLogo";
-
-        if (!file.isEmpty()) {
-            try {
-                String href = FileUtils.upload(file, request, SHOP_LOGO_DIR);
-                ret = new Result(href);
-            } catch (IOException e) {
-                e.printStackTrace();
-                logger.error("商铺logo 上传错误");
-                ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "商铺logo 上传错误", file);
-            }
-        } else {
-            logger.debug("商铺logo文件为空");
-
-            ret = new Result(file);
-        }
-        return ret;
+        return FileUtils.upload(file, request, fileDir.getShopLogoDir());
     }
 
     @ApiOperation(value = "上传商铺图片", notes = "表单控件中name属性的值必须为file")
     @PostMapping("/pictures")
     public Result uploadPicture(HttpServletRequest request) {
+
         Result ret = null;
 
         List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
-
-        String SHOP_PICTURE_DIR = "shopPicture";
 
         ArrayList<Object> retList = new ArrayList<>();
 
         files.forEach(file -> {
             try {
+                Map<String, Object> map = new HashMap<String, Object>(4);
 
-                Long size = file.getSize();
-
-                String href = FileUtils.upload(file, request, SHOP_PICTURE_DIR);
-
-                Map<String, Object> map = new HashMap<String, Object>(2);
-
-                map.put("shopPicturePath", href);
-                map.put("shopPictureSize", size);
+                FileUtils.upload(file, request, fileDir.getShopPictureDir(), map);
 
                 retList.add(map);
 
-            } catch (IOException e) {
+            } catch (Exception e) {
 
                 logger.error("文件" + file.getOriginalFilename() + "上传 发生错误", e);
             }
@@ -221,7 +199,7 @@ public class BizShopController {
     @GetMapping("/typePictures")
     public Result getPicturesByType(
             @ApiParam(name = "type", value = "商铺的业态种类", required = true)
-            String type) {
+                    String type) {
 
         Result ret = null;
 

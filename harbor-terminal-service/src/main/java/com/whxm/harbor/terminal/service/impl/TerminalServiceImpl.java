@@ -6,6 +6,7 @@ import com.whxm.harbor.bean.*;
 import com.whxm.harbor.mapper.BizScreensaverMaterialMapper;
 import com.whxm.harbor.mapper.BizTerminalMapper;
 import com.whxm.harbor.terminal.service.TerminalService;
+import com.whxm.harbor.utils.IPv4Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

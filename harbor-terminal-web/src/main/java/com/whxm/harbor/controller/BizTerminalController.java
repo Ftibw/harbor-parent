@@ -5,6 +5,7 @@ import com.whxm.harbor.bean.PageQO;
 import com.whxm.harbor.bean.PageVO;
 import com.whxm.harbor.bean.Result;
 import com.whxm.harbor.terminal.service.TerminalService;
+import com.whxm.harbor.utils.IPv4Util;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -106,9 +108,11 @@ public class BizTerminalController {
 
     @ApiOperation("添加终端")
     @PostMapping("/bizTerminal")
-    public Result addBizTerminal(@RequestBody BizTerminal bizTerminal) {
+    public Result addBizTerminal(@RequestBody BizTerminal bizTerminal, HttpServletRequest request) {
         Result ret = null;
         try {
+            bizTerminal.setTerminalIp(IPv4Util.getIpAddress(request));
+
             ret = terminalService.addBizTerminal(bizTerminal);
 
         } catch (Exception e) {
