@@ -180,14 +180,12 @@ public class TerminalServiceImpl implements TerminalService {
         try {
             terminalInfo = bizTerminalMapper.selectTerminalWithScreensaver(terminalNumber);
 
-            if (null == terminalInfo)
-                throw new RuntimeException("编号为" + terminalNumber + "的终端不存在");
-
-            //屏保信息
-            screensaverId = terminalInfo.get("screensaverId");
-            //终端开关机时间
-            terminalSwitchTime = terminalInfo.get("terminalSwitchTime");
-
+            if (null != terminalInfo) {
+                //屏保信息
+                screensaverId = terminalInfo.get("screensaverId");
+                //终端开关机时间
+                terminalSwitchTime = terminalInfo.get("terminalSwitchTime");
+            }
             //先存了list引用再说
             ret.build("prog", screensaverId)
                     .build("on_off", terminalSwitchTime)
