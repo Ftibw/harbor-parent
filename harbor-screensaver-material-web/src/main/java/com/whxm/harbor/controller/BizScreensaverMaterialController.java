@@ -31,7 +31,7 @@ public class BizScreensaverMaterialController {
 
     @ApiOperation("获取屏保素材列表")
     @GetMapping("/bizScreensaverMaterials")
-    public Result getBizActivities(PageQO<BizScreensaverMaterial> pageQO,BizScreensaverMaterial condition) {
+    public Result getBizActivities(PageQO<BizScreensaverMaterial> pageQO, BizScreensaverMaterial condition) {
 
         Result ret = null;
 
@@ -44,7 +44,7 @@ public class BizScreensaverMaterialController {
 
         } catch (Exception e) {
             logger.error("屏保素材列表 获取报错", e);
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保素材列表 获取报错", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保素材列表 获取报错", pageQO);
         }
 
         return ret;
@@ -64,8 +64,10 @@ public class BizScreensaverMaterialController {
             ret = new Result(screensaverMaterial);
 
         } catch (Exception e) {
-            logger.error("屏保素材数据 获取报错", e);
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保素材数据 获取报错", null);
+
+            logger.error("ID为{}的屏保素材数据 获取报错", screensaverMaterialId, e);
+
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "ID为" + screensaverMaterialId + "的屏保素材数据 获取报错", null);
         }
 
         return ret;
@@ -80,9 +82,9 @@ public class BizScreensaverMaterialController {
 
         } catch (Exception e) {
 
-            logger.error("屏保素材数据 修改报错",e);
+            logger.error("屏保素材数据 修改报错", e);
 
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保素材数据 修改报错", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保素材数据 修改报错", bizScreensaverMaterial);
         }
 
         return ret;
@@ -99,9 +101,9 @@ public class BizScreensaverMaterialController {
             ret = screensaverMaterialService.deleteBizScreensaverMaterial(bizScreensaverMaterialId);
         } catch (Exception e) {
 
-            logger.error("屏保素材数据 删除报错",e);
+            logger.error("ID为{}的屏保素材数据 删除报错", bizScreensaverMaterialId, e);
 
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保素材数据 删除报错", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "ID为" + bizScreensaverMaterialId + "的屏保素材数据 删除报错", null);
         }
 
         return ret;
@@ -117,7 +119,7 @@ public class BizScreensaverMaterialController {
         } catch (Exception e) {
             logger.error("屏保素材 添加报错", e);
 
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保素材 添加报错", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保素材 添加报错", bizScreensaverMaterial);
         }
         return ret;
     }
@@ -147,12 +149,12 @@ public class BizScreensaverMaterialController {
             } catch (IOException e) {
                 String msg = "文件" + originName + "上传 发生错误";
                 logger.error(msg, e);
-                return new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), msg, null);
+                return new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), msg, file);
             }
         } else {
 
             logger.error("上传的文件是空的");
-            return new Result(HttpStatus.OK.value(), "上传的文件是空的", null);
+            return new Result(HttpStatus.OK.value(), "上传的文件是空的", file);
         }
     }
 

@@ -49,7 +49,7 @@ public class BizShopController {
 
             logger.error("商铺列表 获取错误", e);
 
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "error", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "商铺列表 获取错误", pageQO);
         }
 
         return ret;
@@ -70,9 +70,9 @@ public class BizShopController {
 
         } catch (Exception e) {
 
-            logger.error("商铺数据 获取报错", e);
+            logger.error("ID为{}的商铺数据 获取报错", shopId, e);
 
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "error", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "ID为" + shopId + "的商铺数据 获取报错", null);
         }
 
         return ret;
@@ -88,7 +88,9 @@ public class BizShopController {
 
         } catch (Exception e) {
 
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "error", null);
+            logger.error("商铺数据 修改报错", e);
+
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "商铺数据 修改报错", bizShop);
         }
         return ret;
     }
@@ -107,7 +109,7 @@ public class BizShopController {
 
             logger.error("ID为{}的商铺 状态(启用/停用)变更报错", bizShopId);
 
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "error", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "ID为" + bizShopId + "的商铺 状态切换报错", null);
         }
 
         return ret;
@@ -127,7 +129,7 @@ public class BizShopController {
 
             logger.error("商铺数据 添加报错", e);
 
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "error", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "商铺数据 添加报错", param);
         }
 
         return ret;
@@ -148,11 +150,12 @@ public class BizShopController {
             } catch (IOException e) {
                 e.printStackTrace();
                 logger.error("商铺logo 上传错误");
-                ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "商铺logo 上传错误", null);
+                ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "商铺logo 上传错误", file);
             }
         } else {
             logger.debug("商铺logo文件为空");
-            ret = new Result(null);
+
+            ret = new Result(file);
         }
         return ret;
     }
@@ -183,8 +186,8 @@ public class BizShopController {
                 retList.add(map);
 
             } catch (IOException e) {
-                logger.error("文件" + file.getOriginalFilename() + "上传 发生错误", e);
 
+                logger.error("文件" + file.getOriginalFilename() + "上传 发生错误", e);
             }
         });
 
@@ -220,7 +223,7 @@ public class BizShopController {
         Result ret = null;
 
         try {
-             ret = shopService.getShopPicturesByBizType(bizFormatType);
+            ret = shopService.getShopPicturesByBizType(bizFormatType);
 
         } catch (Exception e) {
             logger.error("业态类型为{}的商铺图片 获取报错", bizFormatType, e);

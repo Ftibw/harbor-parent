@@ -45,7 +45,7 @@ public class BizActivityMaterialController {
         } catch (Exception e) {
             logger.error("活动素材列表 获取报错", e);
 
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "活动素材列表 获取报错", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "活动素材列表 获取报错", pageQO);
         }
 
         return ret;
@@ -59,14 +59,19 @@ public class BizActivityMaterialController {
     ) {
         Result ret = null;
         BizActivityMaterial activityMaterial = null;
+
+        logger.info("活动素材的ID为{}", activityMaterialId);
+
         try {
             activityMaterial = activityMaterialService.getBizActivityMaterial(activityMaterialId);
 
-            ret = new Result(200, "ok", activityMaterial);
+            ret = new Result(activityMaterial);
 
         } catch (Exception e) {
-            logger.error("活动素材数据 获取报错", e);
-            ret = new Result(500, "error", null);
+
+            logger.error("ID为{}活动素材数据 获取报错", activityMaterialId, e);
+
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "ID为" + activityMaterialId + "活动素材数据 获取报错", null);
         }
 
         return ret;
@@ -75,7 +80,15 @@ public class BizActivityMaterialController {
     @ApiOperation("修改活动素材")
     @PutMapping("/bizActivityMaterial")
     public Result updateBizActivityMaterial(@RequestBody BizActivityMaterial bizActivityMaterial) {
-        Result result = activityMaterialService.updateBizActivityMaterial(bizActivityMaterial);
+        Result result = null;
+        try {
+            result = activityMaterialService.updateBizActivityMaterial(bizActivityMaterial);
+        } catch (Exception e) {
+
+            logger.error("活动素材数据 修改报错", e);
+
+            result = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "活动素材数据 修改报错", bizActivityMaterial);
+        }
         return result;
     }
 
@@ -85,14 +98,31 @@ public class BizActivityMaterialController {
             @ApiParam(name = "ID", value = "活动素材的ID", required = true)
             @PathVariable("ID") Integer bizActivityMaterialId
     ) {
-        Result result = activityMaterialService.deleteBizActivityMaterial(bizActivityMaterialId);
+        Result result = null;
+        try {
+            result = activityMaterialService.deleteBizActivityMaterial(bizActivityMaterialId);
+        } catch (Exception e) {
+
+            logger.error("ID为{}的活动素材 删除报错", bizActivityMaterialId, e);
+
+            result = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "ID为" + bizActivityMaterialId + "的活动素材 删除报错", null);
+        }
         return result;
     }
 
     @ApiOperation("添加活动素材")
     @PostMapping("/bizActivityMaterial")
     public Result addBizActivityMaterial(@RequestBody BizActivityMaterial bizActivityMaterial) {
-        Result result = activityMaterialService.addBizActivityMaterial(bizActivityMaterial);
+        Result result = null;
+        try {
+            result = activityMaterialService.addBizActivityMaterial(bizActivityMaterial);
+
+        } catch (Exception e) {
+
+            logger.error("活动素材数据 添加报错", e);
+
+            result = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "活动素材数据 添加报错", bizActivityMaterial);
+        }
         return result;
     }
 
@@ -120,12 +150,12 @@ public class BizActivityMaterialController {
             } catch (IOException e) {
                 String msg = "文件" + originName + "上传 发生错误";
                 logger.error(msg, e);
-                return new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), msg, null);
+                return new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), msg, file);
             }
         } else {
 
             logger.error("上传的文件是空的");
-            return new Result(HttpStatus.OK.value(), "上传的文件是空的", null);
+            return new Result(HttpStatus.OK.value(), "上传的文件是空的", file);
         }
     }
     /**

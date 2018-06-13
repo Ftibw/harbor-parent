@@ -11,7 +11,7 @@ spring:
   redis:
       host: 47.94.202.250
   datasource:
-    url: jdbc:mysql://47.94.202.250:3306/harbor?useUnicode=true&characterEncoding=utf8   #47.94.202.250
+    url: jdbc:mysql://localhost:3306/harbor?useUnicode=true&characterEncoding=utf8   #47.94.202.250
     username: root
     password: 123456
     type: com.alibaba.druid.pool.DruidDataSource #druid数据源

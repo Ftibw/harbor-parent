@@ -38,7 +38,7 @@ public class BusinessFormatController {
 
             logger.error("业态列表 获取报错", e);
 
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "业态列表 获取报错", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "业态列表 获取报错", pageQO);
         }
 
         return ret;
@@ -75,7 +75,7 @@ public class BusinessFormatController {
 
             logger.error("业态数据 添加报错", e);
 
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "业态数据 添加报错", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "业态数据 添加报错", bizFormat);
 
         }
         return ret;
@@ -92,7 +92,7 @@ public class BusinessFormatController {
 
             logger.error("", e);
 
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "业态数据 修改报错", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "业态数据 修改报错", bizFormat);
         }
         return ret;
     }
@@ -106,9 +106,9 @@ public class BusinessFormatController {
             ret = businessFormatService.deleteBizFormat(bizFormatId);
         } catch (Exception e) {
 
-            logger.error("", e);
+            logger.error("ID为{}的业态数据 删除报错", e);
 
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "业态数据 删除报错", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "ID为" + bizFormatId + "的业态数据 删除报错", null);
         }
         return ret;
     }

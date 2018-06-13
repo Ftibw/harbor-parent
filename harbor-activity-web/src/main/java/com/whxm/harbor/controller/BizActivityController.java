@@ -31,7 +31,7 @@ public class BizActivityController {
 
     @ApiOperation("获取活动列表")
     @GetMapping("/bizActivities")
-    public Result getBizActivities(PageQO<BizActivity> pageQO,BizActivity condition) {
+    public Result getBizActivities(PageQO<BizActivity> pageQO, BizActivity condition) {
         Result ret = null;
 
         PageVO<BizActivity> pageVO = null;
@@ -46,6 +46,8 @@ public class BizActivityController {
         } catch (Exception e) {
 
             logger.error("活动列表 获取报错", e);
+
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "", pageQO);
         }
 
         return ret;
@@ -62,11 +64,13 @@ public class BizActivityController {
         try {
             activity = activityService.getBizActivity(activityId);
 
-            ret = new Result(200, "ok", activity);
+            ret = new Result(activity);
 
         } catch (Exception e) {
-            logger.error("活动数据 获取报错", e);
-            ret = new Result(500, "error", null);
+
+            logger.error("ID为{}的活动数据 获取报错", activityId, e);
+
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "ID为" + activityId + "的活动数据 获取报错", null);
         }
 
         return ret;
@@ -75,7 +79,15 @@ public class BizActivityController {
     @ApiOperation("修改活动")
     @PutMapping("/bizActivity")
     public Result updateBizActivity(@RequestBody BizActivity bizActivity) {
-        Result result = activityService.updateBizActivity(bizActivity);
+        Result result = null;
+        try {
+            result = activityService.updateBizActivity(bizActivity);
+        } catch (Exception e) {
+
+            logger.error("活动数据 修改报错", e);
+
+            result = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "活动数据 修改报错", bizActivity);
+        }
         return result;
     }
 
@@ -85,14 +97,33 @@ public class BizActivityController {
             @ApiParam(name = "ID", value = "活动的ID", required = true)
             @PathVariable("ID") Integer bizActivityId
     ) {
-        Result result = activityService.deleteBizActivity(bizActivityId);
+        Result result = null;
+
+        try {
+            result = activityService.deleteBizActivity(bizActivityId);
+
+        } catch (Exception e) {
+
+            logger.error("ID为{}的活动数据 删除报错", bizActivityId, e);
+
+            result = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "ID为" + bizActivityId + "的活动数据 删除报错", null);
+        }
         return result;
     }
 
     @ApiOperation("添加活动")
     @PostMapping("/bizActivity")
     public Result addBizActivity(@RequestBody BizActivity bizActivity) {
-        Result result = activityService.addBizActivity(bizActivity);
+        Result result = null;
+        try {
+            result = activityService.addBizActivity(bizActivity);
+
+        } catch (Exception e) {
+
+            logger.error("活动数据 添加报错", e);
+
+            result = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "活动数据 添加报错", bizActivity);
+        }
         return result;
     }
 
@@ -118,12 +149,12 @@ public class BizActivityController {
             } catch (IOException e) {
                 String msg = "文件" + originName + "上传 发生错误";
                 logger.error(msg, e);
-                return new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), msg, null);
+                return new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), msg, file);
             }
         } else {
 
             logger.error("上传的文件是空的");
-            return new Result(HttpStatus.OK.value(), "上传的文件是空的", null);
+            return new Result(HttpStatus.OK.value(), "上传的文件是空的", file);
         }
     }
 

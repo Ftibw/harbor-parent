@@ -42,7 +42,7 @@ public class BizScreensaverController {
         } catch (Exception e) {
             logger.error("屏保列表 获取报错", e);
 
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保列表 获取报错", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保列表 获取报错", pageQO);
         }
 
         return ret;
@@ -62,8 +62,10 @@ public class BizScreensaverController {
             ret = new Result(screensaver);
 
         } catch (Exception e) {
-            logger.error("屏保数据 获取报错", e);
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "error", null);
+
+            logger.error("ID为{}的屏保数据 获取报错", screensaverId, e);
+
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "ID为" + screensaverId + "的屏保数据 获取报错", null);
         }
 
         return ret;
@@ -73,14 +75,13 @@ public class BizScreensaverController {
     @PutMapping("/bizScreensaver")
     public Result updateBizScreensaver(@RequestBody BizScreensaver bizScreensaver) {
 
-
         Result ret = null;
         try {
             ret = screensaverService.updateBizScreensaver(bizScreensaver);
         } catch (Exception e) {
             logger.error("屏保数据 修改报错", e);
 
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保数据 修改报错", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保数据 修改报错", bizScreensaver);
         }
 
         return ret;
@@ -97,9 +98,9 @@ public class BizScreensaverController {
         try {
             ret = screensaverService.deleteBizScreensaver(bizScreensaverId);
         } catch (Exception e) {
-            logger.error("屏保 删除报错", e);
+            logger.error("ID{}的屏保数据 删除报错", bizScreensaverId, e);
 
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保 删除报错", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "ID为" + bizScreensaverId + "的屏保 删除报错", null);
         }
 
         return ret;
@@ -115,7 +116,7 @@ public class BizScreensaverController {
         } catch (Exception e) {
             logger.error("屏保 添加报错", e);
 
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保 添加报错", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保 添加报错", param);
         }
         return ret;
     }
@@ -130,7 +131,7 @@ public class BizScreensaverController {
         } catch (Exception e) {
             logger.error("ID为{}的屏保 发布报错", param.screensaverId);
 
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保 发布报错", null);
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "屏保 发布报错", param);
         }
         return ret;
     }
