@@ -19,12 +19,12 @@ public class TokenUtils {
      */
     private final static int TARGET_FACTOR_LOW = 11;
     /**
-     * 搅拌次数
+     * 默认搅拌次数
      */
     private final static int DEFAULT_TIMES = 11;
 
     /**
-     * 加盐搅拌5次
+     * 加盐搅拌默认次数
      *
      * @param text 32位字符串
      * @return 64位字符串
