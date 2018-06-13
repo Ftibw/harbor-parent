@@ -131,6 +131,8 @@ public class BusinessFormatServiceImpl implements BusinessFormatService {
         Result ret = null;
 
         try {
+            bizFormat.setIsDeleted(1);
+
             int affectRow = bizFormatMapper.insert(bizFormat);
 
             ret = new Result("成功添加" + affectRow + "行记录");

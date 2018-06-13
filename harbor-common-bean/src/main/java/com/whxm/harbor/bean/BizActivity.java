@@ -1,5 +1,7 @@
 package com.whxm.harbor.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class BizActivity {
     private Integer activityId;
 
@@ -9,7 +11,7 @@ public class BizActivity {
 
     private String activityType;
 
-//    @JsonIgnore
+    @JsonIgnore
     private Integer isDeleted;
 
     public Integer getActivityId() {
