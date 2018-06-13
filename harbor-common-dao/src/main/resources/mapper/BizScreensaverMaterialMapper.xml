@@ -100,8 +100,20 @@
         <include refid="Base_Column_List"/>
         from biz_screensaver_material
         <where>
-            <if test="screensaverMaterialName!=null">and screensaver_material_name like concat('%',#{screensaverMaterialName},'%')</if>
-            <if test="screensaverMaterialType!=null">and screensaver_material_type like concat('%',#{screensaverMaterialType},'%')</if>
+            <if test="screensaverMaterialName!=null">and screensaver_material_name like
+                concat('%',#{screensaverMaterialName},'%')
+            </if>
+            <if test="screensaverMaterialType!=null">and screensaver_material_type like
+                concat('%',#{screensaverMaterialType},'%')
+            </if>
         </where>
+    </select>
+
+    <select id="selectMaterialsByScreensaverId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from biz_screensaver_material
+        JOIN screensaver_material_relation USING (screensaver_material_id)
+        WHERE screensaver_id=#{screensaverId}
     </select>
 </mapper>

@@ -5,7 +5,6 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 public interface BizScreensaverMapper {
     int deleteByPrimaryKey(Integer screensaverId);
@@ -28,7 +27,6 @@ public interface BizScreensaverMapper {
             @Param("screensaverId") Integer screensaverId,
             @Param("screensaverMaterialIds") Integer[] screensaverMaterialIds
     );
-
 
     int insertScreensaverPublishedTerminal(
             @Param("screensaverId") Integer screensaverId,

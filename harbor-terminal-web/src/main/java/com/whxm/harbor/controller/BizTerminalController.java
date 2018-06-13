@@ -1,6 +1,5 @@
 package com.whxm.harbor.controller;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.whxm.harbor.bean.BizTerminal;
 import com.whxm.harbor.bean.PageQO;
 import com.whxm.harbor.bean.PageVO;
@@ -52,12 +51,12 @@ public class BizTerminalController {
     @GetMapping("/bizTerminal/{ID}")
     public Result getBizTerminal(
             @ApiParam(name = "ID", value = "终端的ID", required = true)
-            @PathVariable("ID") String terminalId
+            @PathVariable("ID") String terminalNumber
     ) {
         Result ret = null;
         BizTerminal terminal = null;
         try {
-            terminal = terminalService.getBizTerminal(terminalId);
+            terminal = terminalService.getBizTerminal(terminalNumber);
 
             ret = new Result(terminal);
 
@@ -119,7 +118,7 @@ public class BizTerminalController {
     }
 
     @ApiOperation(value = "终端注册",
-            notes = "param: {\"sn\":\"xx\",\"os\":1/2}  sn表示终端编号;os表示终端类型（1=android  2=windows）")
+            notes = "json: {\"sn\":\"xx\",\"os\":1/2}  sn表示终端编号;os表示终端类型（1=android  2=windows）")
     @PostMapping("/register")
     public Map<String, Boolean> register(@RequestBody Map<String, Object> params) {
 
@@ -135,7 +134,7 @@ public class BizTerminalController {
             }
         } catch (Exception e) {
 
-            logger.error("终端注册检测报错", e);
+            logger.error("编号为{}的终端注册检测报错", params.get("sn"), e);
 
             ret.put("success", false);
         }
@@ -144,18 +143,29 @@ public class BizTerminalController {
     }
 
     @ApiOperation(value = "获取终端的屏保节目",
-            notes = "param: {\"sn\":\"xx\"prog\":xx}    sn表示终端编号；prog表示当前正在播放的屏保节目编号")
+            notes = "json: {\"sn\":\"xx\",\"prog\":\"xx\"}    sn表示终端编号；prog表示当前正在播放的屏保编号")
     @PostMapping("/program")
-    public Map<String, Object> program(Map<String, Object> params) {
+    public Map<String, Object> program(@RequestBody Map<String, Object> params) {
 
-        Map<String, Object> ret = new HashMap<>();
+        Map<String, Object> convert = new HashMap<>(4);
+        Object terminalNumber = null;
+        Object screensaverId = null;
 
-        ret= terminalService.getTerminalScreensaverProgram(params);
+        try {
+            terminalNumber = params.get("sn");
+            screensaverId = params.get("prog");
+            convert.put("terminalNumber", terminalNumber);
+            convert.put("screensaverId", screensaverId);
+            convert = terminalService.getTerminalScreensaverProgram(convert);
 
-        return ret;
+        } catch (Exception e) {
+            logger.error("编号为{}的终端的屏保数据 获取报错", terminalNumber, e);
+            convert.clear();
+            convert.put("code", 0);
+            convert.put("prog", screensaverId);
+            convert.put("on_off", null);
+            convert.put("data", new Object[]{});
+        }
+        return convert;
     }
-}
-
-class DataGird {
-
 }

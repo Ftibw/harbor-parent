@@ -22,5 +22,17 @@ public interface BizTerminalMapper {
 
     void delScreensaverTerminalRelation(String bizTerminalId);
 
+    /**
+     * 检测终端是否注册
+     * @param params 终端编号和终端平台
+     * @return  终端ID
+     */
     String selectRegisteredTerminal(Map<String, Object> params);
+
+    /**
+     * 获取终端及其屏保信息
+     * @param terminalId 终端ID
+     * @return
+     */
+    Map<String,Object> selectTerminalWithScreensaver(String terminalId);
 }

@@ -18,4 +18,6 @@ public interface BizScreensaverMaterialMapper {
     int updateByPrimaryKey(BizScreensaverMaterial record);
 
     List<BizScreensaverMaterial> getBizScreensaverMaterialList(BizScreensaverMaterial condition);
+
+    List<BizScreensaverMaterial> selectMaterialsByScreensaverId(Object screensaverId);
 }

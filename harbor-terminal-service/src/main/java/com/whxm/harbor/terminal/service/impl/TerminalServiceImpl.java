@@ -2,10 +2,8 @@ package com.whxm.harbor.terminal.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.whxm.harbor.bean.BizTerminal;
-import com.whxm.harbor.bean.PageQO;
-import com.whxm.harbor.bean.PageVO;
-import com.whxm.harbor.bean.Result;
+import com.whxm.harbor.bean.*;
+import com.whxm.harbor.mapper.BizScreensaverMaterialMapper;
 import com.whxm.harbor.mapper.BizTerminalMapper;
 import com.whxm.harbor.terminal.service.TerminalService;
 import org.slf4j.Logger;
@@ -15,6 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -158,8 +159,75 @@ public class TerminalServiceImpl implements TerminalService {
         return ret;
     }
 
+    @Resource
+    private BizScreensaverMaterialMapper bizScreensaverMaterialMapper;
+
     @Override
     public Map<String, Object> getTerminalScreensaverProgram(Map<String, Object> params) {
-        return null;
+
+        ResultMap<String, Object> ret = new ResultMap<>(4);
+
+        final List<Map<String, Object>> list = new ArrayList<>();
+
+        Map<String, Object> terminalInfo = null;
+
+        String terminalNumber = (String) params.get("terminalNumber");
+
+        Object screensaverId = null;
+
+        Object terminalSwitchTime = null;
+
+        try {
+            terminalInfo = bizTerminalMapper.selectTerminalWithScreensaver(terminalNumber);
+
+            if (null == terminalInfo)
+                throw new RuntimeException("编号为" + terminalNumber + "的终端不存在");
+
+            //屏保信息
+            screensaverId = terminalInfo.get("screensaverId");
+            //终端开关机时间
+            terminalSwitchTime = terminalInfo.get("terminalSwitchTime");
+
+            //先存了list引用再说
+            ret.build("prog", screensaverId)
+                    .build("on_off", terminalSwitchTime)
+                    .build("data", list);
+
+            if (null == screensaverId || "".equals(screensaverId)) {
+                ret.build("code", 0);
+
+            } else {
+                bizScreensaverMaterialMapper
+                        .selectMaterialsByScreensaverId(screensaverId)
+                        .forEach(item -> {
+                            HashMap<String, Object> map = new HashMap<>(2);
+                            map.put("name", item.getScreensaverMaterialName());
+                            map.put("url", item.getScreensaverMaterialImgPath());
+                            list.add(map);
+                        });
+
+                ret = list.isEmpty() ? ret.build("code", 0) : ret.build("code", 1);
+            }
+
+        } catch (Exception e) {
+
+            logger.error("编号为{}的终端屏保信息 查询报错", terminalNumber);
+
+            throw new RuntimeException();
+        }
+
+        return ret;
+    }
+}
+
+class ResultMap<K, V> extends HashMap<K, V> {
+
+    ResultMap(int initialCapacity) {
+        super(initialCapacity);
+    }
+
+    ResultMap<K, V> build(K key, V value) {
+        this.put(key, value);
+        return this;
     }
 }

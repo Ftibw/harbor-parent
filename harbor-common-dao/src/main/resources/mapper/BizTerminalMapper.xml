@@ -229,4 +229,13 @@
         SELECT terminal_id FROM biz_terminal WHERE terminal_number=#{sn}
         AND terminal_platform=#{os}
     </select>
+
+    <select id="selectTerminalWithScreensaver" resultType="java.util.HashMap">
+        select
+        screensaver_id screensaverId,
+        terminal_switch_time terminalSwitchTime
+        from biz_terminal
+        LEFT JOIN screensaver_published_terminal_relation  USING (terminal_id)
+        WHERE terminal_number=#{terminalNumber}
+    </select>
 </mapper>

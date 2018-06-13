@@ -45,7 +45,7 @@ public class FloorController {
     }
 
     @ApiOperation("添加楼层")
-    @PostMapping("/bizFloor/")
+    @PostMapping("/bizFloor")
     public Result addBizFloor(@RequestBody BizFloor bizFloor) {
         Result ret = null;
 
@@ -62,7 +62,7 @@ public class FloorController {
     }
 
     @ApiOperation("修改楼层")
-    @PutMapping("/bizFloor/")
+    @PutMapping("/bizFloor")
     public Result updateBizFloor(@RequestBody BizFloor bizFloor) {
 
         Result ret = null;

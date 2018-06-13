@@ -65,7 +65,7 @@ public class BusinessFormatController {
     }
 
     @ApiOperation("新增业态")
-    @PostMapping("/bizFormat/")
+    @PostMapping("/bizFormat")
     public Result addBizFormat(@RequestBody BizFormat bizFormat) {
         Result ret = null;
         try {
@@ -82,7 +82,7 @@ public class BusinessFormatController {
     }
 
     @ApiOperation("修改业态")
-    @PutMapping("/bizFormat/")
+    @PutMapping("/bizFormat")
     public Result updateBizFormat(@RequestBody BizFormat bizFormat) {
         Result ret = null;
         try {
