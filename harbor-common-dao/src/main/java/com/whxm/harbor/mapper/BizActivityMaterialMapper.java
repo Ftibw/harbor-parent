@@ -19,5 +19,5 @@ public interface BizActivityMaterialMapper {
 
     int updateByPrimaryKey(BizActivityMaterial record);
 
-    List<BizActivityMaterial> getBizActivityMaterialList();
+    List<BizActivityMaterial> getBizActivityMaterialList(BizActivityMaterial condition);
 }

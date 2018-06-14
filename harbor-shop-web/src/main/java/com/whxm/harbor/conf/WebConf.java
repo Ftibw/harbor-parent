@@ -16,11 +16,14 @@ public class WebConf extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(tokenInterceptor)
                 .addPathPatterns("/*")
-                .excludePathPatterns("/shops")
-                .excludePathPatterns("/logo")
-                .excludePathPatterns("/pictures")
-                .excludePathPatterns("/typePictures")
-                .excludePathPatterns("/shopPictures/*");
+                .excludePathPatterns(
+                        "/swagger*",
+                        "/shops",
+                        "/logo",
+                        "/pictures",
+                        "/typePictures",
+                        "/shopPictures/*"
+                );
         super.addInterceptors(registry);
     }
 

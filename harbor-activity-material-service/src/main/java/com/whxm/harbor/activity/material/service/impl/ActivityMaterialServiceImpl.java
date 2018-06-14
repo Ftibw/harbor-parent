@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 @Transactional
@@ -32,9 +33,9 @@ public class ActivityMaterialServiceImpl implements ActivityMaterialService {
         try {
             activityMaterial = bizActivityMaterialMapper.selectMaterialWithActivityType(bizActivityMaterialId);
 
-            if (null == activityMaterial) {
-                logger.error("错误活动素材ID", activityMaterial);
-            }
+            if (null == activityMaterial)
+                logger.info("ID为{}的活动素材不存在", bizActivityMaterialId);
+
         } catch (Exception e) {
 
             logger.error("活动素材ID为{}的数据 获取报错", bizActivityMaterialId);
@@ -54,7 +55,7 @@ public class ActivityMaterialServiceImpl implements ActivityMaterialService {
 
             pageVO = new PageVO<>(pageQO);
 
-            pageVO.setList(bizActivityMaterialMapper.getBizActivityMaterialList());
+            pageVO.setList(bizActivityMaterialMapper.getBizActivityMaterialList(pageQO.getCondition()));
 
             pageVO.setTotal(page.getTotal());
 
@@ -110,9 +111,12 @@ public class ActivityMaterialServiceImpl implements ActivityMaterialService {
 
     @Override
     public Result addBizActivityMaterial(BizActivityMaterial bizActivityMaterial) {
+
         Result ret = null;
 
         try {
+            bizActivityMaterial.setActivityId(null);
+
             int affectRow = bizActivityMaterialMapper.insert(bizActivityMaterial);
 
             ret = new Result("活动素材数据添加了" + affectRow + "行");
@@ -124,5 +128,27 @@ public class ActivityMaterialServiceImpl implements ActivityMaterialService {
         }
 
         return ret;
+    }
+
+    @Override
+    public List<BizActivityMaterial> getMaterialListByActivityId(Integer activityId) {
+
+        List<BizActivityMaterial> list = null;
+
+        try {
+            BizActivityMaterial activityMaterial = new BizActivityMaterial();
+
+            activityMaterial.setActivityId(activityId);
+
+            list = bizActivityMaterialMapper.getBizActivityMaterialList(activityMaterial);
+
+        } catch (Exception e) {
+
+            logger.error("活动素材数据列表 获取报错", e);
+
+            throw new RuntimeException();
+        }
+
+        return list;
     }
 }

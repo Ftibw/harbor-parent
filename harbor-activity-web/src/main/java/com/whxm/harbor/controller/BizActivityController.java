@@ -26,6 +26,9 @@ public class BizActivityController {
     @Autowired
     private ActivityService activityService;
 
+    @Autowired
+    private FileDir fileDir;
+
     @ApiOperation("获取全部活动数据")
     @GetMapping("/activities")
     public ResultMap<String, Object> getBizFormats() {
@@ -47,6 +50,14 @@ public class BizActivityController {
         }
 
         return ret;
+    }
+
+
+    @ApiOperation("上传logo")
+    @PostMapping("/logo")
+    public Result uploadLogo(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+
+        return FileUtils.upload(file, request, fileDir.getActivityLogoDir());
     }
 
     //==========================以下均被拦截============================
@@ -136,6 +147,7 @@ public class BizActivityController {
     @ApiOperation("添加活动")
     @PostMapping("/bizActivity")
     public Result addBizActivity(@RequestBody BizActivity bizActivity) {
+
         Result result = null;
         try {
             result = activityService.addBizActivity(bizActivity);
@@ -148,14 +160,4 @@ public class BizActivityController {
         }
         return result;
     }
-
-    @ApiOperation("上传logo")
-    @PostMapping("/logo")
-    public Result uploadLogo(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-
-        return FileUtils.upload(file, request, fileDir.getActivityLogoDir());
-    }
-
-    @Autowired
-    private FileDir fileDir;
 }

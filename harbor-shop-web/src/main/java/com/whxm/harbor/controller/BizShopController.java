@@ -31,6 +31,9 @@ public class BizShopController {
     @Autowired
     private ShopService shopService;
 
+    @Autowired
+    private FileDir fileDir;
+
     @ApiOperation(value = "根据业态和楼层获取店铺列表",
             notes = "param: {'floor':'xx','type':''}   type表示业态编号，floor表示楼层编号")
     @PostMapping("/shops")
@@ -97,6 +100,42 @@ public class BizShopController {
 
             ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "业态类型为" + type + "的商铺图片 获取报错", null);
         }
+
+        return ret;
+    }
+
+    @ApiOperation("上传商铺logo")
+    @PostMapping("/logo")
+    public Result uploadLogo(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+
+        return FileUtils.upload(file, request, fileDir.getShopLogoDir());
+    }
+
+    @ApiOperation(value = "上传商铺图片", notes = "表单控件中name属性的值必须为file")
+    @PostMapping("/pictures")
+    public Result uploadPicture(HttpServletRequest request) {
+
+        Result ret = null;
+
+        List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
+
+        ArrayList<Object> retList = new ArrayList<>();
+
+        files.forEach(file -> {
+            try {
+                Map<String, Object> map = new HashMap<String, Object>(4);
+
+                FileUtils.upload(file, request, fileDir.getShopPictureDir(), map);
+
+                retList.add(map);
+
+            } catch (Exception e) {
+
+                logger.error("文件" + file.getOriginalFilename() + "上传 发生错误", e);
+            }
+        });
+
+        ret = new Result(retList);
 
         return ret;
     }
@@ -202,45 +241,6 @@ public class BizShopController {
 
             ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "商铺数据 添加报错", param);
         }
-
-        return ret;
-    }
-
-    @Autowired
-    private FileDir fileDir;
-
-    @ApiOperation("上传商铺logo")
-    @PostMapping("/logo")
-    public Result uploadLogo(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-
-        return FileUtils.upload(file, request, fileDir.getShopLogoDir());
-    }
-
-    @ApiOperation(value = "上传商铺图片", notes = "表单控件中name属性的值必须为file")
-    @PostMapping("/pictures")
-    public Result uploadPicture(HttpServletRequest request) {
-
-        Result ret = null;
-
-        List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
-
-        ArrayList<Object> retList = new ArrayList<>();
-
-        files.forEach(file -> {
-            try {
-                Map<String, Object> map = new HashMap<String, Object>(4);
-
-                FileUtils.upload(file, request, fileDir.getShopPictureDir(), map);
-
-                retList.add(map);
-
-            } catch (Exception e) {
-
-                logger.error("文件" + file.getOriginalFilename() + "上传 发生错误", e);
-            }
-        });
-
-        ret = new Result(retList);
 
         return ret;
     }

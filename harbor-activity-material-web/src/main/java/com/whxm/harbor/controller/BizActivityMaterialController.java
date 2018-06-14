@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 @Api(value = "API - BusinessActivityMaterialController", description = "活动素材 Controller")
@@ -28,11 +29,30 @@ public class BizActivityMaterialController {
     private ActivityMaterialService activityMaterialService;
 
 
-    @ApiOperation("获取活动素材列表")
+    @ApiOperation(value = "根据活动编号获取活动素材列表",
+            notes = "param: {'activity':'xx'}   activity表示活动编号")
     @GetMapping("/activityMaterials")
-    public ResultMap<String, Object> getBizActivities(@RequestBody Map<String, Object> params) {
+    public Map<String, Object> getBizActivities(@RequestBody Map<String, Object> params) {
 
-        return null;
+        ResultMap<String, Object> ret = new ResultMap<String, Object>(2);
+
+        try {
+            Integer activityId = (Integer) params.get("activity");
+
+            List<BizActivityMaterial> list = activityMaterialService.getMaterialListByActivityId(activityId);
+
+            ret.build("data", list);
+
+            ret = list.isEmpty() ? ret.build("success", false) : ret.build("success", true);
+
+        } catch (Exception e) {
+
+            logger.error("活动素材列表 获取报错", params, e);
+
+            ret.build("data", new Object[]{}).build("success", false);
+        }
+
+        return ret;
     }
 
     //==========================以下均被拦截============================

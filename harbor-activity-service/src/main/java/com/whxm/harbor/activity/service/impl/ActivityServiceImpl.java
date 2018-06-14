@@ -136,9 +136,14 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public Result addBizActivity(BizActivity bizActivity) {
+
         Result ret = null;
 
         try {
+            bizActivity.setActivityId(null);
+
+            bizActivity.setIsDeleted(1);
+
             int affectRow = bizActivityMapper.insert(bizActivity);
 
             ret = new Result("活动数据添加了" + affectRow + "行");

@@ -28,6 +28,18 @@ public class BizScreensaverMaterialController {
     @Autowired
     private ScreensaverMaterialService screensaverMaterialService;
 
+    @Autowired
+    private FileDir fileDir;
+
+    @ApiOperation("上传屏保素材图片")
+    @PostMapping("/picture")
+    public Result uploadPicture(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+
+        return FileUtils.upload(file, request, fileDir.getScreensaverMaterialImgDir());
+    }
+
+    //===============================以下均被拦截===============================
+
     @ApiOperation("获取屏保素材列表")
     @GetMapping("/bizScreensaverMaterials")
     public Result getBizActivities(PageQO<BizScreensaverMaterial> pageQO, BizScreensaverMaterial condition) {
@@ -122,14 +134,4 @@ public class BizScreensaverMaterialController {
         }
         return ret;
     }
-
-    @ApiOperation("上传屏保素材图片")
-    @PostMapping("/picture")
-    public Result uploadPicture(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-
-        return FileUtils.upload(file, request, fileDir.getScreensaverMaterialImgDir());
-    }
-
-    @Autowired
-    private FileDir fileDir;
 }
