@@ -28,9 +28,9 @@ public interface BizTerminalMapper {
      * 检测终端是否注册
      *
      * @param params 终端编号和终端平台
-     * @return 终端ID
+     * @return 受影响行数
      */
-    String selectRegisteredTerminal(Map<String, Object> params);
+    int updateRegisteredTime(Map<String, Object> params);
 
     /**
      * 获取终端及其屏保信息

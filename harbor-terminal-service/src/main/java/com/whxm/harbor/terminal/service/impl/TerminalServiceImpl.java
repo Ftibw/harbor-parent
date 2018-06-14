@@ -148,17 +148,18 @@ public class TerminalServiceImpl implements TerminalService {
     }
 
     @Override
-    public Result getRegisteredTerminal(Map<String, Object> params) {
+    public Result register(Map<String, Object> params) {
 
         Result ret = null;
 
         try {
-            String terminalId = bizTerminalMapper.selectRegisteredTerminal(params);
+            if (0 != bizTerminalMapper.updateRegisteredTime(params)) {
 
-            if (null != terminalId)
-                ret = new Result(terminalId);
-            else
+                ret = new Result("终端注册成功");
+            } else {
+
                 ret = new Result(HttpStatus.NOT_FOUND.value(), "终端未注册", null);
+            }
 
         } catch (Exception e) {
 
@@ -202,7 +203,7 @@ public class TerminalServiceImpl implements TerminalService {
             }
             //先存了list引用再说
             ret.build("prog", screensaverId)
-                    .build("on_off", terminalSwitchTime)
+                    .build("on_off", String.valueOf(terminalSwitchTime))
                     .build("data", list);
 
             if (null == screensaverId || "".equals(screensaverId)) {
@@ -214,7 +215,7 @@ public class TerminalServiceImpl implements TerminalService {
                         .forEach(item -> {
                             HashMap<String, Object> map = new HashMap<>(2);
                             map.put("name", item.getScreensaverMaterialName());
-                            map.put("url", urlConfig.getUrlPrefix()+item.getScreensaverMaterialImgPath());
+                            map.put("url", urlConfig.getUrlPrefix() + item.getScreensaverMaterialImgPath());
                             list.add(map);
                         });
 

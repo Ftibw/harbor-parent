@@ -233,10 +233,10 @@
         WHERE terminal_id=#{terminalId}
     </delete>
 
-    <select id="selectRegisteredTerminal" resultType="java.lang.String">
-        SELECT terminal_id FROM biz_terminal WHERE terminal_number=#{sn}
-        AND terminal_platform=#{os}
-    </select>
+    <update id="updateRegisteredTime">
+        UPDATE biz_terminal SET register_terminal_time=#{registerTerminalTime}
+        WHERE terminal_number=#{terminalNumber} AND terminal_platform=#{terminalPlatform}
+    </update>
 
     <select id="selectTerminalWithScreensaver" resultType="java.util.HashMap">
         select

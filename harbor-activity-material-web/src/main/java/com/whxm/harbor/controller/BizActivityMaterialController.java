@@ -150,7 +150,9 @@ public class BizActivityMaterialController {
     @ApiOperation("添加活动素材")
     @PostMapping("/bizActivityMaterial")
     public Result addBizActivityMaterial(@RequestBody BizActivityMaterial bizActivityMaterial) {
+
         Result result = null;
+
         try {
             result = activityMaterialService.addBizActivityMaterial(bizActivityMaterial);
 

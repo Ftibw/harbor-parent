@@ -54,7 +54,7 @@ public interface TerminalService {
      * @param params 终端编号和终端平台
      * @return 终端ID
      */
-    Result getRegisteredTerminal(Map<String, Object> params);
+    Result register(Map<String, Object> params);
 
     /**
      * 根据终端编号和屏保ID

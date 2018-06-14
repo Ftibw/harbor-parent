@@ -124,7 +124,7 @@ public class ActivityMaterialServiceImpl implements ActivityMaterialService {
         Result ret = null;
 
         try {
-            bizActivityMaterial.setActivityId(null);
+            bizActivityMaterial.setActivityMaterialId(null);
 
             int affectRow = bizActivityMaterialMapper.insert(bizActivityMaterial);
 

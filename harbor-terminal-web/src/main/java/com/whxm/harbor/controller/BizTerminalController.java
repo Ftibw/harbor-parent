@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,23 +33,25 @@ public class BizTerminalController {
 
         Map<String, Boolean> ret = new HashMap<>(1);
 
-        Map<String, Object> params = new HashMap<>();
-
-        params.put("sn", sn);
-
-        params.put("os", os);
-
         try {
+            //终端注册然后获取注册状态
             if (HttpStatus.OK.value() ==
-                    terminalService.getRegisteredTerminal(params).getStatus()) {
-
+                    terminalService
+                            .register(
+                                    new ResultMap<String, Object>(3)
+                                            .build("terminalNumber", sn)
+                                            .build("terminalPlatform", os)
+                                            .build("registerTerminalTime", new Date())
+                            ).getStatus()) {
                 ret.put("success", true);
+
             } else {
+
                 ret.put("success", false);
             }
         } catch (Exception e) {
 
-            logger.error("编号为{}的终端注册检测报错", params.get("sn"), e);
+            logger.error("编号为{}的终端注册检测报错", sn, e);
 
             ret.put("success", false);
         }
