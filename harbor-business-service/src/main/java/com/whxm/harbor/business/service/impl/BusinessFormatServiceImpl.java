@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 @Transactional
@@ -63,6 +64,24 @@ public class BusinessFormatServiceImpl implements BusinessFormatService {
         }
 
         return pageVO;
+    }
+
+    @Override
+    public List<BizFormat> getBizFormatList() {
+
+        List<BizFormat> list = null;
+
+        try {
+            list = bizFormatMapper.getBizFormatList(null);
+
+        } catch (Exception e) {
+
+            logger.error("业态数据列表 获取报错", e);
+
+            throw new RuntimeException();
+        }
+
+        return list;
     }
 
     @Override

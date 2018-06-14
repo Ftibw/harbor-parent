@@ -5,6 +5,8 @@ import com.whxm.harbor.bean.PageQO;
 import com.whxm.harbor.bean.PageVO;
 import com.whxm.harbor.bean.Result;
 
+import java.util.List;
+
 /**
  * 楼层服务
  */
@@ -20,10 +22,16 @@ public interface FloorService {
     /**
      * 获取楼层列表
      *
-     * @return list
      * @param pageQO
+     * @return list
      */
     PageVO<BizFloor> getBizFloorList(PageQO<BizFloor> pageQO);
+
+    /**
+     * 获取全部楼层数据
+     * @return 全部楼层数据
+     */
+    List<BizFloor> getBizFloorList();
 
     /**
      * 根据ID删除楼层
@@ -43,8 +51,9 @@ public interface FloorService {
 
     /**
      * 新增楼层数据
-     * @param bizFloor  新楼层数据
-     * @return  添加操作结果
+     *
+     * @param bizFloor 新楼层数据
+     * @return 添加操作结果
      */
     Result addBizFloor(BizFloor bizFloor);
 }

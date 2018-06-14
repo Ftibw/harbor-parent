@@ -28,6 +28,60 @@ public class BizTerminalController {
     @Autowired
     private TerminalService terminalService;
 
+    @ApiOperation(value = "终端注册",
+            notes = "json: {'sn':'xx','os':1/2}  sn表示终端编号;os表示终端类型（1=android  2=windows）")
+    @PostMapping("/register")
+    public Map<String, Boolean> register(@RequestBody Map<String, Object> params) {
+
+        Map<String, Boolean> ret = new HashMap<>(1);
+
+        try {
+            if (HttpStatus.OK.value() ==
+                    terminalService.getRegisteredTerminal(params).getStatus()) {
+
+                ret.put("success", true);
+            } else {
+                ret.put("success", false);
+            }
+        } catch (Exception e) {
+
+            logger.error("编号为{}的终端注册检测报错", params.get("sn"), e);
+
+            ret.put("success", false);
+        }
+
+        return ret;
+    }
+
+    @ApiOperation(value = "获取终端的屏保节目",
+            notes = "json: {'sn':'xx','prog':'xx'}    sn表示终端编号；prog表示当前正在播放的屏保编号")
+    @PostMapping("/program")
+    public Map<String, Object> program(@RequestBody Map<String, Object> params) {
+
+        Map<String, Object> convert = new HashMap<>(4);
+        Object terminalNumber = null;
+        Object screensaverId = null;
+
+        try {
+            terminalNumber = params.get("sn");
+            screensaverId = params.get("prog");
+            convert.put("terminalNumber", terminalNumber);
+            convert.put("screensaverId", screensaverId);
+            convert = terminalService.getTerminalScreensaverProgram(convert);
+
+        } catch (Exception e) {
+            logger.error("编号为{}的终端的屏保数据 获取报错", terminalNumber, e);
+            convert.clear();
+            convert.put("code", 0);
+            convert.put("prog", screensaverId);
+            convert.put("on_off", null);
+            convert.put("data", new Object[]{});
+        }
+        return convert;
+    }
+
+    //==========================以下均被拦截============================
+
     @ApiOperation("获取终端列表")
     @GetMapping("/bizTerminals")
     public Result getBizTerminals(PageQO<BizTerminal> pageQO, BizTerminal condition) {
@@ -123,55 +177,4 @@ public class BizTerminalController {
         return ret;
     }
 
-    @ApiOperation(value = "终端注册",
-            notes = "json: {\"sn\":\"xx\",\"os\":1/2}  sn表示终端编号;os表示终端类型（1=android  2=windows）")
-    @PostMapping("/register")
-    public Map<String, Boolean> register(@RequestBody Map<String, Object> params) {
-
-        Map<String, Boolean> ret = new HashMap<>();
-
-        try {
-            if (HttpStatus.OK.value() ==
-                    terminalService.getRegisteredTerminal(params).getStatus()) {
-
-                ret.put("success", true);
-            } else {
-                ret.put("success", false);
-            }
-        } catch (Exception e) {
-
-            logger.error("编号为{}的终端注册检测报错", params.get("sn"), e);
-
-            ret.put("success", false);
-        }
-
-        return ret;
-    }
-
-    @ApiOperation(value = "获取终端的屏保节目",
-            notes = "json: {\"sn\":\"xx\",\"prog\":\"xx\"}    sn表示终端编号；prog表示当前正在播放的屏保编号")
-    @PostMapping("/program")
-    public Map<String, Object> program(@RequestBody Map<String, Object> params) {
-
-        Map<String, Object> convert = new HashMap<>(4);
-        Object terminalNumber = null;
-        Object screensaverId = null;
-
-        try {
-            terminalNumber = params.get("sn");
-            screensaverId = params.get("prog");
-            convert.put("terminalNumber", terminalNumber);
-            convert.put("screensaverId", screensaverId);
-            convert = terminalService.getTerminalScreensaverProgram(convert);
-
-        } catch (Exception e) {
-            logger.error("编号为{}的终端的屏保数据 获取报错", terminalNumber, e);
-            convert.clear();
-            convert.put("code", 0);
-            convert.put("prog", screensaverId);
-            convert.put("on_off", null);
-            convert.put("data", new Object[]{});
-        }
-        return convert;
-    }
 }

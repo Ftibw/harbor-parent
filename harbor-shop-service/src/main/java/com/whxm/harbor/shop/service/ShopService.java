@@ -28,6 +28,12 @@ public interface ShopService {
      */
     PageVO<BizShop> getBizShopList(PageQO<BizShop> pageQO);
 
+
+    /**
+     *根据业态和楼层获取店铺列表
+     */
+    List<BizShop> getBizShopList(Map<String, Object> params);
+
     /**
      * 根据ID停用/启用商铺
      *
@@ -60,8 +66,9 @@ public interface ShopService {
 
     /**
      * 根据业态种类获取图片集合
+     *
      * @param bizFormatType 业态种类
-     * @return  查询结果
+     * @return 查询结果
      */
     Result getShopPicturesByBizType(String bizFormatType);
 }

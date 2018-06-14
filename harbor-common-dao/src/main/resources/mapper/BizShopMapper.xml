@@ -221,6 +221,17 @@
   </update>
 
     <!--以下为自定义部分-->
+
+    <select id="getBizShopListByFloorAndBizType" resultMap="ExtensionResultMap">
+        select
+        <include refid="Base_Column_List"/>,floor_name,biz_format_type
+        from biz_shop
+        JOIN biz_floor USING(floor_id)
+        JOIN biz_format USING (biz_format_id)
+        WHERE floor_number=#{floorNumber} AND biz_format_type=#{bizFormatType}
+    </select>
+
+
     <select id="getBizShopList" resultMap="ExtensionResultMap">
         select
         <include refid="Base_Column_List"/>,floor_name,biz_format_type
@@ -259,15 +270,18 @@
         SELECT shop_picture_path FROM shop_picture_relation WHERE shop_id=#{bizShopId}
     </select>
 
+    <!--啰嗦,字段需求一开始没说,到后来又要加-->
     <select id="selectShopIdListByBizType" resultType="java.lang.String">
         SELECT bs.shop_id FROM biz_shop bs
         JOIN biz_format bf USING (biz_format_id)
         WHERE bf.biz_format_type=#{bizFormatType}
     </select>
 
-    <select id="selectShopPicturesByType" >
+    <!--<select id="selectShopPicturesByType" >
         SELECT bs.shop_id FROM biz_shop bs
         JOIN biz_format bf USING (biz_format_id)
         WHERE bf.biz_format_type=#{bizFormatType}
-    </select>
+    </select>-->
+
+
 </mapper>

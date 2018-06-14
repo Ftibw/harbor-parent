@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 @Transactional
@@ -63,6 +64,24 @@ public class FloorServiceImpl implements FloorService {
         }
 
         return pageVO;
+    }
+
+    @Override
+    public List<BizFloor> getBizFloorList() {
+
+        List<BizFloor> list = null;
+
+        try {
+            list = bizFloorMapper.getBizFloorList(null);
+
+        } catch (Exception e) {
+
+            logger.error("楼层数据列表 获取报错", e);
+
+            throw new RuntimeException();
+        }
+
+        return list;
     }
 
     @Override

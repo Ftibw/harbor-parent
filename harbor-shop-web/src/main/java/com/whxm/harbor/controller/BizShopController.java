@@ -1,15 +1,13 @@
 package com.whxm.harbor.controller;
 
-import com.whxm.harbor.bean.BizShop;
-import com.whxm.harbor.bean.PageQO;
-import com.whxm.harbor.bean.PageVO;
-import com.whxm.harbor.bean.Result;
+import com.whxm.harbor.bean.*;
 import com.whxm.harbor.conf.FileDir;
 import com.whxm.harbor.utils.FileUtils;
 import com.whxm.harbor.shop.service.ShopService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.omg.CORBA.OBJ_ADAPTER;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +30,78 @@ public class BizShopController {
 
     @Autowired
     private ShopService shopService;
+
+    @ApiOperation(value = "根据业态和楼层获取店铺列表",
+            notes = "param: {'floor':'xx','type':''}   type表示业态编号，floor表示楼层编号")
+    @PostMapping("/shops")
+    public Map<String, Object> getBizShops(@RequestBody Map<String, Object> params) {
+
+        ResultMap<String, Object> convert = new ResultMap<String, Object>(2);
+
+        try {
+            convert.build("floorNumber", params.get("floor"))
+                    .build("bizFormatNumber", params.get("type"));
+
+            List<BizShop> list = shopService.getBizShopList(convert);
+
+            convert.clear();
+
+            convert.build("data", list);
+
+            convert = list.isEmpty() ? convert.build("success", false) : convert.build("success", true);
+
+        } catch (Exception e) {
+
+            logger.error("楼层列表 获取报错", params, e);
+
+            convert.build("data", new Object[]{}).build("success", false);
+        }
+
+        return convert;
+    }
+
+
+    @ApiOperation(value = "根据商铺ID获取商铺图片")
+    @GetMapping("/shopPictures/{ID}")
+    public Result getPicturesById(@PathVariable("ID") String bizShopId) {
+
+        Result ret = null;
+
+        try {
+            List<String> shopPicturePaths = shopService.getShopPicturesById(bizShopId);
+
+            ret = new Result(shopPicturePaths);
+
+        } catch (Exception e) {
+            logger.error("ID为{}的商铺图片 获取报错", bizShopId, e);
+
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "ID为" + bizShopId + "的商铺图片 获取报错", null);
+        }
+
+        return ret;
+    }
+
+    @ApiOperation(value = "根据商铺的业态类型获取商铺图片")
+    @GetMapping("/typePictures")
+    public Result getPicturesByType(
+            @ApiParam(name = "type", value = "商铺的业态种类", required = true)
+                    String type) {
+
+        Result ret = null;
+
+        try {
+            ret = shopService.getShopPicturesByBizType(type);
+
+        } catch (Exception e) {
+            logger.error("业态类型为{}的商铺图片 获取报错", type, e);
+
+            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "业态类型为" + type + "的商铺图片 获取报错", null);
+        }
+
+        return ret;
+    }
+
+    //==========================以下均被拦截============================
 
     @ApiOperation("获取商铺列表")
     @GetMapping("/bizShops")
@@ -174,47 +244,6 @@ public class BizShopController {
 
         return ret;
     }
-
-    @ApiOperation(value = "根据商铺ID获取商铺图片")
-    @GetMapping("/shopPictures/{ID}")
-    public Result getPicturesById(@PathVariable("ID") String bizShopId) {
-
-        Result ret = null;
-
-        try {
-            List<String> shopPicturePaths = shopService.getShopPicturesById(bizShopId);
-
-            ret = new Result(shopPicturePaths);
-
-        } catch (Exception e) {
-            logger.error("ID为{}的商铺图片 获取报错", bizShopId, e);
-
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "ID为" + bizShopId + "的商铺图片 获取报错", null);
-        }
-
-        return ret;
-    }
-
-    @ApiOperation(value = "根据商铺的业态类型获取商铺图片")
-    @GetMapping("/typePictures")
-    public Result getPicturesByType(
-            @ApiParam(name = "type", value = "商铺的业态种类", required = true)
-                    String type) {
-
-        Result ret = null;
-
-        try {
-            ret = shopService.getShopPicturesByBizType(type);
-
-        } catch (Exception e) {
-            logger.error("业态类型为{}的商铺图片 获取报错", type, e);
-
-            ret = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "业态类型为" + type + "的商铺图片 获取报错", null);
-        }
-
-        return ret;
-    }
-
 }
 
 //商铺+商铺图片数据封装

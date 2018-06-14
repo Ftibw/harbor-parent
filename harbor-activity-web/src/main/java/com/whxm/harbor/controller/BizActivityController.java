@@ -1,10 +1,7 @@
 package com.whxm.harbor.controller;
 
 import com.whxm.harbor.activity.service.ActivityService;
-import com.whxm.harbor.bean.BizActivity;
-import com.whxm.harbor.bean.PageQO;
-import com.whxm.harbor.bean.PageVO;
-import com.whxm.harbor.bean.Result;
+import com.whxm.harbor.bean.*;
 import com.whxm.harbor.conf.FileDir;
 import com.whxm.harbor.utils.FileUtils;
 import io.swagger.annotations.Api;
@@ -18,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Api(value = "API - BusinessActivityController", description = "活动 Controller")
 @RestController
@@ -27,6 +25,31 @@ public class BizActivityController {
 
     @Autowired
     private ActivityService activityService;
+
+    @ApiOperation("获取全部活动数据")
+    @GetMapping("/activities")
+    public ResultMap<String, Object> getBizFormats() {
+
+        ResultMap<String, Object> ret = new ResultMap<>(2);
+
+        try {
+            List<BizActivity> list = activityService.getBizActivityList();
+
+            ret.build("data", list);
+
+            ret = list.isEmpty() ? ret.build("success", false) : ret.build("success", true);
+
+        } catch (Exception e) {
+
+            logger.error("活动列表 获取报错", e);
+
+            ret.build("data", new Object[]{}).build("success", false);
+        }
+
+        return ret;
+    }
+
+    //==========================以下均被拦截============================
 
     @ApiOperation("获取活动列表")
     @GetMapping("/bizActivities")

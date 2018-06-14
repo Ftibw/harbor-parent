@@ -1,15 +1,13 @@
 package com.whxm.harbor.controller;
 
 import com.whxm.harbor.activity.material.service.ActivityMaterialService;
-import com.whxm.harbor.bean.BizActivityMaterial;
-import com.whxm.harbor.bean.PageQO;
-import com.whxm.harbor.bean.PageVO;
-import com.whxm.harbor.bean.Result;
+import com.whxm.harbor.bean.*;
 import com.whxm.harbor.conf.FileDir;
 import com.whxm.harbor.utils.FileUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.models.auth.In;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 @Api(value = "API - BusinessActivityMaterialController", description = "活动素材 Controller")
 @RestController
@@ -27,6 +26,16 @@ public class BizActivityMaterialController {
 
     @Autowired
     private ActivityMaterialService activityMaterialService;
+
+
+    @ApiOperation("获取活动素材列表")
+    @GetMapping("/activityMaterials")
+    public ResultMap<String, Object> getBizActivities(@RequestBody Map<String, Object> params) {
+
+        return null;
+    }
+
+    //==========================以下均被拦截============================
 
     @ApiOperation("获取活动素材列表")
     @GetMapping("/bizActivityMaterials")

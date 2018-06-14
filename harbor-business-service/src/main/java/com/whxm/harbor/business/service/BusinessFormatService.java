@@ -1,10 +1,9 @@
 package com.whxm.harbor.business.service;
 
 
-import com.whxm.harbor.bean.BizFormat;
-import com.whxm.harbor.bean.PageQO;
-import com.whxm.harbor.bean.PageVO;
-import com.whxm.harbor.bean.Result;
+import com.whxm.harbor.bean.*;
+
+import java.util.List;
 
 /**
  * 业态服务
@@ -19,12 +18,19 @@ public interface BusinessFormatService {
     BizFormat getBizFormat(Integer bizFormatId);
 
     /**
-     * 获取业态集合
+     * 分页+过滤获取业态集合
      *
-     * @return list
      * @param pageQO
+     * @return list
      */
     PageVO<BizFormat> getBizFormatList(PageQO<BizFormat> pageQO);
+
+    /**
+     * 获取所有业态数据
+     *
+     * @return 所有业态数据
+     */
+    List<BizFormat> getBizFormatList();
 
     /**
      * 根据ID删除一个业态数据
@@ -45,14 +51,15 @@ public interface BusinessFormatService {
     /**
      * 根据业态编号前缀查询业态
      * @param keyword   业态编号前缀
-     * @return  业态列表
+     * @return 业态列表
      */
 //    List<BizFormat> getBizFormatByNumPrefix(String keyword);
 
     /**
      * 新增一个业态数据
+     *
      * @param bizFormat 要新增的业态
-     * @return  操作结果
+     * @return 操作结果
      */
     Result addBizFormat(BizFormat bizFormat);
 }

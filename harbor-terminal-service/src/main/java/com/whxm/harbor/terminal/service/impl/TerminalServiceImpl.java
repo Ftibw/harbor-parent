@@ -6,13 +6,12 @@ import com.whxm.harbor.bean.*;
 import com.whxm.harbor.mapper.BizScreensaverMaterialMapper;
 import com.whxm.harbor.mapper.BizTerminalMapper;
 import com.whxm.harbor.terminal.service.TerminalService;
-import com.whxm.harbor.utils.IPv4Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.whxm.harbor.bean.Result;
 import javax.annotation.Resource;
 import java.util.*;
 
@@ -126,6 +125,8 @@ public class TerminalServiceImpl implements TerminalService {
 
             bizTerminal.setAddTerminalTime(new Date());
 
+            bizTerminal.setTerminalId(UUID.randomUUID().toString().replace("-", ""));
+
             int affectRow = bizTerminalMapper.insert(bizTerminal);
 
             ret = new Result("终端数据添加了" + affectRow + "行");
@@ -218,17 +219,5 @@ public class TerminalServiceImpl implements TerminalService {
         }
 
         return ret;
-    }
-}
-
-class ResultMap<K, V> extends HashMap<K, V> {
-
-    ResultMap(int initialCapacity) {
-        super(initialCapacity);
-    }
-
-    ResultMap<K, V> build(K key, V value) {
-        this.put(key, value);
-        return this;
     }
 }

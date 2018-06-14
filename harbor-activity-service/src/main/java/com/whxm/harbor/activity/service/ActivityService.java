@@ -5,6 +5,8 @@ import com.whxm.harbor.bean.PageQO;
 import com.whxm.harbor.bean.PageVO;
 import com.whxm.harbor.bean.Result;
 
+import java.util.List;
+
 /**
  * 活动服务
  */
@@ -20,10 +22,17 @@ public interface ActivityService {
     /**
      * 获取活动列表
      *
-     * @return list
      * @param pageQO
+     * @return list
      */
     PageVO<BizActivity> getBizActivityList(PageQO<BizActivity> pageQO);
+
+    /**
+     * 获取所有活动数据
+     *
+     * @return 所有活动数据
+     */
+    List<BizActivity> getBizActivityList();
 
     /**
      * 根据ID删除活动
@@ -43,8 +52,9 @@ public interface ActivityService {
 
     /**
      * 新增活动数据
-     * @param bizActivity  新活动数据
-     * @return  添加操作结果
+     *
+     * @param bizActivity 新活动数据
+     * @return 添加操作结果
      */
     Result addBizActivity(BizActivity bizActivity);
 }

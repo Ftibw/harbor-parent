@@ -1,9 +1,6 @@
 package com.whxm.harbor.controller;
 
-import com.whxm.harbor.bean.BizFloor;
-import com.whxm.harbor.bean.PageQO;
-import com.whxm.harbor.bean.PageVO;
-import com.whxm.harbor.bean.Result;
+import com.whxm.harbor.bean.*;
 import com.whxm.harbor.floor.service.FloorService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -14,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+
 @Api(value = "API - FloorController", description = "楼层 Controller")
 @RestController
 public class FloorController {
@@ -22,9 +22,34 @@ public class FloorController {
     @Autowired
     private FloorService floorService;
 
+    @ApiOperation("获取全部楼层数据")
+    @GetMapping("/floors")
+    public Map<String, Object> getBizFormats() {
+
+        ResultMap<String, Object> ret = new ResultMap<>(2);
+
+        try {
+            List<BizFloor> list = floorService.getBizFloorList();
+
+            ret.build("data", list);
+
+            ret = list.isEmpty() ? ret.build("success", false) : ret.build("success", true);
+
+        } catch (Exception e) {
+
+            logger.error("楼层列表 获取报错", e);
+
+            ret.build("data", new Object[]{}).build("success", false);
+        }
+
+        return ret;
+    }
+
+    //==========================以下均被拦截============================
+
     @ApiOperation("获取楼层列表")
     @GetMapping("/bizFloors")
-    public Result getBizFloors(PageQO<BizFloor> pageQO,BizFloor condition) {
+    public Result getBizFloors(PageQO<BizFloor> pageQO, BizFloor condition) {
         PageVO<BizFloor> pageVO = null;
 
         Result ret = null;

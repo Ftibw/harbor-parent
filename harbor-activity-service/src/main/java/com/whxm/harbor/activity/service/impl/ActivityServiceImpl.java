@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 @Transactional
@@ -65,6 +66,24 @@ public class ActivityServiceImpl implements ActivityService {
         }
 
         return pageVO;
+    }
+
+    @Override
+    public List<BizActivity> getBizActivityList() {
+
+        List<BizActivity> list = null;
+
+        try {
+            list = bizActivityMapper.getBizActivityList(null);
+
+        } catch (Exception e) {
+
+            logger.error("活动数据列表 获取报错", e);
+
+            throw new RuntimeException();
+        }
+
+        return list;
     }
 
     @Override

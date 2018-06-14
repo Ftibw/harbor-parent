@@ -6,6 +6,8 @@ import com.whxm.harbor.bean.BizShop;
 import com.whxm.harbor.bean.PageQO;
 import com.whxm.harbor.bean.PageVO;
 import com.whxm.harbor.bean.Result;
+import com.whxm.harbor.mapper.BizFloorMapper;
+import com.whxm.harbor.mapper.BizFormatMapper;
 import com.whxm.harbor.mapper.BizShopMapper;
 import com.whxm.harbor.shop.service.ShopService;
 import org.slf4j.Logger;
@@ -67,6 +69,29 @@ public class ShopServiceImpl implements ShopService {
         }
 
         return pageVO;
+    }
+
+    /**
+     * 终端获取商铺数据
+     * @param params 楼层编号和业态编号
+     * @return list
+     */
+    @Override
+    public List<BizShop> getBizShopList(Map<String, Object> params) {
+
+        List<BizShop> list = null;
+
+        try {
+            list = bizShopMapper.getBizShopListByFloorAndBizType(params);
+
+        } catch (Exception e) {
+
+            logger.error("商铺数据列表 获取报错", e);
+
+            throw new RuntimeException();
+        }
+
+        return list;
     }
 
     @Override
