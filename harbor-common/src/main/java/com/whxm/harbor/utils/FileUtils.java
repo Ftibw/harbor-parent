@@ -1,7 +1,9 @@
 package com.whxm.harbor.utils;
 
 import com.whxm.harbor.bean.Result;
+import com.whxm.harbor.conf.UrlConfig;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,7 +18,9 @@ import java.util.Map;
  * @Email ftibw@live.com
  * @CreateTime 2018/6/13 21:58
  */
+
 public class FileUtils {
+
     private static final Logger logger = Logger.getLogger(FileUtils.class);
 
     public static void upload(

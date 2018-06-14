@@ -7,9 +7,11 @@ import com.whxm.harbor.bean.BizActivity;
 import com.whxm.harbor.bean.PageQO;
 import com.whxm.harbor.bean.PageVO;
 import com.whxm.harbor.bean.Result;
+import com.whxm.harbor.conf.UrlConfig;
 import com.whxm.harbor.mapper.BizActivityMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -134,12 +136,17 @@ public class ActivityServiceImpl implements ActivityService {
         return ret;
     }
 
+    @Autowired
+    private UrlConfig urlConfig;
+
     @Override
     public Result addBizActivity(BizActivity bizActivity) {
 
         Result ret = null;
 
         try {
+            bizActivity.setActivityLogo(urlConfig.getUrlPrefix()+bizActivity.getActivityLogo());
+
             bizActivity.setActivityId(null);
 
             bizActivity.setIsDeleted(1);

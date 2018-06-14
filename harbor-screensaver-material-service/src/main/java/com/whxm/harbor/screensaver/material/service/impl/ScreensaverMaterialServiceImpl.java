@@ -5,11 +5,13 @@ import com.github.pagehelper.PageHelper;
 import com.whxm.harbor.bean.BizScreensaverMaterial;
 import com.whxm.harbor.bean.PageQO;
 import com.whxm.harbor.bean.PageVO;
+import com.whxm.harbor.conf.UrlConfig;
 import com.whxm.harbor.mapper.BizScreensaverMaterialMapper;
 import com.whxm.harbor.screensaver.material.service.ScreensaverMaterialService;
 import com.whxm.harbor.bean.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -109,11 +111,20 @@ public class ScreensaverMaterialServiceImpl implements ScreensaverMaterialServic
         return ret;
     }
 
+    @Autowired
+    private UrlConfig urlConfig;
+
     @Override
     public Result addBizScreensaverMaterial(BizScreensaverMaterial bizScreensaverMaterial) {
+
         Result ret = null;
 
         try {
+            bizScreensaverMaterial.setScreensaverMaterialImgPath(
+                    urlConfig.getUrlPrefix()
+                            + bizScreensaverMaterial.getScreensaverMaterialImgPath()
+            );
+
             int affectRow = bizScreensaverMaterialMapper.insert(bizScreensaverMaterial);
 
             ret = new Result("屏保素材数据添加了" + affectRow + "行");

@@ -7,9 +7,11 @@ import com.whxm.harbor.bean.BizActivityMaterial;
 import com.whxm.harbor.bean.PageQO;
 import com.whxm.harbor.bean.PageVO;
 import com.whxm.harbor.bean.Result;
+import com.whxm.harbor.conf.UrlConfig;
 import com.whxm.harbor.mapper.BizActivityMaterialMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -109,12 +111,20 @@ public class ActivityMaterialServiceImpl implements ActivityMaterialService {
         return ret;
     }
 
+    @Autowired
+    private UrlConfig urlConfig;
+
     @Override
     public Result addBizActivityMaterial(BizActivityMaterial bizActivityMaterial) {
 
         Result ret = null;
 
         try {
+            bizActivityMaterial.setActivityMaterialImgPath(
+                    urlConfig.getUrlPrefix() +
+                    bizActivityMaterial.getActivityMaterialImgPath()
+            );
+
             bizActivityMaterial.setActivityId(null);
 
             int affectRow = bizActivityMaterialMapper.insert(bizActivityMaterial);

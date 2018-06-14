@@ -3,11 +3,13 @@ package com.whxm.harbor.terminal.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.whxm.harbor.bean.*;
+import com.whxm.harbor.conf.UrlConfig;
 import com.whxm.harbor.mapper.BizScreensaverMaterialMapper;
 import com.whxm.harbor.mapper.BizTerminalMapper;
 import com.whxm.harbor.terminal.service.TerminalService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -171,6 +173,9 @@ public class TerminalServiceImpl implements TerminalService {
     @Resource
     private BizScreensaverMaterialMapper bizScreensaverMaterialMapper;
 
+    @Autowired
+    private UrlConfig urlConfig;
+
     @Override
     public ResultMap<String, Object> getTerminalScreensaverProgram(Map<String, Object> params) {
 
@@ -209,7 +214,7 @@ public class TerminalServiceImpl implements TerminalService {
                         .forEach(item -> {
                             HashMap<String, Object> map = new HashMap<>(2);
                             map.put("name", item.getScreensaverMaterialName());
-                            map.put("url", item.getScreensaverMaterialImgPath());
+                            map.put("url", urlConfig.getUrlPrefix()+item.getScreensaverMaterialImgPath());
                             list.add(map);
                         });
 

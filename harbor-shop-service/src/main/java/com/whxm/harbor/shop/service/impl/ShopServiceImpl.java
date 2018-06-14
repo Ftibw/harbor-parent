@@ -3,12 +3,14 @@ package com.whxm.harbor.shop.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.whxm.harbor.bean.*;
+import com.whxm.harbor.conf.UrlConfig;
 import com.whxm.harbor.mapper.BizFloorMapper;
 import com.whxm.harbor.mapper.BizFormatMapper;
 import com.whxm.harbor.mapper.BizShopMapper;
 import com.whxm.harbor.shop.service.ShopService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -156,6 +158,9 @@ public class ShopServiceImpl implements ShopService {
         return ret;
     }
 
+    @Autowired
+    private UrlConfig urlConfig;
+
     @Override
     public Result addBizShop(BizShop bizShop, List<Map<String, Object>> pictureList) {
 
@@ -166,9 +171,18 @@ public class ShopServiceImpl implements ShopService {
 
             String shopId = UUID.randomUUID().toString().replace("-", "");
 
+            bizShop.setShopLogoPath(
+                    urlConfig.getUrlPrefix()
+                            + bizShop.getShopLogoPath()
+            );
             bizShop.setShopId(shopId);
             bizShop.setIsShopEnabled(SHOP_ENABLED);
             bizShop.setAddShopTime(new Date());
+
+            pictureList.forEach(item -> item.replace(
+                    "shopPicturePath",
+                    urlConfig.getUrlPrefix() + item.get("shopPicturePath")
+            ));
 
             try {
                 if (null != bizShopMapper.selectIdByNumber(bizShop.getShopNumber())) {
@@ -179,8 +193,7 @@ public class ShopServiceImpl implements ShopService {
 
                 int affectRow2 = 0;
 
-                if (null != pictureList)
-
+                if (!pictureList.isEmpty())
                     affectRow2 = bizShopMapper.insertShopPictures(shopId, pictureList);
 
                 ret = new Result("新增" + affectRow + "行商铺记录,新增" + affectRow2 + "行商铺图片记录");

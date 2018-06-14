@@ -38,8 +38,6 @@ public class BizActivityMaterialController {
 
         ResultMap<String, Object> ret = new ResultMap<String, Object>(2);
 
-        //@RequestBody Map<String, Object> params
-        //(Integer) params.get("activity")
         try {
             Integer activityId = activity;
 
