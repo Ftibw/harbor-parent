@@ -41,7 +41,9 @@ public class FileUtils {
             //uuid生成新名称
             newName = StringUtils.createStrUseUUID(originName);
             //文件保存的目录
-            String filePath = request.getServletContext().getRealPath(File.separator + uploadRootDir);
+            //request.getServletContext().getRealPath(File.separator + uploadRootDir);
+            String filePath = "C:\\Users\\ftibw\\Desktop\\dev\\install\\tomcat\\apache-tomcat-8.0.45\\apache-tomcat-8.0.45\\webapps\\resources"
+                    + File.separator + uploadRootDir;
             //分文件夹管理时的文件夹名
             String dirName = StringUtils.createDirName();
             //文件夹

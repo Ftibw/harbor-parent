@@ -57,7 +57,14 @@ public class ActivityServiceImpl implements ActivityService {
 
             pageVO = new PageVO<>(pageQO);
 
-            pageVO.setList(bizActivityMapper.getBizActivityList(pageQO.getCondition()));
+            List<BizActivity> list = bizActivityMapper.getBizActivityList(pageQO.getCondition());
+
+            list.forEach(item -> item.setActivityLogo(
+                    urlConfig.getUrlPrefix()
+                            + item.getActivityLogo()
+            ));
+
+            pageVO.setList(list);
 
             pageVO.setTotal(page.getTotal());
 
@@ -70,6 +77,9 @@ public class ActivityServiceImpl implements ActivityService {
         return pageVO;
     }
 
+    @Autowired
+    private UrlConfig urlConfig;
+
     @Override
     public List<BizActivity> getBizActivityList() {
 
@@ -77,6 +87,11 @@ public class ActivityServiceImpl implements ActivityService {
 
         try {
             list = bizActivityMapper.getBizActivityList(null);
+
+            list.forEach(item -> item.setActivityLogo(
+                    urlConfig.getUrlPrefix()
+                            + item.getActivityLogo()
+            ));
 
         } catch (Exception e) {
 
@@ -122,7 +137,6 @@ public class ActivityServiceImpl implements ActivityService {
         Result ret = null;
 
         try {
-
             int affectRow = bizActivityMapper.updateByPrimaryKeySelective(bizActivity);
 
             ret = new Result("活动数据修改了" + affectRow + "行");
@@ -136,17 +150,12 @@ public class ActivityServiceImpl implements ActivityService {
         return ret;
     }
 
-    @Autowired
-    private UrlConfig urlConfig;
-
     @Override
     public Result addBizActivity(BizActivity bizActivity) {
 
         Result ret = null;
 
         try {
-            bizActivity.setActivityLogo(urlConfig.getUrlPrefix()+bizActivity.getActivityLogo());
-
             bizActivity.setActivityId(null);
 
             bizActivity.setIsDeleted(1);

@@ -57,7 +57,14 @@ public class ActivityMaterialServiceImpl implements ActivityMaterialService {
 
             pageVO = new PageVO<>(pageQO);
 
-            pageVO.setList(bizActivityMaterialMapper.getBizActivityMaterialList(pageQO.getCondition()));
+            List<BizActivityMaterial> list = bizActivityMaterialMapper.getBizActivityMaterialList(pageQO.getCondition());
+
+            list.forEach(item -> item.setActivityMaterialImgPath(
+                    urlConfig.getUrlPrefix()
+                            + item.getActivityMaterialImgPath()
+            ));
+
+            pageVO.setList(list);
 
             pageVO.setTotal(page.getTotal());
 
@@ -111,20 +118,12 @@ public class ActivityMaterialServiceImpl implements ActivityMaterialService {
         return ret;
     }
 
-    @Autowired
-    private UrlConfig urlConfig;
-
     @Override
     public Result addBizActivityMaterial(BizActivityMaterial bizActivityMaterial) {
 
         Result ret = null;
 
         try {
-            bizActivityMaterial.setActivityMaterialImgPath(
-                    urlConfig.getUrlPrefix() +
-                    bizActivityMaterial.getActivityMaterialImgPath()
-            );
-
             bizActivityMaterial.setActivityId(null);
 
             int affectRow = bizActivityMaterialMapper.insert(bizActivityMaterial);
@@ -140,6 +139,9 @@ public class ActivityMaterialServiceImpl implements ActivityMaterialService {
         return ret;
     }
 
+    @Autowired
+    private UrlConfig urlConfig;
+
     @Override
     public List<BizActivityMaterial> getMaterialListByActivityId(Integer activityId) {
 
@@ -151,6 +153,11 @@ public class ActivityMaterialServiceImpl implements ActivityMaterialService {
             activityMaterial.setActivityId(activityId);
 
             list = bizActivityMaterialMapper.getBizActivityMaterialList(activityMaterial);
+
+            list.forEach(item -> item.setActivityMaterialImgPath(
+                    urlConfig.getUrlPrefix()
+                            + item.getActivityMaterialImgPath()
+            ));
 
         } catch (Exception e) {
 

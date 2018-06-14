@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 @Transactional
@@ -35,7 +36,7 @@ public class ScreensaverMaterialServiceImpl implements ScreensaverMaterialServic
             screensaverMaterial = bizScreensaverMaterialMapper.selectByPrimaryKey(bizScreensaverMaterialId);
 
             if (null == screensaverMaterial) {
-                logger.error("错误屏保素材ID", screensaverMaterial);
+                logger.info("ID为{}的屏保素材不存在", bizScreensaverMaterialId);
             }
         } catch (Exception e) {
 
@@ -47,6 +48,9 @@ public class ScreensaverMaterialServiceImpl implements ScreensaverMaterialServic
         return screensaverMaterial;
     }
 
+    @Autowired
+    private UrlConfig urlConfig;
+
     @Override
     public PageVO<BizScreensaverMaterial> getBizScreensaverMaterialList(PageQO<BizScreensaverMaterial> pageQO) {
 
@@ -56,7 +60,14 @@ public class ScreensaverMaterialServiceImpl implements ScreensaverMaterialServic
 
             pageVO = new PageVO<>(pageQO);
 
-            pageVO.setList(bizScreensaverMaterialMapper.getBizScreensaverMaterialList(pageQO.getCondition()));
+            List<BizScreensaverMaterial> list = bizScreensaverMaterialMapper.getBizScreensaverMaterialList(pageQO.getCondition());
+
+            list.forEach(item -> item.setScreensaverMaterialImgPath(
+                    urlConfig.getUrlPrefix()
+                            + item.getScreensaverMaterialImgPath()
+            ));
+
+            pageVO.setList(list);
 
             pageVO.setTotal(page.getTotal());
 
@@ -111,20 +122,12 @@ public class ScreensaverMaterialServiceImpl implements ScreensaverMaterialServic
         return ret;
     }
 
-    @Autowired
-    private UrlConfig urlConfig;
-
     @Override
     public Result addBizScreensaverMaterial(BizScreensaverMaterial bizScreensaverMaterial) {
 
         Result ret = null;
 
         try {
-            bizScreensaverMaterial.setScreensaverMaterialImgPath(
-                    urlConfig.getUrlPrefix()
-                            + bizScreensaverMaterial.getScreensaverMaterialImgPath()
-            );
-
             int affectRow = bizScreensaverMaterialMapper.insert(bizScreensaverMaterial);
 
             ret = new Result("屏保素材数据添加了" + affectRow + "行");

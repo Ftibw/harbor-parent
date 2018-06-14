@@ -225,8 +225,8 @@ public class BizShopController {
     }
 
     @ApiOperation(value = "添加商铺",
-            notes = "pictureList中元素为map,map有两个key," +
-                    "分别必须写成shopPicturePath(商铺图片路径)和shopPictureSize(商铺图片大小)")
+            notes = "pictureList中元素为map,map有3个key," +
+                    "shopPictureName(商铺图片名称),shopPicturePath(商铺图片路径),shopPictureSize(商铺图片大小)")
     @PostMapping("/bizShop")
     public Result addBizShop(@RequestBody ShopParam param) {
 

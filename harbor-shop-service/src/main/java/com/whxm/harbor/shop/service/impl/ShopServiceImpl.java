@@ -24,6 +24,10 @@ public class ShopServiceImpl implements ShopService {
 
     private static final Logger logger = LoggerFactory.getLogger(ShopServiceImpl.class);
 
+
+    @Autowired
+    private UrlConfig urlConfig;
+
     @Resource
     private BizShopMapper bizShopMapper;
 
@@ -54,7 +58,14 @@ public class ShopServiceImpl implements ShopService {
 
             pageVO = new PageVO<>(pageQO);
 
-            pageVO.setList(bizShopMapper.getBizShopList(pageQO.getCondition()));
+            List<BizShop> list = bizShopMapper.getBizShopList(pageQO.getCondition());
+
+            list.forEach(item -> item.setShopLogoPath(
+                    urlConfig.getUrlPrefix()
+                            + item.getShopLogoPath()
+            ));
+
+            pageVO.setList(list);
 
             pageVO.setTotal(page.getTotal());
 
@@ -84,6 +95,10 @@ public class ShopServiceImpl implements ShopService {
         try {
             list = bizShopMapper.getBizShopListByFloorNumberAndBizType(params);
 
+            list.forEach(item -> item.setShopLogoPath(
+                    urlConfig.getUrlPrefix()
+                            + item.getShopLogoPath()
+            ));
         } catch (Exception e) {
 
             logger.error("商铺数据列表 获取报错", e);
@@ -158,9 +173,6 @@ public class ShopServiceImpl implements ShopService {
         return ret;
     }
 
-    @Autowired
-    private UrlConfig urlConfig;
-
     @Override
     public Result addBizShop(BizShop bizShop, List<Map<String, Object>> pictureList) {
 
@@ -168,27 +180,19 @@ public class ShopServiceImpl implements ShopService {
         Integer SHOP_ENABLED = 1;
 
         if (null != bizShop) {
-
-            String shopId = UUID.randomUUID().toString().replace("-", "");
-
-            bizShop.setShopLogoPath(
-                    urlConfig.getUrlPrefix()
-                            + bizShop.getShopLogoPath()
-            );
-            bizShop.setShopId(shopId);
-            bizShop.setIsShopEnabled(SHOP_ENABLED);
-            bizShop.setAddShopTime(new Date());
-
-            pictureList.forEach(item -> item.replace(
-                    "shopPicturePath",
-                    urlConfig.getUrlPrefix() + item.get("shopPicturePath")
-            ));
-
             try {
                 if (null != bizShopMapper.selectIdByNumber(bizShop.getShopNumber())) {
 
                     return new Result(HttpStatus.NOT_ACCEPTABLE.value(), "商铺编号重复", null);
                 }
+
+                //赋值
+                String shopId = UUID.randomUUID().toString().replace("-", "");
+
+                bizShop.setShopId(shopId);
+                bizShop.setIsShopEnabled(SHOP_ENABLED);
+                bizShop.setAddShopTime(new Date());
+
                 int affectRow = bizShopMapper.insert(bizShop);
 
                 int affectRow2 = 0;
