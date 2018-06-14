@@ -18,7 +18,11 @@ public class WebConf extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(tokenInterceptor)
                 .addPathPatterns("/*")
-                .excludePathPatterns("/register", "/swagger*");
+                .excludePathPatterns(
+                        "/swagger*",
+                        "/register",
+                        "/program"
+                );
         super.addInterceptors(registry);
     }
 

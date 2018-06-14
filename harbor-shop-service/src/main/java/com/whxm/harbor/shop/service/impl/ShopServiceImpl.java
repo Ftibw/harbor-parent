@@ -2,10 +2,7 @@ package com.whxm.harbor.shop.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.whxm.harbor.bean.BizShop;
-import com.whxm.harbor.bean.PageQO;
-import com.whxm.harbor.bean.PageVO;
-import com.whxm.harbor.bean.Result;
+import com.whxm.harbor.bean.*;
 import com.whxm.harbor.mapper.BizFloorMapper;
 import com.whxm.harbor.mapper.BizFormatMapper;
 import com.whxm.harbor.mapper.BizShopMapper;
@@ -83,13 +80,12 @@ public class ShopServiceImpl implements ShopService {
         List<BizShop> list = null;
 
         try {
-            BizShop condition = new BizShop();
+            //如果类型转化处理好,可以直接使用BizShop对象封装
+            ResultMap<String, Object> convert = new ResultMap<String, Object>(2)
+                    .build("floorId", params.get("floor"))
+                    .build("bizFormatId", params.get("type"));
 
-            condition.setBizFormatId((String) params.get("type"));
-
-            condition.setFloorId((Integer) params.get("floor"));
-
-            list = bizShopMapper.getBizShopList(condition);
+            list = bizShopMapper.getBizShopListByFloorNumberAndBizType(convert);
 
         } catch (Exception e) {
 

@@ -37,6 +37,7 @@ public class BizActivityMaterialController {
         ResultMap<String, Object> ret = new ResultMap<String, Object>(2);
 
         try {
+            //由于数字可以强制这里才能用...并不通用
             Integer activityId = (Integer) params.get("activity");
 
             List<BizActivityMaterial> list = activityMaterialService.getMaterialListByActivityId(activityId);

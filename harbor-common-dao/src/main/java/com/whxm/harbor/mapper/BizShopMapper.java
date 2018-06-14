@@ -30,7 +30,7 @@ public interface BizShopMapper {
 
     List<String> selectShopIdListByBizType(String bizFormatType);
 
-    List<BizShop> getBizShopListByFloorAndBizType(Map<String, Object> params);
+    List<BizShop> getBizShopListByFloorNumberAndBizType(Map<String, Object> params);
 
     //int delShopPicturesRelation(String shopId);
 }
