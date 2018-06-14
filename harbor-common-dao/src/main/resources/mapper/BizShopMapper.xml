@@ -221,6 +221,14 @@
   </update>
 
     <!--以下为自定义部分-->
+    <select id="selectIdByNumber" resultMap="ExtensionResultMap">
+        select
+        <include refid="Base_Column_List"/>,floor_name,biz_format_type
+        from biz_shop
+        JOIN biz_floor USING(floor_id)
+        JOIN biz_format USING (biz_format_id)
+        WHERE shop_number=#{shopNumber}
+    </select>
 
     <select id="getBizShopListByFloorNumberAndBizType" resultMap="ExtensionResultMap">
         select

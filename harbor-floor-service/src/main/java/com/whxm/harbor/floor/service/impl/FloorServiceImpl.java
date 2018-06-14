@@ -10,6 +10,7 @@ import com.whxm.harbor.floor.service.FloorService;
 import com.whxm.harbor.mapper.BizFloorMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -128,9 +129,15 @@ public class FloorServiceImpl implements FloorService {
 
     @Override
     public Result addBizFloor(BizFloor bizFloor) {
+
         Result ret = null;
 
         try {
+            if (null != bizFloorMapper.selectIdByNumber(bizFloor.getFloorNumber())) {
+
+                return new Result(HttpStatus.NOT_ACCEPTABLE.value(), "业态编号重复", null);
+            }
+
             int affectRow = bizFloorMapper.insert(bizFloor);
 
             ret = new Result("楼层数据 成功添加" + affectRow + "条数据");

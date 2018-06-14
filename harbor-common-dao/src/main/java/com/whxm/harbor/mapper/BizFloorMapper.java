@@ -18,4 +18,6 @@ public interface BizFloorMapper {
     int updateByPrimaryKey(BizFloor record);
 
     List<BizFloor> getBizFloorList(BizFloor condition);
+
+    BizFloor selectIdByNumber(String floorNumber);
 }

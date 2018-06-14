@@ -18,4 +18,6 @@ public interface BizFormatMapper {
     int updateByPrimaryKey(BizFormat record);
 
     List<BizFormat> getBizFormatList(BizFormat condition);
+
+    BizFormat selectIdByNumber(String bizFormatNumber);
 }

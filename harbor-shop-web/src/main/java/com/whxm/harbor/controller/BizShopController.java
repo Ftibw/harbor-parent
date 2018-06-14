@@ -37,12 +37,16 @@ public class BizShopController {
     @ApiOperation(value = "根据业态和楼层获取店铺列表",
             notes = "param: {'floor':'xx','type':''}   type表示业态ID，floor表示楼层ID")
     @PostMapping("/shops")
-    public Map<String, Object> getBizShops(@RequestBody Map<String, Object> params) {
+    public Map<String, Object> getBizShops(Integer floor, Integer type) {
 
         ResultMap<String, Object> ret = new ResultMap<>(2);
 
         try {
-            List<BizShop> list = shopService.getBizShopList(params);
+            List<BizShop> list = shopService.getBizShopList(
+                    new ResultMap<String, Object>(2)
+                            .build("floorId", floor)
+                            .build("bizFormatId", type)
+            );
 
             ret.build("data", list);
 
@@ -50,7 +54,7 @@ public class BizShopController {
 
         } catch (Exception e) {
 
-            logger.error("楼层列表 获取报错", params, e);
+            logger.error("楼层列表 获取报错", e);
 
             ret.build("data", new Object[]{}).build("success", false);
         }

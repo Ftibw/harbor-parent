@@ -201,6 +201,14 @@
   </update>
 
     <!--以下为自定义部分-->
+    <select id="selectIdByNumber" resultMap="ExtensionResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>,floor_name
+        FROM biz_terminal
+        JOIN biz_floor USING (floor_id)
+        WHERE terminal_number=#{terminalNumber}
+    </select>
+
     <select id="getBizTerminalList" resultMap="ExtensionResultMap">
         SELECT
         <include refid="Base_Column_List"/>,floor_name

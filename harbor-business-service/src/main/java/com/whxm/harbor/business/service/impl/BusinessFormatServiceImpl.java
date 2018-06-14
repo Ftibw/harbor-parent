@@ -10,6 +10,7 @@ import com.whxm.harbor.bean.Result;
 import com.whxm.harbor.mapper.BizFormatMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -150,6 +151,12 @@ public class BusinessFormatServiceImpl implements BusinessFormatService {
         Result ret = null;
 
         try {
+
+            if (null != bizFormatMapper.selectIdByNumber(bizFormat.getBizFormatNumber())) {
+
+                return new Result(HttpStatus.NOT_ACCEPTABLE.value(), "业态编号重复", null);
+            }
+
             bizFormat.setIsDeleted(1);
 
             int affectRow = bizFormatMapper.insert(bizFormat);

@@ -70,6 +70,12 @@
   </update>
 
     <!--以下为自定义部分-->
+    <select id="selectIdByNumber" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from biz_floor WHERE floor_number=#{floorNumber}
+    </select>
+
     <select id="getBizFloorList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

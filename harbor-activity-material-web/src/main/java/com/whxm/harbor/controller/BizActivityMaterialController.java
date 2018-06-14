@@ -28,17 +28,20 @@ public class BizActivityMaterialController {
     @Autowired
     private ActivityMaterialService activityMaterialService;
 
+    @Autowired
+    private FileDir fileDir;
 
     @ApiOperation(value = "根据活动编号获取活动素材列表",
             notes = "param: {'activity':'xx'}   activity表示活动编号")
     @PostMapping("/activityMaterials")
-    public Map<String, Object> getBizActivities(@RequestBody Map<String, Object> params) {
+    public Map<String, Object> getBizActivities(Integer activity) {
 
         ResultMap<String, Object> ret = new ResultMap<String, Object>(2);
 
+        //@RequestBody Map<String, Object> params
+        //(Integer) params.get("activity")
         try {
-            //由于数字可以强制这里才能用...并不通用
-            Integer activityId = (Integer) params.get("activity");
+            Integer activityId = activity;
 
             List<BizActivityMaterial> list = activityMaterialService.getMaterialListByActivityId(activityId);
 
@@ -48,12 +51,19 @@ public class BizActivityMaterialController {
 
         } catch (Exception e) {
 
-            logger.error("活动素材列表 获取报错", params, e);
+            logger.error("活动素材列表 获取报错", activity, e);
 
             ret.build("data", new Object[]{}).build("success", false);
         }
 
         return ret;
+    }
+
+    @ApiOperation("上传活动素材图片")
+    @PostMapping("/picture")
+    public Result uploadPicture(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+
+        return FileUtils.upload(file, request, fileDir.getActivityMaterialImgDir());
     }
 
     //==========================以下均被拦截============================
@@ -155,13 +165,4 @@ public class BizActivityMaterialController {
         return result;
     }
 
-    @ApiOperation("上传活动素材图片")
-    @PostMapping("/picture")
-    public Result uploadPicture(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-
-        return FileUtils.upload(file, request, fileDir.getActivityMaterialImgDir());
-    }
-
-    @Autowired
-    private FileDir fileDir;
 }

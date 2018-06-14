@@ -32,5 +32,8 @@ public interface BizShopMapper {
 
     List<BizShop> getBizShopListByFloorNumberAndBizType(Map<String, Object> params);
 
+
+    BizShop selectIdByNumber(String shopNumber);
+
     //int delShopPicturesRelation(String shopId);
 }

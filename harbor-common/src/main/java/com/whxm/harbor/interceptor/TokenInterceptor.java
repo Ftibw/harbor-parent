@@ -22,6 +22,8 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
+//        System.out.println(request.getRequestURL());
+
         String token = request.getParameter("token");
 
         String salt = null;

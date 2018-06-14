@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.whxm.harbor.bean.Result;
+
 import javax.annotation.Resource;
 import java.util.*;
 
@@ -120,6 +121,10 @@ public class TerminalServiceImpl implements TerminalService {
         Result ret = null;
 
         try {
+            if (null != bizTerminalMapper.selectIdByNumber(bizTerminal.getTerminalNumber())) {
+
+                return new Result(HttpStatus.NOT_ACCEPTABLE.value(), "终端编号重复", null);
+            }
 
             bizTerminal.setIsDeleted(1);
 
@@ -167,7 +172,7 @@ public class TerminalServiceImpl implements TerminalService {
     private BizScreensaverMaterialMapper bizScreensaverMaterialMapper;
 
     @Override
-    public Map<String, Object> getTerminalScreensaverProgram(Map<String, Object> params) {
+    public ResultMap<String, Object> getTerminalScreensaverProgram(Map<String, Object> params) {
 
         ResultMap<String, Object> ret = new ResultMap<>(4);
 

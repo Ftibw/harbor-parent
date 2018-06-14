@@ -1,9 +1,6 @@
 package com.whxm.harbor.terminal.service;
 
-import com.whxm.harbor.bean.BizTerminal;
-import com.whxm.harbor.bean.PageQO;
-import com.whxm.harbor.bean.PageVO;
-import com.whxm.harbor.bean.Result;
+import com.whxm.harbor.bean.*;
 
 import java.util.Map;
 
@@ -64,5 +61,5 @@ public interface TerminalService {
      * @param params
      * @return
      */
-    Map<String,Object> getTerminalScreensaverProgram(Map<String, Object> params);
+    ResultMap<String,Object> getTerminalScreensaverProgram(Map<String, Object> params);
 }

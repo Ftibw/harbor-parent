@@ -1,9 +1,6 @@
 package com.whxm.harbor.controller;
 
-import com.whxm.harbor.bean.BizTerminal;
-import com.whxm.harbor.bean.PageQO;
-import com.whxm.harbor.bean.PageVO;
-import com.whxm.harbor.bean.Result;
+import com.whxm.harbor.bean.*;
 import com.whxm.harbor.terminal.service.TerminalService;
 import com.whxm.harbor.utils.IPv4Util;
 import io.swagger.annotations.Api;
@@ -30,10 +27,16 @@ public class BizTerminalController {
 
     @ApiOperation(value = "终端注册",
             notes = "json: {'sn':'xx','os':1/2}  sn表示终端编号;os表示终端类型（1=android  2=windows）")
-    @PostMapping("/register")
-    public Map<String, Boolean> register(@RequestBody Map<String, Object> params) {
+    @PostMapping(value = "/register")
+    public Map<String, Boolean> register(String sn, Integer os) {
 
         Map<String, Boolean> ret = new HashMap<>(1);
+
+        Map<String, Object> params = new HashMap<>();
+
+        params.put("sn", sn);
+
+        params.put("os", os);
 
         try {
             if (HttpStatus.OK.value() ==
@@ -56,26 +59,24 @@ public class BizTerminalController {
     @ApiOperation(value = "获取终端的屏保节目",
             notes = "json: {'sn':'xx','prog':'xx'}    sn表示终端编号；prog表示当前正在播放的屏保编号")
     @PostMapping("/program")
-    public Map<String, Object> program(@RequestBody Map<String, Object> params) {
+    public Map<String, Object> program(String sn, Integer prog) {
 
-        Map<String, Object> convert = new HashMap<>(4);
-        Object terminalNumber = null;
-        Object screensaverId = null;
+        ResultMap<String, Object> convert = new ResultMap<>(4);
 
         try {
-            terminalNumber = params.get("sn");
-            screensaverId = params.get("prog");
-            convert.put("terminalNumber", terminalNumber);
-            convert.put("screensaverId", screensaverId);
+            convert.build("terminalNumber", sn).build("screensaverId", prog);
+
             convert = terminalService.getTerminalScreensaverProgram(convert);
 
         } catch (Exception e) {
-            logger.error("编号为{}的终端的屏保数据 获取报错", terminalNumber, e);
-            convert.clear();
-            convert.put("code", 0);
-            convert.put("prog", screensaverId);
-            convert.put("on_off", null);
-            convert.put("data", new Object[]{});
+
+            logger.error("编号为{}的终端的屏保数据 获取报错", sn, e);
+
+            convert.clean()
+                    .build("code", 0)
+                    .build("prog", prog)
+                    .build("on_off", null)
+                    .build("data", new Object[]{});
         }
         return convert;
     }

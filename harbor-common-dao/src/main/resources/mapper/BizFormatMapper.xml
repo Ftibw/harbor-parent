@@ -86,4 +86,8 @@
         <include refid="Base_Column_List"/>
         from biz_format where is_deleted = 1
     </select>
+
+    <select id="selectIdByNumber">
+        SELECT biz_format_id FROM  biz_format WHERE biz_format_number=#{bizFormatNumber}
+    </select>
 </mapper>

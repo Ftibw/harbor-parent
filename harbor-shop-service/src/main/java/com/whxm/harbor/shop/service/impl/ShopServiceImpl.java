@@ -80,12 +80,7 @@ public class ShopServiceImpl implements ShopService {
         List<BizShop> list = null;
 
         try {
-            //如果类型转化处理好,可以直接使用BizShop对象封装
-            ResultMap<String, Object> convert = new ResultMap<String, Object>(2)
-                    .build("floorId", params.get("floor"))
-                    .build("bizFormatId", params.get("type"));
-
-            list = bizShopMapper.getBizShopListByFloorNumberAndBizType(convert);
+            list = bizShopMapper.getBizShopListByFloorNumberAndBizType(params);
 
         } catch (Exception e) {
 
@@ -176,6 +171,10 @@ public class ShopServiceImpl implements ShopService {
             bizShop.setAddShopTime(new Date());
 
             try {
+                if (null != bizShopMapper.selectIdByNumber(bizShop.getShopNumber())) {
+
+                    return new Result(HttpStatus.NOT_ACCEPTABLE.value(), "商铺编号重复", null);
+                }
                 int affectRow = bizShopMapper.insert(bizShop);
 
                 int affectRow2 = 0;
@@ -196,7 +195,7 @@ public class ShopServiceImpl implements ShopService {
         } else {
             logger.error("要添加的商铺数据为空");
 
-            ret = new Result("商铺数据为空");
+            ret = new Result(HttpStatus.NOT_ACCEPTABLE.value(), "要添加的商铺数据为空", null);
         }
 
         return ret;

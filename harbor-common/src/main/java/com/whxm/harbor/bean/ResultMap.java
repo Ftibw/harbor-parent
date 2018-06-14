@@ -12,4 +12,10 @@ public class ResultMap<K, V> extends HashMap<K, V> {
         this.put(key, value);
         return this;
     }
+
+
+    public ResultMap<K, V> clean() {
+        super.clear();
+        return this;
+    }
 }
