@@ -73,6 +73,7 @@ public class ShopServiceImpl implements ShopService {
 
     /**
      * 终端获取商铺数据
+     *
      * @param params 楼层编号和业态编号
      * @return list
      */
@@ -82,7 +83,13 @@ public class ShopServiceImpl implements ShopService {
         List<BizShop> list = null;
 
         try {
-            list = bizShopMapper.getBizShopListByFloorAndBizType(params);
+            BizShop condition = new BizShop();
+
+            condition.setBizFormatId((String) params.get("type"));
+
+            condition.setFloorId((Integer) params.get("floor"));
+
+            list = bizShopMapper.getBizShopList(condition);
 
         } catch (Exception e) {
 

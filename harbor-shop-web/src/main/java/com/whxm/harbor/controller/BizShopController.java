@@ -35,32 +35,27 @@ public class BizShopController {
     private FileDir fileDir;
 
     @ApiOperation(value = "根据业态和楼层获取店铺列表",
-            notes = "param: {'floor':'xx','type':''}   type表示业态编号，floor表示楼层编号")
+            notes = "param: {'floor':'xx','type':''}   type表示业态ID，floor表示楼层ID")
     @PostMapping("/shops")
     public Map<String, Object> getBizShops(@RequestBody Map<String, Object> params) {
 
-        ResultMap<String, Object> convert = new ResultMap<String, Object>(2);
+        ResultMap<String, Object> ret = new ResultMap<>(2);
 
         try {
-            convert.build("floorNumber", params.get("floor"))
-                    .build("bizFormatNumber", params.get("type"));
+            List<BizShop> list = shopService.getBizShopList(params);
 
-            List<BizShop> list = shopService.getBizShopList(convert);
+            ret.build("data", list);
 
-            convert.clear();
-
-            convert.build("data", list);
-
-            convert = list.isEmpty() ? convert.build("success", false) : convert.build("success", true);
+            ret = list.isEmpty() ? ret.build("success", false) : ret.build("success", true);
 
         } catch (Exception e) {
 
             logger.error("楼层列表 获取报错", params, e);
 
-            convert.build("data", new Object[]{}).build("success", false);
+            ret.build("data", new Object[]{}).build("success", false);
         }
 
-        return convert;
+        return ret;
     }
 
 

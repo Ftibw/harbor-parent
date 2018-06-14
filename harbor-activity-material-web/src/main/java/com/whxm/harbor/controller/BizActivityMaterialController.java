@@ -31,7 +31,7 @@ public class BizActivityMaterialController {
 
     @ApiOperation(value = "根据活动编号获取活动素材列表",
             notes = "param: {'activity':'xx'}   activity表示活动编号")
-    @GetMapping("/activityMaterials")
+    @PostMapping("/activityMaterials")
     public Map<String, Object> getBizActivities(@RequestBody Map<String, Object> params) {
 
         ResultMap<String, Object> ret = new ResultMap<String, Object>(2);
