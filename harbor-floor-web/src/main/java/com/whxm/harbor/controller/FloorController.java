@@ -106,9 +106,9 @@ public class FloorController {
 
 
     @ApiOperation("删除楼层")
-    @DeleteMapping("/bizFloor/{ID}")
+    @DeleteMapping("/bizFloor")
     public Result delBizFloor(@ApiParam(name = "ID", value = "楼层ID", required = true)
-                              @PathVariable("ID") Integer bizFloorId) {
+                                      Integer bizFloorId) {
         Result ret = null;
 
         try {

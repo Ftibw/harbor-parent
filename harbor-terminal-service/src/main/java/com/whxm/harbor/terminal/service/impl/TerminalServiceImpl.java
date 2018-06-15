@@ -212,12 +212,11 @@ public class TerminalServiceImpl implements TerminalService {
             } else {
                 bizScreensaverMaterialMapper
                         .selectMaterialsByScreensaverId(screensaverId)
-                        .forEach(item -> {
-                            HashMap<String, Object> map = new HashMap<>(2);
-                            map.put("name", item.getScreensaverMaterialName());
-                            map.put("url", urlConfig.getUrlPrefix() + item.getScreensaverMaterialImgPath());
-                            list.add(map);
-                        });
+                        .forEach(item -> list.add(
+                                new ResultMap<String, Object>(2)
+                                        .build("name", item.getScreensaverMaterialName())
+                                        .build("url", urlConfig.getUrlPrefix() + item.getScreensaverMaterialImgPath())
+                        ));
 
                 ret = list.isEmpty() ? ret.build("code", 0) : ret.build("code", 1);
             }

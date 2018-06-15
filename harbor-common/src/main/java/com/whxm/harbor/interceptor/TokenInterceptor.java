@@ -43,7 +43,7 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
         if (null == token || null == salt || !salt.equals(TokenUtils.salt(token))) {
             response.setContentType("text/html;charset=utf-8");
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().println("token无效");
+            response.getWriter().println("未授权");
             // 401 状态码 没有权限访问
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             return false;
